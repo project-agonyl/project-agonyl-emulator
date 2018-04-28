@@ -39,8 +39,6 @@ namespace Agonyl.Shared
 			if (_running)
 				throw new Exception("Server is already running.");
 			_running = true;
-
-			//this.NavigateToRoot();
 		}
 
 		/// <summary>

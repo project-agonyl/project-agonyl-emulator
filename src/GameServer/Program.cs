@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿#region copyright
+// Copyright (c) 2018 Project Agonyl
+#endregion
+
+using System;
+using Agonyl.Shared.Util;
 
 namespace Agonyl.Game
 {
@@ -10,6 +11,15 @@ namespace Agonyl.Game
 	{
 		static void Main(string[] args)
 		{
+			try
+			{
+				GameServer.Instance.Run();
+			}
+			catch (Exception ex)
+			{
+				Log.Error("Error on startup: {0}, {1}", ex.GetType().Name, ex.Message);
+				CliUtil.Exit(1, true);
+			}
 		}
 	}
 }

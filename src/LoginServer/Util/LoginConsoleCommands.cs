@@ -1,4 +1,7 @@
-﻿using System;
+﻿#region copyright
+// Copyright (c) 2018 Project Agonyl
+#endregion
+
 using System.Collections.Generic;
 using Agonyl.Shared.Util;
 using Agonyl.Shared.Util.Commands;

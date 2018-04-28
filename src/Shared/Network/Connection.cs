@@ -51,11 +51,6 @@ namespace Agonyl.Shared.Network
 		public int Index { get; set; }
 
 		/// <summary>
-		/// Session key for this connection.
-		/// </summary>
-		public string SessionKey { get; set; }
-
-		/// <summary>
 		/// Creates new connection.
 		/// </summary>
 		public Connection()
@@ -102,8 +97,6 @@ namespace Agonyl.Shared.Network
 			catch { }
 
 			this.OnClosed();
-
-			Log.Info("Closed connection from '{0}'.", this.Address);
 		}
 
 		/// <summary>
@@ -145,8 +138,8 @@ namespace Agonyl.Shared.Network
 
 					// Read packet from buffer
 					var packetBuffer = new byte[packetLength];
-					Buffer.BlockCopy(_buffer, read + sizeof(short), packetBuffer, 0, packetLength);
-					read += sizeof(short) + packetLength;
+					Buffer.BlockCopy(_buffer, read, packetBuffer, 0, packetLength);
+					read += packetLength;
 
 					if (this.ShouldDecrypt)
 						_crypto.Decrypt(ref packetBuffer);
@@ -156,7 +149,7 @@ namespace Agonyl.Shared.Network
 					if (this.ShouldDecrypt)
 						packet = new Packet(packetBuffer);
 					else
-						packet = new Packet(packetBuffer, 7);
+						packet = new Packet(packetBuffer, 9);
 
 					// Check size from table?
 					var size = Op.GetSize(packet.Op);

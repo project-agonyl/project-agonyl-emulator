@@ -3,7 +3,6 @@
 #endregion
 
 using Agonyl.Shared.Network;
-using Agonyl.Shared.Util;
 
 namespace Agonyl.Login.Network
 {

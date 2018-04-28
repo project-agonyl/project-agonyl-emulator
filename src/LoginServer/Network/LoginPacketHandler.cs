@@ -19,14 +19,15 @@ namespace Agonyl.Login.Network
 		[PacketHandler(Op.C2L_LOGIN)]
 		public void C2L_LOGIN(LoginConnection conn, Packet packet)
 		{
-			packet.SetReadPointer(8);
+			packet.SetReadPointer(10);
 			var username = packet.GetString(20);
-			packet.SetReadPointer(29);
+			packet.SetReadPointer(31);
 			var password = packet.GetString(20);
 			if (!LoginServer.Instance.Database.AccountExists(username, password))
 				Send.L2C_MESSAGE(conn, "Invalid ID/password");
 			else
 			{
+				Log.Info(username + " account successfully logged in.");
 				Send.L2C_LOGIN_OK(conn);
 				Send.L2C_SERVER_LIST(conn, LoginServer.Instance.Conf.ServerName);
 			}

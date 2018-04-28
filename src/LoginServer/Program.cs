@@ -1,4 +1,8 @@
-﻿using System;
+﻿#region copyright
+// Copyright (c) 2018 Project Agonyl
+#endregion
+
+using System;
 using Agonyl.Shared.Util;
 
 namespace Agonyl.Login
