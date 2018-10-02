@@ -10,7 +10,8 @@ This is an effort to create an open source emulator for A3. If you are developer
 Requirements
 ------------
 1. Dot Net 4.0
-2. MySQL
+2. MySQL or MariaDB
+3. Redis
 
 Running the Project
 -------------------

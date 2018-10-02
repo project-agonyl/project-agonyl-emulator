@@ -28,9 +28,14 @@ namespace Agonyl.Game
 		public AgonylDb Database { get; private set; }
 
 		/// <summary>
-		/// LoginServer console commands.
+		/// GameServer console commands.
 		/// </summary>
 		public GameConsoleCommands ConsoleCommands { get; private set; }
+
+		/// <summary>
+		/// LoginServer IPC handler
+		/// </summary>
+		public GameConnection LoginServerConnection { get; private set; }
 
 		/// <summary>
 		/// Starts the server.
@@ -47,6 +52,9 @@ namespace Agonyl.Game
 
 			// Database
 			this.InitDatabase(this.Database = new AgonylDb(), this.Conf);
+
+			// Redis server
+			this.Redis = new Redis(this.Conf.RedisHost, this.Conf.RedisPort, this.Conf.RedisPassword);
 
 			// Packet handlers
 			GamePacketHandler.Instance.RegisterMethods();

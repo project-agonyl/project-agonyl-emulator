@@ -92,6 +92,31 @@ namespace Agonyl.Shared.Database
 			}
 		}
 
+		public int AccountIdByUsername(string username)
+		{
+			using (var conn = this.GetConnection())
+			using (var mc = new MySqlCommand("SELECT `id` FROM `account` WHERE `username` = @username", conn))
+			{
+				mc.Parameters.AddWithValue("@username", username);
+
+				using (var reader = mc.ExecuteReader())
+					if (reader.Read())
+						return Convert.ToInt32(reader["id"].ToString());
+				return 0;
+			}
+		}
+
+		public MySqlDataReader GetCharacterList(int id)
+		{
+			using (var conn = this.GetConnection())
+			using (var mc = new MySqlCommand("SELECT * FROM `character` WHERE `account_id` = @id", conn))
+			{
+				mc.Parameters.AddWithValue("@id", id);
+				using (var reader = mc.ExecuteReader())
+					return reader;
+			}
+		}
+
 		/// <summary>
 		/// Creates new account with given information.
 		/// </summary>

@@ -59,6 +59,21 @@ namespace Agonyl.Shared.Util.Config
 		public int DbPort { get; protected set; }
 
 		/// <summary>
+		/// Redis host
+		/// </summary>
+		public string RedisHost { get; protected set; }
+
+		/// <summary>
+		/// Redis port
+		/// </summary>
+		public int RedisPort { get; protected set; }
+
+		/// <summary>
+		/// Redis password
+		/// </summary>
+		public string RedisPassword { get; protected set; }
+
+		/// <summary>
 		/// Database name
 		/// </summary>
 		public string DbName { get; protected set; }
@@ -100,6 +115,9 @@ namespace Agonyl.Shared.Util.Config
 			this.DbName = GetIniValue("DATABASE", "NAME", "agonyl");
 			this.DbUserName = GetIniValue("DATABASE", "USERNAME", "agonyl");
 			this.DbPassword = GetIniValue("DATABASE", "PASSWORD", "agonyl");
+			this.RedisHost = GetIniValue("REDIS", "HOST", "127.0.0.1");
+			this.RedisPort = Convert.ToInt32(GetIniValue("REDIS", "PORT", "6379"));
+			this.RedisPassword = GetIniValue("REDIS", "PASSWORD", "");
 		}
 	}
 }

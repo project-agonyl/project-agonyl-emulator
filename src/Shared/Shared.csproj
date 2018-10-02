@@ -39,8 +39,12 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="StackExchange.Redis, Version=1.2.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\StackExchange.Redis.1.2.6\lib\net46\StackExchange.Redis.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,6 +57,7 @@
     <Compile Include="Database\AgonylDb.cs" />
     <Compile Include="Database\Commands.cs" />
     <Compile Include="Database\MySqlDataReaderExtension.cs" />
+    <Compile Include="Database\Redis.cs" />
     <Compile Include="Data\AgonylData.cs" />
     <Compile Include="Data\Database.cs" />
     <Compile Include="Data\Exceptions.cs" />
@@ -67,11 +72,14 @@
     <Compile Include="Util\Commands\CommandManager.cs" />
     <Compile Include="Util\Commands\ConsoleCommands.cs" />
     <Compile Include="Util\Config\Conf.cs" />
+    <Compile Include="Util\Config\Constants.cs" />
     <Compile Include="Util\Extensions.cs" />
     <Compile Include="Util\FileReader.cs" />
     <Compile Include="Util\Log.cs" />
     <Compile Include="Util\Security\Crypt.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

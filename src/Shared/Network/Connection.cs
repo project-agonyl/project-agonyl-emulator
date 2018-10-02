@@ -141,7 +141,7 @@ namespace Agonyl.Shared.Network
 					Buffer.BlockCopy(_buffer, read, packetBuffer, 0, packetLength);
 					read += packetLength;
 
-					if (this.ShouldDecrypt)
+					if (this.ShouldDecrypt && !(_buffer[10] == 0x11 && _buffer[11] == 0x38))
 						_crypto.Decrypt(ref packetBuffer);
 
 					// Get packet
@@ -235,40 +235,13 @@ namespace Agonyl.Shared.Network
 			if (_socket == null || this.State == ConnectionState.Closed)
 				return;
 
-			// Get size from table
-			var size = Op.GetSize(packet.Op);
-			if (size == -1)
-				throw new ArgumentException("Size for op '" + packet.Op.ToString("X4") + "' unknown.");
-
-			// Calculate length
-			var fixHeaderSize = (sizeof(short) + sizeof(int) + sizeof(int) + packet.Length);
-			var dynHeaderSize = (sizeof(short) + sizeof(int) + sizeof(int) + sizeof(short) + packet.Length);
-			var length = (size == 0 ? dynHeaderSize : size);
-
-			// Check table length
-			if (size != 0)
-			{
-				if (length < sizeof(short) + sizeof(int) + sizeof(int) + packet.Length)
-					throw new Exception("Packet is bigger than specified in the packet size table.");
-
-				if (size != sizeof(short) + sizeof(int) + sizeof(int) + packet.Length)
-					Log.Warning("Packet size doesn't match packet table size. (op: {3} ({0:X4}), size: {1}, expected: {2})", packet.Op, fixHeaderSize, size, Op.GetName(packet.Op));
-			}
-
 			// Create packet
-			var buffer = new byte[length];
-			Buffer.BlockCopy(BitConverter.GetBytes((short)packet.Op), 0, buffer, 0, sizeof(short));
-			Buffer.BlockCopy(BitConverter.GetBytes(-1), 0, buffer, sizeof(short), sizeof(int)); // checksum?
+			var buffer = new byte[packet.Length];
+			packet.Build(ref buffer, 0);
 
-			var offset = (sizeof(short) + sizeof(int) + sizeof(int));
-			if (size == 0)
-			{
-				Buffer.BlockCopy(BitConverter.GetBytes((short)length), 0, buffer, offset, sizeof(short));
-				offset += sizeof(short);
-			}
-
-			packet.Build(ref buffer, offset);
-
+			// Encrypt packet
+			_crypto.Encrypt(ref buffer);
+			
 			//Send
 			_socket.Send(buffer);
 		}

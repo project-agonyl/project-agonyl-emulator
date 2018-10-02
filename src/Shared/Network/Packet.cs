@@ -38,7 +38,7 @@ namespace Agonyl.Shared.Network
 			_buffer = buffer;
 
 			this.Length = buffer.Length;
-			this.Op = (int)buffer[11];
+			this.Op = this.GetOpCode();
 		}
 
 		/// <summary>
@@ -611,13 +611,142 @@ namespace Agonyl.Shared.Network
 		{
 			if (num == 0)
 				return new byte[] { 0x00, 0x00 };
-			string hexPort = string.Format("{0:x}", num);
+			var hexPort = string.Format("{0:x}", num);
 			while (hexPort.Length < 4)
 				hexPort = "0" + hexPort;
-			string temp = hexPort[2] + hexPort[3].ToString();
-			string temp1 = hexPort[0] + hexPort[1].ToString();
+			var temp = hexPort[2] + hexPort[3].ToString();
+			var temp1 = hexPort[0] + hexPort[1].ToString();
 			var tempByte = new[] { Convert.ToByte(temp, 16), Convert.ToByte(temp1, 16) };
 			return tempByte;
+		}
+
+		private int GetOpCode()
+		{
+			int opCode;
+			switch (_buffer[10])
+			{
+				case 0x08:
+					switch (_buffer[11])
+					{
+						case 0x11:
+							opCode = Network.Op.C2G_CLIENT_EXIT;
+							break;
+						case 0x13:
+							opCode = Network.Op.C2G_CAN_INTERACT_NPC;
+							break;
+						default:
+							opCode = Network.Op.C2G_UNKNOWN;
+							break;
+					}
+					break;
+				case 0x00:
+					switch (_buffer[11])
+					{
+						case 0xC0:
+							opCode = Network.Op.C2G_PAYMENT_INFO;
+							break;
+						case 0x19:
+							opCode = Network.Op.C2G_WARP_COMPLETE;
+							break;
+						case 0x12:
+							opCode = Network.Op.C2G_MOVE_CHARACTER;
+							break;
+						default:
+							opCode = Network.Op.C2G_UNKNOWN;
+							break;
+					}
+					break;
+				case 0x67:
+					switch (_buffer[11])
+					{
+						case 0x17:
+							opCode = Network.Op.C2G_RECHARGE_POTION;
+							break;
+						default:
+							opCode = Network.Op.C2G_UNKNOWN;
+							break;
+					}
+					break;
+				case 0x11:
+					switch (_buffer[11])
+					{
+						case 0x11:
+							opCode = Network.Op.C2G_WARP_LOCATION;
+							break;
+						case 0x38:
+							opCode = Network.Op.C2G_CHARACTER_LIST;
+							break;
+						default:
+							opCode = Network.Op.C2G_UNKNOWN;
+							break;
+					}
+					break;
+				case 0x12:
+					switch (_buffer[11])
+					{
+						case 0x11:
+							opCode = Network.Op.C2G_WARP_REQUEST;
+							break;
+						default:
+							opCode = Network.Op.C2G_UNKNOWN;
+							break;
+					}
+					break;
+				case 0x06:
+					switch (_buffer[11])
+					{
+						case 0x16:
+							opCode = Network.Op.C2G_HEALER_WINDOW_OPEN;
+							break;
+						default:
+							opCode = Network.Op.C2G_UNKNOWN;
+							break;
+					}
+					break;
+				case 0x1C:
+					switch (_buffer[11])
+					{
+						case 0x50:
+							opCode = Network.Op.C2G_RECHARGE_POTIONS_FULL;
+							break;
+						default:
+							opCode = Network.Op.C2G_UNKNOWN;
+							break;
+					}
+					break;
+				case 0x02:
+					switch (_buffer[11])
+					{
+						case 0xA0:
+							opCode = Network.Op.C2G_DELETE_CHARACTER;
+							break;
+						case 0x12:
+							opCode = Network.Op.C2G_MOVED_CHARACTER;
+							break;
+						default:
+							opCode = Network.Op.C2G_UNKNOWN;
+							break;
+					}
+					break;
+				default:
+					switch (_buffer.Length)
+					{
+						case 37:
+							opCode = Network.Op.C2G_SELECT_CHARACTER;
+							break;
+						case 22:
+							opCode = Network.Op.C2G_PING;
+							break;
+						case 35:
+							opCode = Network.Op.C2G_CREATE_CHARACTER;
+							break;
+						default:
+							opCode = Network.Op.C2G_UNKNOWN;
+							break;
+					}
+					break;
+			}
+			return opCode;
 		}
 
 		private enum ZlibMode

@@ -27,9 +27,15 @@ namespace Agonyl.Login.Network
 				Send.L2C_MESSAGE(conn, "Invalid ID/password");
 			else
 			{
-				Log.Info(username + " account successfully logged in.");
-				Send.L2C_LOGIN_OK(conn);
-				Send.L2C_SERVER_LIST(conn, LoginServer.Instance.Conf.ServerName);
+				if (LoginServer.Instance.Redis.IsLoggedIn(username))
+					Send.L2C_MESSAGE(conn, "Account already logged in");
+				else
+				{
+					Log.Info(username + " account successfully logged in.");
+					conn.Username = username;
+					Send.L2C_LOGIN_OK(conn);
+					Send.L2C_SERVER_LIST(conn, LoginServer.Instance.Conf.ServerName);
+				}
 			}
 		}
 
@@ -41,6 +47,7 @@ namespace Agonyl.Login.Network
 		[PacketHandler(Op.C2L_SERVER_DETAILS)]
 		public void C2L_SERVER_DETAILS(LoginConnection conn, Packet packet)
 		{
+			LoginServer.Instance.Redis.AddLoggedInAccount(conn.Username);
 			Send.L2C_SERVER_DETAILS(conn, LoginServer.Instance.Conf.GameServerHost, LoginServer.Instance.Conf.GameServerPort);
 		}
 	}

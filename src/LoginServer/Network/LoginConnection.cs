@@ -8,6 +8,11 @@ namespace Agonyl.Login.Network
 {
 	public class LoginConnection : Connection
 	{
+		/// <summary>
+		/// Username of the current connection.
+		/// </summary>
+		public string Username { get; set; }
+
 		public LoginConnection()
 		{
 			this.ShouldDecrypt = false;

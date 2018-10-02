@@ -10,7 +10,6 @@ using Agonyl.Shared;
 using Agonyl.Shared.Database;
 using Agonyl.Shared.Network;
 using Agonyl.Shared.Util;
-using Agonyl.Shared.Util.Commands;
 
 namespace Agonyl.Login
 {
@@ -48,6 +47,12 @@ namespace Agonyl.Login
 
 			// Database
 			this.InitDatabase(this.Database = new AgonylDb(), this.Conf);
+
+			// Redis server
+			this.Redis = new Redis(this.Conf.RedisHost, this.Conf.RedisPort, this.Conf.RedisPassword);
+
+			// Remove previously logged in accounts
+			this.Redis.ResetLoggedInAccountList();
 
 			// Packet handlers
 			LoginPacketHandler.Instance.RegisterMethods();

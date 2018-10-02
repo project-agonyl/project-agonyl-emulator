@@ -24,6 +24,11 @@ namespace Agonyl.Shared
 		public AgonylData Data { get; private set; }
 
 		/// <summary>
+		/// Redis connection.
+		/// </summary>
+		public Redis Redis { get; protected set; }
+
+		/// <summary>
 		/// Initializes class.
 		/// </summary>
 		public Server()
