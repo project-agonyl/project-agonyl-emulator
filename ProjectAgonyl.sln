@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginServer", "src\LoginServer\LoginServer.csproj", "{AF6460D6-3A59-40A2-BD53-1DF038CEF2C5}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -14,6 +14,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameServer", "src\GameServe
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "src\Shared\Shared.csproj", "{C2E02244-B7EC-468E-A15C-343167B6143A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{56112A2F-74E6-43C9-9226-6E5F2A11B7C2}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
