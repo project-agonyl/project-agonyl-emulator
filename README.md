@@ -17,8 +17,8 @@ Running the Project
 -------------------
 1. Build the project using Visual Studio 2017 or higher
 2. Import database schemas from ``data`` into respective MySQL databases
-4. Update ``LoginServer.ini`` and ``GameServer.ini`` with proper credentials
-5. Run ``LoginServer.exe`` as well as ``GameServer.exe``
+3. Update ``LoginServer.ini`` and ``GameServer.ini`` with proper credentials
+4. Run ``LoginServer.exe`` as well as ``GameServer.exe``
 
 Currently available features
 ----------------------------
