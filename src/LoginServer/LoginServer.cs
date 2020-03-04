@@ -1,6 +1,8 @@
 ﻿#region copyright
+
 // Copyright (c) 2018 Project Agonyl
-#endregion
+
+#endregion copyright
 
 using System;
 using Agonyl.Login.Network;
@@ -13,61 +15,63 @@ using Agonyl.Shared.Util;
 
 namespace Agonyl.Login
 {
-	public class LoginServer : Server
-	{
-		public static readonly LoginServer Instance = new LoginServer();
+    public class LoginServer : Server
+    {
+        public static readonly LoginServer Instance = new LoginServer();
 
-		/// <summary>
-		/// Configuration.
-		/// </summary>
-		public LoginConf Conf { get; private set; }
+        /// <summary>
+        /// Configuration.
+        /// </summary>
+        public LoginConf Conf { get; private set; }
 
-		/// <summary>
-		/// Login server's database.
-		/// </summary>
-		public AgonylDb Database { get; private set; }
+        /// <summary>
+        /// Login server's database.
+        /// </summary>
+        public ASD ASDDatabase { get; private set; }
 
-		/// <summary>
-		/// LoginServer console commands.
-		/// </summary>
-		public LoginConsoleCommands ConsoleCommands { get; private set; }
+        /// <summary>
+        /// LoginServer console commands.
+        /// </summary>
+        public LoginConsoleCommands ConsoleCommands { get; private set; }
 
-		/// <summary>
-		/// Starts the server.
-		/// </summary>
-		public override void Run()
-		{
-			base.Run();
+        /// <summary>
+        /// Starts the server.
+        /// </summary>
+        public override void Run()
+        {
+            base.Run();
 
-			CliUtil.WriteHeader("Login Server", ConsoleColor.Magenta);
-			CliUtil.LoadingTitle();
+            CliUtil.WriteHeader("Login Server", ConsoleColor.Magenta);
+            CliUtil.LoadingTitle();
 
-			// Conf
-			this.LoadConf(this.Conf = new LoginConf());
+            Log.Status("Starting Login Server...");
 
-			// Database
-			this.InitDatabase(this.Database = new AgonylDb(), this.Conf);
+            // Conf
+            this.LoadConf(this.Conf = new LoginConf());
 
-			// Redis server
-			this.Redis = new Redis(this.Conf.RedisHost, this.Conf.RedisPort, this.Conf.RedisPassword);
+            // ASD Database
+            this.InitDatabase(this.ASDDatabase = new ASD(), this.Conf);
 
-			// Remove previously logged in accounts
-			this.Redis.ResetLoggedInAccountList();
+            // Redis server
+            this.Redis = new Redis(this.Conf.RedisHost, this.Conf.RedisPort, this.Conf.RedisPassword);
 
-			// Packet handlers
-			LoginPacketHandler.Instance.RegisterMethods();
+            // Remove previously logged in accounts
+            this.Redis.ResetLoggedInAccountList();
 
-			// Server
-			var mgr = new ConnectionManager<LoginConnection>(this.Conf.Host, this.Conf.Port);
-			mgr.Start();
+            // Packet handlers
+            LoginPacketHandler.Instance.RegisterMethods();
 
-			// Ready
-			CliUtil.RunningTitle();
-			Log.Status("Server ready, listening on {0}.", mgr.Address);
+            // Server
+            var mgr = new ConnectionManager<LoginConnection>(this.Conf.Host, this.Conf.Port);
+            mgr.Start();
 
-			// Commands
-			this.ConsoleCommands = new LoginConsoleCommands();
-			this.ConsoleCommands.Wait();
-		}
-	}
+            // Ready
+            CliUtil.RunningTitle();
+            Log.Status("Login Server is ready, listening on {0}.", mgr.Address);
+
+            // Commands
+            this.ConsoleCommands = new LoginConsoleCommands();
+            this.ConsoleCommands.Wait();
+        }
+    }
 }

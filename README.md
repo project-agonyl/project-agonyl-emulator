@@ -16,16 +16,15 @@ Requirements
 Running the Project
 -------------------
 1. Build the project using Visual Studio 2017 or higher
-2. Create MySQL database
-3. Import database schema from ``data/db.sql`` into your emulator database
-4. Import example test data from ``data/seed.sql``
-5. Update {project-folder}\bin\Debug\LoginServer\LoginServer.ini with proper credentials
-8. Run {project-folder}\bin\Debug\LoginServer\LoginServer.exe to start the login server
+2. Import database schemas from ``data`` into respective MySQL databases
+3. Update ``LoginServer.ini`` and ``GameServer.ini`` with proper credentials
+4. Run ``LoginServer.exe`` as well as ``GameServer.exe``
 
 Currently available features
 ----------------------------
 1. Account validation and login
-2. Showing of server details
+2. Showing of server details and server selection
+3. Character listing
 
 Client
 ------

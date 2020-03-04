@@ -5,7 +5,7 @@ root = true
 
 # Code files
 [*.{cs,csx,vb,vbx}]
-indent_style = tab
+indent_style = space
 indent_size = 4
 insert_final_newline = true
 charset = utf-8-bom
@@ -22,7 +22,7 @@ indent_size = 2
 
 # JSON files
 [*.json]
-indent_style = tab
+indent_style = space
 indent_size = 4
 
 # Dotnet code style settings:
