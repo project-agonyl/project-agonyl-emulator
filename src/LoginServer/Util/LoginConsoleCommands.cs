@@ -10,7 +10,7 @@ using Agonyl.Shared.Util.Commands;
 
 namespace Agonyl.Login.Util
 {
-	public class LoginConsoleCommands : ConsoleCommands
+    public class LoginConsoleCommands : ConsoleCommands
     {
         public LoginConsoleCommands()
         {

@@ -13,7 +13,7 @@ using MsgPack.Serialization;
 
 namespace Agonyl.Shared.Data
 {
-	public interface IDatabase
+    public interface IDatabase
     {
         /// <summary>
         /// Amount of entries.
@@ -187,8 +187,8 @@ namespace Agonyl.Shared.Data
 
         protected abstract void LoadFromFile(string path);
 
-		protected virtual void AfterLoad()
-		{
-		}
-	}
+        protected virtual void AfterLoad()
+        {
+        }
+    }
 }

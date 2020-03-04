@@ -6,7 +6,7 @@
 
 namespace Agonyl.Game.Data
 {
-	public class Account
+    public class Account
     {
         /// <summary>
         /// Account's username.

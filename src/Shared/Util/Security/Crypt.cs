@@ -4,13 +4,9 @@
 
 #endregion copyright
 
-using System;
-using System.Security.Cryptography;
-using System.Text;
-
 namespace Agonyl.Shared.Util.Security
 {
-	public class Crypt
+    public class Crypt
     {
         private int m_ConstKey1;
         private int m_ConstKey2;

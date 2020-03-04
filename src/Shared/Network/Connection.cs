@@ -12,7 +12,7 @@ using Agonyl.Shared.Util.Security;
 
 namespace Agonyl.Shared.Network
 {
-	public abstract class Connection
+    public abstract class Connection
     {
         private byte[] _buffer, _backBuffer;
         private Crypt _crypto;
@@ -52,15 +52,15 @@ namespace Agonyl.Shared.Network
         /// </summary>
         public int Index { get; set; }
 
-		/// <summary>
-		/// Username of the current connection.
-		/// </summary>
-		public string Username { get; set; }
+        /// <summary>
+        /// Username of the current connection.
+        /// </summary>
+        public string Username { get; set; }
 
-		/// <summary>
-		/// Creates new connection.
-		/// </summary>
-		public Connection()
+        /// <summary>
+        /// Creates new connection.
+        /// </summary>
+        public Connection()
         {
             _buffer = new byte[1024 * 500];
             _backBuffer = new byte[ushort.MaxValue];
@@ -104,7 +104,7 @@ namespace Agonyl.Shared.Network
             catch { }
 
             this.OnClosed();
-			this.OnAfterClose();
+            this.OnAfterClose();
         }
 
         /// <summary>
@@ -115,10 +115,10 @@ namespace Agonyl.Shared.Network
             _socket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, this.OnReceive, null);
         }
 
-		/// <summary>
-		/// After close event to clean up connection details.
-		/// </summary>
-		protected abstract void OnAfterClose();
+        /// <summary>
+        /// After close event to clean up connection details.
+        /// </summary>
+        protected abstract void OnAfterClose();
 
         /// <summary>
         /// Called when new data is available from socket.
@@ -136,7 +136,7 @@ namespace Agonyl.Shared.Network
                 {
                     this.State = ConnectionState.Closed;
                     this.OnClosed();
-					this.OnAfterClose();
+                    this.OnAfterClose();
                     return;
                 }
 
@@ -191,7 +191,7 @@ namespace Agonyl.Shared.Network
             {
                 this.State = ConnectionState.Closed;
                 this.OnClosed();
-				this.OnAfterClose();
+                this.OnAfterClose();
             }
             catch (ObjectDisposedException)
             {

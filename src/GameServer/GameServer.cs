@@ -15,63 +15,65 @@ using Agonyl.Shared.Util;
 
 namespace Agonyl.Game
 {
-	internal class GameServer : Server
-	{
-		public static readonly GameServer Instance = new GameServer();
+    internal class GameServer : Server
+    {
+        public static readonly GameServer Instance = new GameServer();
 
-		/// <summary>
-		/// Configuration.
-		/// </summary>
-		public GameConf Conf { get; private set; }
+        /// <summary>
+        /// Configuration.
+        /// </summary>
+        public GameConf Conf { get; private set; }
 
-		/// <summary>
-		/// Game server's database.
-		/// </summary>
-		public ASD ASDDatabase { get; private set; }
+        /// <summary>
+        /// Game server's database.
+        /// </summary>
+        public ASD ASDDatabase { get; private set; }
 
-		/// <summary>
-		/// GameServer console commands.
-		/// </summary>
-		public GameConsoleCommands ConsoleCommands { get; private set; }
+        /// <summary>
+        /// GameServer console commands.
+        /// </summary>
+        public GameConsoleCommands ConsoleCommands { get; private set; }
 
-		/// <summary>
-		/// LoginServer IPC handler
-		/// </summary>
-		public GameConnection LoginServerConnection { get; private set; }
+        /// <summary>
+        /// LoginServer IPC handler
+        /// </summary>
+        public GameConnection LoginServerConnection { get; private set; }
 
-		/// <summary>
-		/// Starts the server.
-		/// </summary>
-		public override void Run()
-		{
-			base.Run();
+        /// <summary>
+        /// Starts the server.
+        /// </summary>
+        public override void Run()
+        {
+            base.Run();
 
-			CliUtil.WriteHeader("Game Server", ConsoleColor.Magenta);
-			CliUtil.LoadingTitle();
+            CliUtil.WriteHeader("Game Server", ConsoleColor.Magenta);
+            CliUtil.LoadingTitle();
 
-			// Conf
-			this.LoadConf(this.Conf = new GameConf());
+            Log.Status("Starting Game Server...");
 
-			// Database
-			this.InitDatabase(this.ASDDatabase = new ASD(), this.Conf);
+            // Conf
+            this.LoadConf(this.Conf = new GameConf());
 
-			// Redis server
-			this.Redis = new Redis(this.Conf.RedisHost, this.Conf.RedisPort, this.Conf.RedisPassword);
+            // Database
+            this.InitDatabase(this.ASDDatabase = new ASD(), this.Conf);
 
-			// Packet handlers
-			GamePacketHandler.Instance.RegisterMethods();
+            // Redis server
+            this.Redis = new Redis(this.Conf.RedisHost, this.Conf.RedisPort, this.Conf.RedisPassword);
 
-			// Server
-			var mgr = new ConnectionManager<GameConnection>(this.Conf.Host, this.Conf.Port);
-			mgr.Start();
+            // Packet handlers
+            GamePacketHandler.Instance.RegisterMethods();
 
-			// Ready
-			CliUtil.RunningTitle();
-			Log.Status("Game Server is ready, listening on {0}.", mgr.Address);
+            // Server
+            var mgr = new ConnectionManager<GameConnection>(this.Conf.Host, this.Conf.Port);
+            mgr.Start();
 
-			// Commands
-			this.ConsoleCommands = new GameConsoleCommands();
-			this.ConsoleCommands.Wait();
-		}
-	}
+            // Ready
+            CliUtil.RunningTitle();
+            Log.Status("Game Server is ready, listening on {0}.", mgr.Address);
+
+            // Commands
+            this.ConsoleCommands = new GameConsoleCommands();
+            this.ConsoleCommands.Wait();
+        }
+    }
 }

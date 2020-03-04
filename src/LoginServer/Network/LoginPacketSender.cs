@@ -8,7 +8,7 @@ using Agonyl.Shared.Network;
 
 namespace Agonyl.Login.Network
 {
-	public static class Send
+    public static class Send
     {
         /// <summary>
         /// Sends custom message to client.
@@ -73,7 +73,6 @@ namespace Agonyl.Login.Network
             packet.PutString(serverHost);
             packet.PutEmptyBin(16 - serverHost.Length);
             packet.PutReverseHexOfInt(serverPort);
-            packet.PutEmptyBin(2);
             conn.Send(packet);
         }
     }

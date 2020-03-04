@@ -13,7 +13,7 @@ using System.Text;
 
 namespace Agonyl.Shared.Network
 {
-	public class Packet
+    public class Packet
     {
         private const int DefaultSize = 1024;
 
@@ -488,9 +488,9 @@ namespace Agonyl.Shared.Network
         /// Writes the reverse hex of the given integer.
         /// </summary>
         /// <param name="value"></param>
-        public void PutReverseHexOfInt(int value)
+        public void PutReverseHexOfInt(int value, int length = 4)
         {
-            var tempByte = this.IntToReverseHexBytes(value);
+            var tempByte = this.IntToReverseHexBytes(value, length);
             this.PutBytes(tempByte);
         }
 
@@ -608,16 +608,24 @@ namespace Agonyl.Shared.Network
         /// <summary>
         /// Returns packet with byte equivalent of int
         /// </summary>
-        private byte[] IntToReverseHexBytes(int num)
+        private byte[] IntToReverseHexBytes(int num, int length = 4)
         {
-            if (num == 0)
-                return new byte[] { 0x00, 0x00 };
             var hexPort = string.Format("{0:x}", num);
-            while (hexPort.Length < 4)
+            while (hexPort.Length < length * 2)
+            {
                 hexPort = "0" + hexPort;
-            var temp = hexPort[2] + hexPort[3].ToString();
-            var temp1 = hexPort[0] + hexPort[1].ToString();
-            var tempByte = new[] { Convert.ToByte(temp, 16), Convert.ToByte(temp1, 16) };
+            }
+            var tempByte = new byte[length];
+            var j = 0;
+            for (var i = hexPort.Length - 1; i > 0; i -= 2)
+            {
+                if (j == length)
+                {
+                    break;
+                }
+                tempByte[j] = Convert.ToByte(hexPort[i - 1] + hexPort[i].ToString(), 16);
+                j++;
+            }
             return tempByte;
         }
 

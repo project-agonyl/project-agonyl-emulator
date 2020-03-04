@@ -10,7 +10,7 @@ using Agonyl.Shared.Util;
 
 namespace Agonyl.Game.Network
 {
-	public class GameConnection : Connection
+    public class GameConnection : Connection
     {
         /// <summary>
         /// Holds account details.
@@ -34,13 +34,13 @@ namespace Agonyl.Game.Network
             return;
         }
 
-		protected override void OnAfterClose()
-		{
-			if (Account != null && GameServer.Instance.Redis.IsLoggedIn(Account.Username))
-			{
-				Log.Info(Account.Username + " account has left the game server");
-				GameServer.Instance.Redis.RemoveLoggedInAccount(Account.Username);
-			}
-		}
-	}
+        protected override void OnAfterClose()
+        {
+            if (Account != null && GameServer.Instance.Redis.IsLoggedIn(Account.Username))
+            {
+                Log.Info(Account.Username + " account has left the game server");
+                GameServer.Instance.Redis.RemoveLoggedInAccount(Account.Username);
+            }
+        }
+    }
 }

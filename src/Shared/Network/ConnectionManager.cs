@@ -11,11 +11,11 @@ using Agonyl.Shared.Util;
 
 namespace Agonyl.Shared.Network
 {
-	/// <summary>
-	/// Accepts connections and sets them up.
-	/// </summary>
-	/// <typeparam name="TConnection"></typeparam>
-	public class ConnectionManager<TConnection> where TConnection : Connection, new()
+    /// <summary>
+    /// Accepts connections and sets them up.
+    /// </summary>
+    /// <typeparam name="TConnection"></typeparam>
+    public class ConnectionManager<TConnection> where TConnection : Connection, new()
     {
         private Socket _socket;
 

@@ -9,7 +9,7 @@ using System.Net;
 
 namespace Agonyl.Shared.Util
 {
-	public static class Extensions
+    public static class Extensions
     {
         /// <summary>
         /// Calculates differences between 2 strings.

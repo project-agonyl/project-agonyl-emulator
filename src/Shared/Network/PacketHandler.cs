@@ -10,11 +10,11 @@ using Agonyl.Shared.Util;
 
 namespace Agonyl.Shared.Network
 {
-	/// <summary>
-	/// Specifies required methods for packet handlers.
-	/// </summary>
-	/// <typeparam name="Connection"></typeparam>
-	public interface IPacketHandler<TConnection> where TConnection : Connection
+    /// <summary>
+    /// Specifies required methods for packet handlers.
+    /// </summary>
+    /// <typeparam name="Connection"></typeparam>
+    public interface IPacketHandler<TConnection> where TConnection : Connection
     {
         /// <summary>
         /// Handles packet from connection.

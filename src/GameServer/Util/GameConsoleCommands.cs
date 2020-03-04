@@ -8,7 +8,7 @@ using Agonyl.Shared.Util.Commands;
 
 namespace Agonyl.Game.Util
 {
-	public class GameConsoleCommands : ConsoleCommands
+    public class GameConsoleCommands : ConsoleCommands
     {
     }
 }

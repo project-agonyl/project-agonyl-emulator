@@ -10,10 +10,10 @@ using System.IO;
 
 namespace Agonyl.Shared.Util
 {
-	/// <summary>
-	/// All log levels. Also used as bitmask, for hiding.
-	/// </summary>
-	[Flags]
+    /// <summary>
+    /// All log levels. Also used as bitmask, for hiding.
+    /// </summary>
+    [Flags]
     public enum LogLevel : int
     {
         Info = 0x0001,

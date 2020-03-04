@@ -8,7 +8,7 @@ using System;
 
 namespace Agonyl.Shared.Data
 {
-	public class DatabaseWarningException : Exception
+    public class DatabaseWarningException : Exception
     {
         public DatabaseWarningException(string msg)
             : base(msg)

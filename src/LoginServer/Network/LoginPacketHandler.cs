@@ -9,7 +9,7 @@ using Agonyl.Shared.Util;
 
 namespace Agonyl.Login.Network
 {
-	public class LoginPacketHandler : PacketHandler<LoginConnection>
+    public class LoginPacketHandler : PacketHandler<LoginConnection>
     {
         public static readonly LoginPacketHandler Instance = new LoginPacketHandler();
 

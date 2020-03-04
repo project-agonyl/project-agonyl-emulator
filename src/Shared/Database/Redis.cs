@@ -12,7 +12,7 @@ using StackExchange.Redis;
 
 namespace Agonyl.Shared.Database
 {
-	public class Redis
+    public class Redis
     {
         private string _connectionString;
 

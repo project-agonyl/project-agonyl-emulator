@@ -13,10 +13,10 @@ using Agonyl.Shared.Util.Config;
 
 namespace Agonyl.Shared
 {
-	/// <summary>
-	/// Base class for server applications.
-	/// </summary>
-	public abstract class Server
+    /// <summary>
+    /// Base class for server applications.
+    /// </summary>
+    public abstract class Server
     {
         private bool _running;
 
@@ -56,8 +56,8 @@ namespace Agonyl.Shared
             try
             {
                 db.Init(conf.ASDDbHost, conf.ASDDbUserName, conf.ASDDbPassword, conf.ASDDbName);
-				Log.Info("Initialized " + db.GetDbName() + " database connection");
-			}
+                Log.Info("Initialized " + db.GetDbName() + " database connection");
+            }
             catch (Exception ex)
             {
                 Log.Error("Failed to initialize " + db.GetDbName() + " database: {0}", ex.Message);

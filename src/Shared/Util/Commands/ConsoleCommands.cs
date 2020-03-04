@@ -10,10 +10,10 @@ using System.Linq;
 
 namespace Agonyl.Shared.Util.Commands
 {
-	/// <summary>
-	/// Console command manager
-	/// </summary>
-	public class ConsoleCommands : CommandManager<ConsoleCommand, ConsoleCommandFunc>
+    /// <summary>
+    /// Console command manager
+    /// </summary>
+    public class ConsoleCommands : CommandManager<ConsoleCommand, ConsoleCommandFunc>
     {
         public ConsoleCommands()
         {

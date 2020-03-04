@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace Agonyl.Shared.Network
 {
-	public static class Op
+    public static class Op
     {
         public const int C2L_LOGIN = 0xE0; // Size 56
         public const int C2L_SERVER_DETAILS = 0xE1; // Size 11

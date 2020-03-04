@@ -11,10 +11,10 @@ using MySql.Data.MySqlClient;
 
 namespace Agonyl.Shared.Database
 {
-	/// <summary>
-	/// Base class for simplified MySQL commands.
-	/// </summary>
-	public abstract class SimpleCommand : IDisposable
+    /// <summary>
+    /// Base class for simplified MySQL commands.
+    /// </summary>
+    public abstract class SimpleCommand : IDisposable
     {
         protected MySqlCommand _mc;
         protected Dictionary<string, object> _set;

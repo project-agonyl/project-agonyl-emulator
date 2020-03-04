@@ -11,26 +11,26 @@ using System.IO;
 
 namespace Agonyl.Shared.Util
 {
-	/// <summary>
-	/// General use class to read files line for line.
-	/// </summary>
-	/// <remarks>
-	/// Ignores empty lines and lines prefixed with '!', ';', '#', '//', or '--'.
-	/// Supports including of files via 'include {file}' and 'require {file}'.
-	/// Require raises an exception if the file couldn't be found.
-	/// </remarks>
-	/// <example>
-	/// <code>
-	///	using (var fr = new FileReader(filePath))
-	///	{
-	///		foreach (string line in fr)
-	///		{
-	///			// Do something with line
-	///		}
-	///	}
-	///	</code>
-	///	</example>
-	public class FileReader : IEnumerable<FileReaderLine>, IDisposable
+    /// <summary>
+    /// General use class to read files line for line.
+    /// </summary>
+    /// <remarks>
+    /// Ignores empty lines and lines prefixed with '!', ';', '#', '//', or '--'.
+    /// Supports including of files via 'include {file}' and 'require {file}'.
+    /// Require raises an exception if the file couldn't be found.
+    /// </remarks>
+    /// <example>
+    /// <code>
+    ///	using (var fr = new FileReader(filePath))
+    ///	{
+    ///		foreach (string line in fr)
+    ///		{
+    ///			// Do something with line
+    ///		}
+    ///	}
+    ///	</code>
+    ///	</example>
+    public class FileReader : IEnumerable<FileReaderLine>, IDisposable
     {
         private string _filePath;
         private string _relativePath;

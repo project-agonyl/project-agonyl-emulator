@@ -6,7 +6,7 @@
 
 namespace Agonyl.Shared.Data
 {
-	public class AgonylData
+    public class AgonylData
     {
     }
 }

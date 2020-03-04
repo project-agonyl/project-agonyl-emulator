@@ -9,19 +9,19 @@ using Agonyl.Shared.Util;
 
 namespace Agonyl.Game
 {
-	internal class Program
-	{
-		private static void Main(string[] args)
-		{
-			try
-			{
-				GameServer.Instance.Run();
-			}
-			catch (Exception ex)
-			{
-				Log.Error("Error on startup: {0}, {1}", ex.GetType().Name, ex.Message);
-				CliUtil.Exit(1, true);
-			}
-		}
-	}
+    internal class Program
+    {
+        private static void Main(string[] args)
+        {
+            try
+            {
+                GameServer.Instance.Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error on startup: {0}, {1}", ex.GetType().Name, ex.Message);
+                CliUtil.Exit(1, true);
+            }
+        }
+    }
 }

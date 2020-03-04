@@ -9,7 +9,7 @@ using Agonyl.Shared.Util.Config;
 
 namespace Agonyl.Game.Util.Config
 {
-	public class GameConf : Conf
+    public class GameConf : Conf
     {
         /// <summary>
         /// GameServer host

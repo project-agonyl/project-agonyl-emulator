@@ -10,7 +10,7 @@ using System.Security.Principal;
 
 namespace Agonyl.Shared.Util
 {
-	public static class CliUtil
+    public static class CliUtil
     {
         private const string TitlePrefix = "Project Agonyl : ";
 

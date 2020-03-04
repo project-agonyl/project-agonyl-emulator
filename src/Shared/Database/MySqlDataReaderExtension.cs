@@ -9,10 +9,10 @@ using MySql.Data.MySqlClient;
 
 namespace Agonyl.Shared.Database
 {
-	/// <summary>
-	/// Extensions for the MySqlDataReader.
-	/// </summary>
-	public static class MySqlDataReaderExtension
+    /// <summary>
+    /// Extensions for the MySqlDataReader.
+    /// </summary>
+    public static class MySqlDataReaderExtension
     {
         /// <summary>
         /// Returns true if value at index is null.

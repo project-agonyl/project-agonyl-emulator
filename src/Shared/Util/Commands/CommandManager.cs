@@ -9,12 +9,12 @@ using System.Collections.Generic;
 
 namespace Agonyl.Shared.Util.Commands
 {
-	/// <summary>
-	/// Generalized command manager
-	/// </summary>
-	/// <typeparam name="TCommand"></typeparam>
-	/// <typeparam name="TFunc"></typeparam>
-	public abstract class CommandManager<TCommand, TFunc>
+    /// <summary>
+    /// Generalized command manager
+    /// </summary>
+    /// <typeparam name="TCommand"></typeparam>
+    /// <typeparam name="TFunc"></typeparam>
+    public abstract class CommandManager<TCommand, TFunc>
         where TCommand : Command<TFunc>
         where TFunc : class
     {
