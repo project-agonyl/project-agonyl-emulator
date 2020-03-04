@@ -1,6 +1,8 @@
 ﻿#region copyright
+
 // Copyright (c) 2018 Project Agonyl
-#endregion
+
+#endregion copyright
 
 using System;
 using Agonyl.Game.Network;
@@ -13,7 +15,7 @@ using Agonyl.Shared.Util;
 
 namespace Agonyl.Game
 {
-	class GameServer : Server
+	internal class GameServer : Server
 	{
 		public static readonly GameServer Instance = new GameServer();
 
@@ -25,7 +27,7 @@ namespace Agonyl.Game
 		/// <summary>
 		/// Game server's database.
 		/// </summary>
-		public AgonylDb Database { get; private set; }
+		public ASD ASDDatabase { get; private set; }
 
 		/// <summary>
 		/// GameServer console commands.
@@ -51,7 +53,7 @@ namespace Agonyl.Game
 			this.LoadConf(this.Conf = new GameConf());
 
 			// Database
-			this.InitDatabase(this.Database = new AgonylDb(), this.Conf);
+			this.InitDatabase(this.ASDDatabase = new ASD(), this.Conf);
 
 			// Redis server
 			this.Redis = new Redis(this.Conf.RedisHost, this.Conf.RedisPort, this.Conf.RedisPassword);
@@ -65,7 +67,7 @@ namespace Agonyl.Game
 
 			// Ready
 			CliUtil.RunningTitle();
-			Log.Status("Server ready, listening on {0}.", mgr.Address);
+			Log.Status("Game Server is ready, listening on {0}.", mgr.Address);
 
 			// Commands
 			this.ConsoleCommands = new GameConsoleCommands();

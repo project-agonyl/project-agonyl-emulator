@@ -1,6 +1,8 @@
 ﻿#region copyright
+
 // Copyright (c) 2018 Project Agonyl
-#endregion
+
+#endregion copyright
 
 using System;
 using System.IO;
@@ -49,14 +51,14 @@ namespace Agonyl.Shared.Util.Config
 		public string ServerName { get; protected set; }
 
 		/// <summary>
-		/// Database host
+		/// ASD Database host
 		/// </summary>
-		public string DbHost { get; protected set; }
+		public string ASDDbHost { get; protected set; }
 
 		/// <summary>
-		/// Database port
+		/// ASD Database port
 		/// </summary>
-		public int DbPort { get; protected set; }
+		public int ASDDbPort { get; protected set; }
 
 		/// <summary>
 		/// Redis host
@@ -74,19 +76,19 @@ namespace Agonyl.Shared.Util.Config
 		public string RedisPassword { get; protected set; }
 
 		/// <summary>
-		/// Database name
+		/// ASD Database name
 		/// </summary>
-		public string DbName { get; protected set; }
+		public string ASDDbName { get; protected set; }
 
 		/// <summary>
-		/// Database username
+		/// ASD Database username
 		/// </summary>
-		public string DbUserName { get; protected set; }
+		public string ASDDbUserName { get; protected set; }
 
 		/// <summary>
-		/// Database password
+		/// ASD Database password
 		/// </summary>
-		public string DbPassword { get; protected set; }
+		public string ASDDbPassword { get; protected set; }
 
 		/// <summary>
 		/// Config file path
@@ -110,11 +112,11 @@ namespace Agonyl.Shared.Util.Config
 			this.Port = Convert.ToInt32(GetIniValue("STARTUP", "PORT", "3550"));
 			this.ServerId = Convert.ToInt32(GetIniValue("STARTUP", "SERVERID", "0"));
 			this.ServerName = GetIniValue("STARTUP", "SERVERNAME", "Agonyl");
-			this.DbHost = GetIniValue("DATABASE", "HOST", "127.0.0.1");
-			this.DbPort = Convert.ToInt32(GetIniValue("DATABASE", "PORT", "3306"));
-			this.DbName = GetIniValue("DATABASE", "NAME", "agonyl");
-			this.DbUserName = GetIniValue("DATABASE", "USERNAME", "agonyl");
-			this.DbPassword = GetIniValue("DATABASE", "PASSWORD", "agonyl");
+			this.ASDDbHost = GetIniValue("ASD_DATABASE", "HOST", "127.0.0.1");
+			this.ASDDbPort = Convert.ToInt32(GetIniValue("ASD_DATABASE", "PORT", "3306"));
+			this.ASDDbName = GetIniValue("ASD_DATABASE", "NAME", "agonyl");
+			this.ASDDbUserName = GetIniValue("ASD_DATABASE", "USERNAME", "agonyl");
+			this.ASDDbPassword = GetIniValue("ASD_DATABASE", "PASSWORD", "agonyl");
 			this.RedisHost = GetIniValue("REDIS", "HOST", "127.0.0.1");
 			this.RedisPort = Convert.ToInt32(GetIniValue("REDIS", "PORT", "6379"));
 			this.RedisPassword = GetIniValue("REDIS", "PASSWORD", "");

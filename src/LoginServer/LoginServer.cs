@@ -1,6 +1,8 @@
 ﻿#region copyright
+
 // Copyright (c) 2018 Project Agonyl
-#endregion
+
+#endregion copyright
 
 using System;
 using Agonyl.Login.Network;
@@ -25,7 +27,7 @@ namespace Agonyl.Login
 		/// <summary>
 		/// Login server's database.
 		/// </summary>
-		public AgonylDb Database { get; private set; }
+		public ASD ASDDatabase { get; private set; }
 
 		/// <summary>
 		/// LoginServer console commands.
@@ -42,11 +44,13 @@ namespace Agonyl.Login
 			CliUtil.WriteHeader("Login Server", ConsoleColor.Magenta);
 			CliUtil.LoadingTitle();
 
+			Log.Status("Starting Login Server...");
+
 			// Conf
 			this.LoadConf(this.Conf = new LoginConf());
 
-			// Database
-			this.InitDatabase(this.Database = new AgonylDb(), this.Conf);
+			// ASD Database
+			this.InitDatabase(this.ASDDatabase = new ASD(), this.Conf);
 
 			// Redis server
 			this.Redis = new Redis(this.Conf.RedisHost, this.Conf.RedisPort, this.Conf.RedisPassword);
@@ -63,7 +67,7 @@ namespace Agonyl.Login
 
 			// Ready
 			CliUtil.RunningTitle();
-			Log.Status("Server ready, listening on {0}.", mgr.Address);
+			Log.Status("Login Server is ready, listening on {0}.", mgr.Address);
 
 			// Commands
 			this.ConsoleCommands = new LoginConsoleCommands();

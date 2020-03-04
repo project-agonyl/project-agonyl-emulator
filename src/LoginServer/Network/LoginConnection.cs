@@ -1,18 +1,16 @@
 ﻿#region copyright
+
 // Copyright (c) 2018 Project Agonyl
-#endregion
+
+#endregion copyright
 
 using Agonyl.Shared.Network;
+using Agonyl.Shared.Util;
 
 namespace Agonyl.Login.Network
 {
 	public class LoginConnection : Connection
 	{
-		/// <summary>
-		/// Username of the current connection.
-		/// </summary>
-		public string Username { get; set; }
-
 		public LoginConnection()
 		{
 			this.ShouldDecrypt = false;
@@ -42,6 +40,15 @@ namespace Agonyl.Login.Network
 		protected override void CleanUp()
 		{
 			return;
+		}
+
+		protected override void OnAfterClose()
+		{
+			if (Username != null && LoginServer.Instance.Redis.IsLoggedIn(Username))
+			{
+				Log.Info(Username + " account has left the login server");
+				LoginServer.Instance.Redis.RemoveLoggedInAccount(Username);
+			}
 		}
 	}
 }

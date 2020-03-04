@@ -1,61 +1,16 @@
 ﻿#region copyright
+
 // Copyright (c) 2018 Project Agonyl
-#endregion
+
+#endregion copyright
 
 using System;
 using MySql.Data.MySqlClient;
 
 namespace Agonyl.Shared.Database
 {
-	public class AgonylDb
+	public class ASD : Base
 	{
-		private string _connectionString;
-
-		/// <summary>
-		/// Sets connection string and calls TestConnection.
-		/// </summary>
-		/// <param name="host"></param>
-		/// <param name="user"></param>
-		/// <param name="pass"></param>
-		/// <param name="db"></param>
-		/// <exception cref="Exception">Thrown if connection couldn't be established.</exception>
-		public void Init(string host, string user, string pass, string db)
-		{
-			_connectionString = string.Format("server={0}; database={1}; uid={2}; password={3}; charset=utf8; pooling=true; min pool size=0; max pool size=100;", host, db, user, pass);
-			this.TestConnection();
-		}
-
-		/// <summary>
-		/// Returns a valid connection.
-		/// </summary>
-		protected MySqlConnection GetConnection()
-		{
-			if (_connectionString == null)
-				throw new Exception("Database connection has not been initialized.");
-
-			var result = new MySqlConnection(_connectionString);
-			result.Open();
-			return result;
-		}
-
-		/// <summary>
-		/// Tests connection.
-		/// </summary>
-		/// <exception cref="Exception">Thrown if connection couldn't be established.</exception>
-		public void TestConnection()
-		{
-			MySqlConnection conn = null;
-			try
-			{
-				conn = this.GetConnection();
-			}
-			finally
-			{
-				if (conn != null)
-					conn.Close();
-			}
-		}
-
 		/// <summary>
 		/// Returns true if accounts exists.
 		/// </summary>
@@ -64,7 +19,7 @@ namespace Agonyl.Shared.Database
 		public bool AccountExists(string username)
 		{
 			using (var conn = this.GetConnection())
-			using (var mc = new MySqlCommand("SELECT `username` FROM `account` WHERE `username` = @username", conn))
+			using (var mc = new MySqlCommand("SELECT `c_id` FROM `account` WHERE `c_id` = @username", conn))
 			{
 				mc.Parameters.AddWithValue("@username", username);
 
@@ -82,7 +37,7 @@ namespace Agonyl.Shared.Database
 		public bool AccountExists(string username, string password)
 		{
 			using (var conn = this.GetConnection())
-			using (var mc = new MySqlCommand("SELECT `username` FROM `account` WHERE `username` = @username AND `password` = @password", conn))
+			using (var mc = new MySqlCommand("SELECT `c_id` FROM `account` WHERE `c_id` = @username AND `c_headera` = @password", conn))
 			{
 				mc.Parameters.AddWithValue("@username", username);
 				mc.Parameters.AddWithValue("@password", password);
@@ -95,23 +50,23 @@ namespace Agonyl.Shared.Database
 		public int AccountIdByUsername(string username)
 		{
 			using (var conn = this.GetConnection())
-			using (var mc = new MySqlCommand("SELECT `id` FROM `account` WHERE `username` = @username", conn))
+			using (var mc = new MySqlCommand("SELECT `c_id` FROM `account` WHERE `c_id` = @username", conn))
 			{
 				mc.Parameters.AddWithValue("@username", username);
 
 				using (var reader = mc.ExecuteReader())
 					if (reader.Read())
-						return Convert.ToInt32(reader["id"].ToString());
+						return Convert.ToInt32(reader["c_id"].ToString());
 				return 0;
 			}
 		}
 
-		public MySqlDataReader GetCharacterList(int id)
+		public MySqlDataReader GetCharacterList(string username)
 		{
 			using (var conn = this.GetConnection())
-			using (var mc = new MySqlCommand("SELECT * FROM `character` WHERE `account_id` = @id", conn))
+			using (var mc = new MySqlCommand("SELECT * FROM `charac0` WHERE `c_sheadera` = @id AND `c_status` = 'A'", conn))
 			{
-				mc.Parameters.AddWithValue("@id", id);
+				mc.Parameters.AddWithValue("@id", username);
 				using (var reader = mc.ExecuteReader())
 					return reader;
 			}
@@ -126,31 +81,31 @@ namespace Agonyl.Shared.Database
 		/// <exception cref="ArgumentNullException">Thrown if name or password is empty.</exception>
 		public bool CreateAccount(string name, string password)
 		{
-// 			if (string.IsNullOrWhiteSpace(name))
-// 				throw new ArgumentNullException("name");
-// 
-// 			if (string.IsNullOrWhiteSpace(password))
-// 				throw new ArgumentNullException("password");
-// 
-// 			// Wrap password in BCrypt
-// 			password = BCrypt.HashPassword(password, BCrypt.GenerateSalt());
-// 
-// 			using (var conn = this.GetConnection())
-// 			using (var cmd = new InsertCommand("INSERT INTO `accounts` {0}", conn))
-// 			{
-// 				cmd.Set("name", name);
-// 				cmd.Set("password", password);
-// 
-// 				try
-// 				{
-// 					cmd.Execute();
-// 					return true;
-// 				}
-// 				catch (Exception ex)
-// 				{
-// 					Log.Exception(ex, "Failed to create account '{0}'.", name);
-// 				}
-// 			}
+			// 			if (string.IsNullOrWhiteSpace(name))
+			// 				throw new ArgumentNullException("name");
+			//
+			// 			if (string.IsNullOrWhiteSpace(password))
+			// 				throw new ArgumentNullException("password");
+			//
+			// 			// Wrap password in BCrypt
+			// 			password = BCrypt.HashPassword(password, BCrypt.GenerateSalt());
+			//
+			// 			using (var conn = this.GetConnection())
+			// 			using (var cmd = new InsertCommand("INSERT INTO `accounts` {0}", conn))
+			// 			{
+			// 				cmd.Set("name", name);
+			// 				cmd.Set("password", password);
+			//
+			// 				try
+			// 				{
+			// 					cmd.Execute();
+			// 					return true;
+			// 				}
+			// 				catch (Exception ex)
+			// 				{
+			// 					Log.Exception(ex, "Failed to create account '{0}'.", name);
+			// 				}
+			// 			}
 
 			return false;
 		}

@@ -54,7 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Const\Types.cs" />
-    <Compile Include="Database\AgonylDb.cs" />
+    <Compile Include="Database\ASD.cs" />
+    <Compile Include="Database\Base.cs" />
     <Compile Include="Database\Commands.cs" />
     <Compile Include="Database\MySqlDataReaderExtension.cs" />
     <Compile Include="Database\Redis.cs" />
