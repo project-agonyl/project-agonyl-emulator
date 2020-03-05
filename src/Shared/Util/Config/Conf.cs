@@ -6,30 +6,12 @@
 
 using System;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Text;
+using System.Xml;
 
 namespace Agonyl.Shared.Util.Config
 {
     public class Conf
     {
-        [DllImport("kernel32")]
-        private static extern int GetPrivateProfileString(string section, string key, string def, StringBuilder retVal, int size, string filePath);
-
-        /// <summary>
-        /// Read the key value in the config file
-        /// </summary>
-        /// <param name="Section">Section String</param>
-        /// <param name="Key">Key String</param>
-        /// <param name="iniPath">ini File Path String</param>
-        /// <param name="defaultValue">default Return Value String</param>
-        protected string GetIniValue(string Section, string Key, string defaultValue = "")
-        {
-            var temp = new StringBuilder(255);
-            var i = GetPrivateProfileString(Section, Key, "", temp, 255, this.ConfFile);
-            return (temp.ToString().Trim() != "") ? temp.ToString().Trim() : defaultValue;
-        }
-
         /// <summary>
         /// IP of the server
         /// </summary>
@@ -96,11 +78,16 @@ namespace Agonyl.Shared.Util.Config
         public string ConfFile { get; protected set; }
 
         /// <summary>
+        /// Loaded config file data
+        /// </summary>
+        public XmlDocument XmlDocument { get; protected set; }
+
+        /// <summary>
         /// Initializes default config.
         /// </summary>
         public Conf()
         {
-            this.ConfFile = Directory.GetCurrentDirectory() + "\\SvrInfo.ini";
+            this.ConfFile = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + Path.DirectorySeparatorChar + "Server.xml";
         }
 
         /// <summary>
@@ -108,18 +95,133 @@ namespace Agonyl.Shared.Util.Config
         /// </summary>
         public virtual void LoadAll()
         {
-            this.Host = GetIniValue("STARTUP", "HOST", "0.0.0.0");
-            this.Port = Convert.ToInt32(GetIniValue("STARTUP", "PORT", "3550"));
-            this.ServerId = Convert.ToInt32(GetIniValue("STARTUP", "SERVERID", "0"));
-            this.ServerName = GetIniValue("STARTUP", "SERVERNAME", "Agonyl");
-            this.ASDDbHost = GetIniValue("ASD_DATABASE", "HOST", "127.0.0.1");
-            this.ASDDbPort = Convert.ToInt32(GetIniValue("ASD_DATABASE", "PORT", "3306"));
-            this.ASDDbName = GetIniValue("ASD_DATABASE", "NAME", "agonyl");
-            this.ASDDbUserName = GetIniValue("ASD_DATABASE", "USERNAME", "agonyl");
-            this.ASDDbPassword = GetIniValue("ASD_DATABASE", "PASSWORD", "agonyl");
-            this.RedisHost = GetIniValue("REDIS", "HOST", "127.0.0.1");
-            this.RedisPort = Convert.ToInt32(GetIniValue("REDIS", "PORT", "6379"));
-            this.RedisPassword = GetIniValue("REDIS", "PASSWORD", "");
+            // Set default values
+            this.Host = "0.0.0.0";
+            this.Port = 3550;
+            this.ServerId = 0;
+            this.ServerName = "Agonyl";
+            this.ASDDbHost = "127.0.0.1";
+            this.ASDDbPort = 3306;
+            this.ASDDbName = "ASD";
+            this.ASDDbUserName = "agonyl";
+            this.ASDDbPassword = "agonyl";
+            this.RedisHost = "127.0.0.1";
+            this.RedisPort = 6379;
+            this.RedisPassword = "";
+            try
+            {
+                XmlDocument = new XmlDocument();
+                XmlDocument.Load(this.ConfFile);
+                var ServerNode = XmlDocument.GetElementsByTagName("Server")[0];
+                if (ServerNode != null)
+                {
+                    this.ServerId = ServerNode.Attributes["id"].Value != null ? Convert.ToInt32(ServerNode.Attributes["id"].Value) : this.ServerId;
+                    foreach (XmlNode child in ServerNode.ChildNodes)
+                    {
+                        switch (child.Name)
+                        {
+                            case "Name":
+                                if (child.InnerText != null)
+                                {
+                                    this.ServerName = child.InnerText;
+                                }
+                                break;
+
+                            case "Host":
+                                if (child.InnerText != null)
+                                {
+                                    this.Host = child.InnerText;
+                                }
+                                break;
+
+                            case "Port":
+                                if (child.InnerText != null)
+                                {
+                                    this.Port = Convert.ToInt32(child.InnerText);
+                                }
+                                break;
+                        }
+                    }
+                }
+                var RedisNode = XmlDocument.GetElementsByTagName("Redis")[0];
+                if (RedisNode != null)
+                {
+                    foreach (XmlNode child in RedisNode.ChildNodes)
+                    {
+                        switch (child.Name)
+                        {
+                            case "Host":
+                                if (child.InnerText != null)
+                                {
+                                    this.RedisHost = child.InnerText;
+                                }
+                                break;
+
+                            case "Port":
+                                if (child.InnerText != null)
+                                {
+                                    this.RedisPort = Convert.ToInt32(child.InnerText);
+                                }
+                                break;
+
+                            case "Password":
+                                if (child.InnerText != null)
+                                {
+                                    this.RedisPassword = child.InnerText;
+                                }
+                                break;
+                        }
+                    }
+                }
+                var AsdNode = XmlDocument.GetElementsByTagName("ASD")[0];
+                if (AsdNode != null)
+                {
+                    foreach (XmlNode child in AsdNode.ChildNodes)
+                    {
+                        switch (child.Name)
+                        {
+                            case "Name":
+                                if (child.InnerText != null)
+                                {
+                                    this.ASDDbName = child.InnerText;
+                                }
+                                break;
+
+                            case "Host":
+                                if (child.InnerText != null)
+                                {
+                                    this.ASDDbHost = child.InnerText;
+                                }
+                                break;
+
+                            case "Port":
+                                if (child.InnerText != null)
+                                {
+                                    this.ASDDbPort = Convert.ToInt32(child.InnerText);
+                                }
+                                break;
+
+                            case "Username":
+                                if (child.InnerText != null)
+                                {
+                                    this.ASDDbUserName = child.InnerText;
+                                }
+                                break;
+
+                            case "Password":
+                                if (child.InnerText != null)
+                                {
+                                    this.ASDDbPassword = child.InnerText;
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message);
+            }
         }
     }
 }

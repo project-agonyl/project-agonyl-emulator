@@ -15,10 +15,10 @@ Requirements
 
 Running the Project
 -------------------
-1. Build the project using Visual Studio 2017 or higher
+1. Build the project using Visual Studio 2019 or higher
 2. Import database schemas from ``data`` into respective MySQL databases
-3. Update ``LoginServer.ini`` and ``GameServer.ini`` with proper credentials
-4. Run ``LoginServer.exe`` as well as ``GameServer.exe``
+3. Update ``LoginServer.xml`` and ``GameServer.xml`` with proper credentials
+4. Run ``LoginServer.exe`` as well as ``GameServer.exe`` to start the emulator
 
 Currently available features
 ----------------------------

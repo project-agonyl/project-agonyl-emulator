@@ -28,14 +28,44 @@ namespace Agonyl.Login.Util.Config
         public LoginConf()
             : base()
         {
-            this.ConfFile = Directory.GetCurrentDirectory() + "\\LoginServer.ini";
+            this.ConfFile = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + Path.DirectorySeparatorChar + "LoginServer.xml";
         }
 
         public override void LoadAll()
         {
             base.LoadAll();
-            this.GameServerHost = GetIniValue("GAMESERVER", "HOST", "127.0.0.1");
-            this.GameServerPort = Convert.ToInt32(GetIniValue("GAMESERVER", "PORT", "9867"));
+            this.GameServerHost = "127.0.0.1";
+            this.GameServerPort = 9867;
+            try
+            {
+                var GameServerNode = XmlDocument.GetElementsByTagName("GameServer")[0];
+                if (GameServerNode != null)
+                {
+                    foreach (System.Xml.XmlNode child in GameServerNode.ChildNodes)
+                    {
+                        switch (child.Name)
+                        {
+                            case "Host":
+                                if (child.InnerText != null)
+                                {
+                                    this.GameServerHost = child.InnerText;
+                                }
+                                break;
+
+                            case "Port":
+                                if (child.InnerText != null)
+                                {
+                                    this.GameServerPort = Convert.ToInt32(child.InnerText);
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Shared.Util.Log.Error(ex.Message);
+            }
         }
     }
 }

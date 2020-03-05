@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Config>
+  <Server id="1">
+    <Name>Agonly</Name>
+    <Host>127.0.0.1</Host>
+    <Port>9867</Port>
+  </Server>
+  <Databases>
+    <Redis>
+      <Name>agonyl</Name>
+      <Host>127.0.0.1</Host>
+    </Redis>
+    <ASD>
+      <Name>ASD</Name>
+      <Host>127.0.0.1</Host>
+      <Port>3306</Port>
+      <Username>agonyl</Username>
+      <Password>agonyl</Password>
+    </ASD>
+  </Databases>
+  <DataConfig>
+    <BaseDirectory>GameData</BaseDirectory>
+    <TeleportTextFileName>Teleport.txt</TeleportTextFileName>
+    <ItemDirectory>Item</ItemDirectory>
+    <MapDirectory>map</MapDirectory>
+    <NpcDirectory>npc</NpcDirectory>
+    <PcDirectory>pc</PcDirectory>
+    <PQuestDirectory>PQuest</PQuestDirectory>
+    <QuestDirectory>quest</QuestDirectory>
+    <ShopDirectory>shop</ShopDirectory>
+    <SkillDirectory>skill</SkillDirectory>
+    <SQuestDirectory>SQuest</SQuestDirectory>
+    <TyrDirectory>tyr</TyrDirectory>
+  </DataConfig>
+</Config>
