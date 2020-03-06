@@ -11,11 +11,11 @@ using Agonyl.Shared.Network;
 
 namespace Agonyl.Game.Network.PacketBuilder
 {
-    public class CharacterList : Shared.Network.PacketBuilder
+    public class CharacterListPacketBuilder : Shared.Network.PacketBuilder
     {
         private List<Charac0> _characters;
 
-        public CharacterList(List<Charac0> characters, int PacketSize = 952, byte Control = 0x03, byte Command = 0xFF, int Protocol = 4357, int uid = 0) : base(PacketSize, Control, Command, Protocol, uid)
+        public CharacterListPacketBuilder(List<Charac0> characters, int PacketSize = 952, byte Control = 0x03, byte Command = 0xFF, int Protocol = 4357, int uid = 0) : base(PacketSize, Control, Command, Protocol, uid)
         {
             _characters = characters;
         }
@@ -42,7 +42,7 @@ namespace Agonyl.Game.Network.PacketBuilder
                 packet.PutEmptyBin(20);
                 packet.PutByte(0x00);
                 packet.PutByte(0x01);
-                packet.PutByte(0xFF);
+                packet.PutByte(0xFF); // Type is 255 for an empty slot
                 packet.PutEmptyBin(165);
             }
             packet.PutEmptyBin(952 - packet.Length);

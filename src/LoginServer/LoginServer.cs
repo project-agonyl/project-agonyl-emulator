@@ -25,11 +25,6 @@ namespace Agonyl.Login
         public LoginConf Conf { get; private set; }
 
         /// <summary>
-        /// Login server's database.
-        /// </summary>
-        public ASD ASDDatabase { get; private set; }
-
-        /// <summary>
         /// LoginServer console commands.
         /// </summary>
         public LoginConsoleCommands ConsoleCommands { get; private set; }

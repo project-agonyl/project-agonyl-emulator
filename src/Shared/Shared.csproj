@@ -60,9 +60,12 @@
     <Compile Include="Database\Model\Charac0.cs" />
     <Compile Include="Database\MySqlDataReaderExtension.cs" />
     <Compile Include="Database\Redis.cs" />
-    <Compile Include="Data\AgonylData.cs" />
     <Compile Include="Data\Database.cs" />
     <Compile Include="Data\Exceptions.cs" />
+    <Compile Include="Data\GameData.cs" />
+    <Compile Include="Data\Game\IT0ItemProperty.cs" />
+    <Compile Include="Data\Game\IT0ItemLevel.cs" />
+    <Compile Include="Data\Game\Item.cs" />
     <Compile Include="Network\Connection.cs" />
     <Compile Include="Network\ConnectionManager.cs" />
     <Compile Include="Network\Op.cs" />
@@ -78,11 +81,13 @@
     <Compile Include="Util\Config\Constants.cs" />
     <Compile Include="Util\Extensions.cs" />
     <Compile Include="Util\FileReader.cs" />
+    <Compile Include="Util\Functions.cs" />
     <Compile Include="Util\Log.cs" />
     <Compile Include="Util\Security\Crypt.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

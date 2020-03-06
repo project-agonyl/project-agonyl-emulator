@@ -15,7 +15,7 @@ namespace Agonyl.Game.Network
         public static void G2C_CHARACTER_LIST(GameConnection conn, Data.Account account)
         {
             var packet = new Packet(Op.G2C_CHARACTER_LIST);
-            var packetBuilder = new CharacterList(GameServer.Instance.ASDDatabase.GetCharacterList(account.Username).ToList());
+            var packetBuilder = new CharacterListPacketBuilder(GameServer.Instance.ASDDatabase.GetCharacterList(account.Username).ToList());
             packetBuilder.Build(ref packet);
             conn.Send(packet);
         }

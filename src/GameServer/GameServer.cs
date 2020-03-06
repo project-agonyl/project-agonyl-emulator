@@ -5,10 +5,12 @@
 #endregion copyright
 
 using System;
+using System.IO;
 using Agonyl.Game.Network;
 using Agonyl.Game.Util;
 using Agonyl.Game.Util.Config;
 using Agonyl.Shared;
+using Agonyl.Shared.Data;
 using Agonyl.Shared.Database;
 using Agonyl.Shared.Network;
 using Agonyl.Shared.Util;
@@ -27,7 +29,7 @@ namespace Agonyl.Game
         /// <summary>
         /// Game server's database.
         /// </summary>
-        public ASD ASDDatabase { get; private set; }
+        public GameData GameData { get; protected set; }
 
         /// <summary>
         /// GameServer console commands.
@@ -38,6 +40,11 @@ namespace Agonyl.Game
         /// LoginServer IPC handler
         /// </summary>
         public GameConnection LoginServerConnection { get; private set; }
+
+        public GameServer()
+        {
+            this.GameData = new GameData();
+        }
 
         /// <summary>
         /// Starts the server.
@@ -60,6 +67,9 @@ namespace Agonyl.Game
             // Redis server
             this.Redis = new Redis(this.Conf.RedisHost, this.Conf.RedisPort, this.Conf.RedisPassword);
 
+            // Load game data files
+            this.LoadData();
+
             // Packet handlers
             GamePacketHandler.Instance.RegisterMethods();
 
@@ -74,6 +84,40 @@ namespace Agonyl.Game
             // Commands
             this.ConsoleCommands = new GameConsoleCommands();
             this.ConsoleCommands.Wait();
+        }
+
+        /// <summary>
+        /// Loads data from files.
+        /// </summary>
+        protected void LoadData()
+        {
+            try
+            {
+                this.LoadItemFiles();
+            }
+            catch (FileNotFoundException ex)
+            {
+                Log.Error(ex.Message);
+                CliUtil.Exit(1);
+            }
+            catch (Exception ex)
+            {
+                Log.Exception(ex, "Error while loading data.");
+                CliUtil.Exit(1);
+            }
+        }
+
+        private void LoadItemFiles()
+        {
+            Log.Info("Loading item data...");
+            this.LoadIT0();
+            Log.Info("Loaded " + this.GameData.Items.Count + " items");
+        }
+
+        private void LoadIT0()
+        {
+            var parser = new IT0Parser(this.Conf.GetIT0Path());
+            parser.ParseFile(ref this.GameData.Items);
         }
     }
 }

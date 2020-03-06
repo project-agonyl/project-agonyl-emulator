@@ -21,22 +21,14 @@ namespace Agonyl.Shared
         private bool _running;
 
         /// <summary>
-        /// File databases.
+        /// Game server's database.
         /// </summary>
-        public AgonylData Data { get; private set; }
+        public ASD ASDDatabase { get; protected set; }
 
         /// <summary>
         /// Redis connection.
         /// </summary>
         public Redis Redis { get; protected set; }
-
-        /// <summary>
-        /// Initializes class.
-        /// </summary>
-        public Server()
-        {
-            this.Data = new AgonylData();
-        }
 
         /// <summary>
         /// Starts the server.
@@ -62,34 +54,6 @@ namespace Agonyl.Shared
             {
                 Log.Error("Failed to initialize " + db.GetDbName() + " database: {0}", ex.Message);
                 CliUtil.Exit(1, true);
-            }
-        }
-
-        /// <summary>
-        /// Loads data from files.
-        /// </summary>
-        protected void LoadData(DataToLoad toLoad, bool reload)
-        {
-            Log.Info("Loading data...");
-
-            try
-            {
-                // @TODO Load binary zone data files
-            }
-            catch (DatabaseErrorException ex)
-            {
-                Log.Error(ex.ToString());
-                CliUtil.Exit(1);
-            }
-            catch (FileNotFoundException ex)
-            {
-                Log.Error(ex.Message);
-                CliUtil.Exit(1);
-            }
-            catch (Exception ex)
-            {
-                Log.Exception(ex, "Error while loading data.");
-                CliUtil.Exit(1);
             }
         }
 

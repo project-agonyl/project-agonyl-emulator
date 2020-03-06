@@ -18,6 +18,7 @@ namespace Agonyl.Game.Util.Config
         public string BaseGameDataPath { get; protected set; }
 
         public string TeleportTextFileName { get; protected set; }
+        public string ItemDirectory { get; protected set; }
 
         /// <summary>
         /// Initializes default config.
@@ -32,6 +33,7 @@ namespace Agonyl.Game.Util.Config
         {
             base.LoadAll();
             this.BaseGameDataPath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + Path.DirectorySeparatorChar + "GameData";
+            this.ItemDirectory = "item";
             try
             {
                 var DataConfig = XmlDocument.GetElementsByTagName("DataConfig")[0];
@@ -54,6 +56,13 @@ namespace Agonyl.Game.Util.Config
                                     this.TeleportTextFileName = child.InnerText;
                                 }
                                 break;
+
+                            case "ItemDirectory":
+                                if (child.InnerText != null)
+                                {
+                                    this.ItemDirectory = child.InnerText;
+                                }
+                                break;
                         }
                     }
                 }
@@ -62,6 +71,11 @@ namespace Agonyl.Game.Util.Config
             {
                 Shared.Util.Log.Error(ex.Message);
             }
+        }
+
+        public string GetIT0Path()
+        {
+            return this.BaseGameDataPath + Path.DirectorySeparatorChar + this.ItemDirectory + Path.DirectorySeparatorChar + "0";
         }
     }
 }
