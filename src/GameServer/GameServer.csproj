@@ -56,7 +56,7 @@
   <ItemGroup>
     <Compile Include="Data\Account.cs" />
     <Compile Include="GameServer.cs" />
-    <Compile Include="Network\PacketBuilder\CharacterList.cs" />
+    <Compile Include="Network\PacketBuilder\CharacterListPacketBuilder.cs" />
     <Compile Include="Network\GameConnection.cs" />
     <Compile Include="Network\GamePacketHandler.cs" />
     <Compile Include="Network\GamePacketSender.cs" />
