@@ -34,7 +34,29 @@ namespace Agonyl.Game.Network.PacketBuilder
                     packet.PutByte(Convert.ToByte(character.c_sheaderb)); // Type
                     packet.PutByte(0x00); // Town
                     packet.PutReverseHexOfInt(Convert.ToInt32(character.c_sheaderc)); // Level
-                    packet.PutEmptyBin(160);
+                    var wearArray = character.GetWear().Replace("WEAR=", "").Split(';');
+                    var wearBytesAdded = 0;
+                    for (var i = 0; i < wearArray.Length; i += 3)
+                    {
+                        decimal value;
+                        if (!decimal.TryParse(wearArray[i], out value))
+                        {
+                            continue;
+                        }
+                        wearBytesAdded += 16;
+                        packet.PutEmptyBin(4);
+                        packet.PutReverseHexOfInt(Convert.ToInt32(wearArray[i]));
+                        packet.PutReverseHexOfInt(Convert.ToInt32(wearArray[i + 1]));
+                        if (GameServer.Instance.GameData.Items.ContainsKey(Convert.ToInt32(wearArray[i]) & 0xF33))
+                        {
+                            packet.PutReverseHexOfInt(GameServer.Instance.GameData.Items[Convert.ToInt32(wearArray[i]) & 0xF33].SlotIndex);
+                        }
+                        else
+                        {
+                            packet.PutReverseHexOfInt(0);
+                        }
+                    }
+                    packet.PutEmptyBin(160 - wearBytesAdded);
                 }
             }
             for (var i = 0; i < 5 - _characters.Count; i++)
