@@ -4,6 +4,7 @@
 
 #endregion copyright
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,13 +19,13 @@ namespace Agonyl.Game.Util
         {
         }
 
-        public void ParseFile(ref Dictionary<int, Item> Data)
+        public void ParseFile(ref Dictionary<uint, Item> Data)
         {
             var fileBytes = File.ReadAllBytes(this.FilePath);
             for (var i = 0; i < fileBytes.Length; i += 242)
             {
                 var Item = new Item();
-                Item.ItemCode = (Functions.BytesToInt16(fileBytes.Skip(i).Take(2).ToArray()) << 10) + Functions.BytesToInt16(fileBytes.Skip(i + 2).Take(2).ToArray());
+                Item.ItemCode = Convert.ToUInt32((Functions.BytesToInt16(fileBytes.Skip(i).Take(2).ToArray()) << 10) + Functions.BytesToInt16(fileBytes.Skip(i + 2).Take(2).ToArray()));
                 Item.SlotIndex = fileBytes[i + 4];
                 Item.ItemType = fileBytes[i + 6];
                 Item.ItemName = System.Text.Encoding.Default.GetString(fileBytes.Skip(i + 7).Take(30).ToArray());

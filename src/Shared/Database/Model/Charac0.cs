@@ -13,7 +13,7 @@
 
         public string GetWear()
         {
-            return this.GetMBodyPart("WEAR");
+            return this.GetMBodyPart("_1WEAR");
         }
 
         protected string GetMBodyPart(string StartsWith)
@@ -22,8 +22,7 @@
             {
                 return "";
             }
-            var mBodyArray = this.m_body.Split("\\_1".ToCharArray());
-            foreach (var item in mBodyArray)
+            foreach (string item in this.m_body.Split('\\'))
             {
                 if (item.StartsWith(StartsWith))
                 {

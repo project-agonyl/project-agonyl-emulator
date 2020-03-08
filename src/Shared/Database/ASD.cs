@@ -62,6 +62,11 @@ namespace Agonyl.Shared.Database
             }
         }
 
+        /// <summary>
+        /// Returns all characters of an account
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public IEnumerable<Model.Charac0> GetCharacterList(string username)
         {
             using (var conn = this.GetConnection())
@@ -91,92 +96,83 @@ namespace Agonyl.Shared.Database
         }
 
         /// <summary>
-        /// Creates new account with given information.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException">Thrown if name or password is empty.</exception>
-        public bool CreateAccount(string name, string password)
-        {
-            // 			if (string.IsNullOrWhiteSpace(name))
-            // 				throw new ArgumentNullException("name");
-            //
-            // 			if (string.IsNullOrWhiteSpace(password))
-            // 				throw new ArgumentNullException("password");
-            //
-            // 			// Wrap password in BCrypt
-            // 			password = BCrypt.HashPassword(password, BCrypt.GenerateSalt());
-            //
-            // 			using (var conn = this.GetConnection())
-            // 			using (var cmd = new InsertCommand("INSERT INTO `accounts` {0}", conn))
-            // 			{
-            // 				cmd.Set("name", name);
-            // 				cmd.Set("password", password);
-            //
-            // 				try
-            // 				{
-            // 					cmd.Execute();
-            // 					return true;
-            // 				}
-            // 				catch (Exception ex)
-            // 				{
-            // 					Log.Exception(ex, "Failed to create account '{0}'.", name);
-            // 				}
-            // 			}
-
-            return false;
-        }
-
-        /// <summary>
         /// Returns true if a character with the given name exists on account.
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public bool CharacterExists(long accountId, string name)
+        public bool CharacterExists(int accountId, string name)
         {
             using (var conn = this.GetConnection())
-            using (var mc = new MySqlCommand("SELECT `characterId` FROM `characters` WHERE `accountId` = @accountId AND `name` = @name", conn))
             {
-                mc.Parameters.AddWithValue("@accountId", accountId);
-                mc.Parameters.AddWithValue("@name", name);
+                using (var mc = new MySqlCommand("SELECT LOWER(`c_id`) FROM `charac0` WHERE `c_sheadera` = @accountId AND `c_id` = LOWER(@name)", conn))
+                {
+                    mc.Parameters.AddWithValue("@accountId", accountId);
+                    mc.Parameters.AddWithValue("@name", name);
 
-                using (var reader = mc.ExecuteReader())
-                    return reader.HasRows;
+                    using (var reader = mc.ExecuteReader())
+                        return reader.HasRows;
+                }
             }
         }
 
         /// <summary>
-        /// Returns true if team name exists.
+        /// Returns true if a character with the given name exists.
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public bool TeamNameExists(string teamName)
+        public bool CharacterExists(string name)
         {
             using (var conn = this.GetConnection())
-            using (var mc = new MySqlCommand("SELECT `accountId` FROM `accounts` WHERE `teamName` = @teamName", conn))
             {
-                mc.Parameters.AddWithValue("@teamName", teamName);
+                using (var mc = new MySqlCommand("SELECT `c_id` FROM `charac0` WHERE `c_id` = @name", conn))
+                {
+                    mc.Parameters.AddWithValue("@name", name);
 
-                using (var reader = mc.ExecuteReader())
-                    return reader.HasRows;
+                    using (var reader = mc.ExecuteReader())
+                        return reader.HasRows;
+                }
             }
         }
 
         /// <summary>
-        /// Changes team name for account.
+        /// Returns character count of an account.
         /// </summary>
-        /// <param name="account"></param>
+        /// <param name="name"></param>
         /// <returns></returns>
-        public bool UpdateTeamName(long accountId, string teamName)
+        public long CharacterCount(string username)
         {
             using (var conn = this.GetConnection())
-            using (var cmd = new UpdateCommand("UPDATE `accounts` SET {0} WHERE `accountId` = @accountId", conn))
             {
-                cmd.AddParameter("@accountId", accountId);
-                cmd.Set("teamName", teamName);
+                using (var mc = new MySqlCommand("SELECT COUNT(*) FROM `charac0` WHERE `c_sheadera` = @name AND `c_status` = 'A'", conn))
+                {
+                    mc.Parameters.AddWithValue("@name", username);
+                    return (long)mc.ExecuteScalar();
+                }
+            }
+        }
 
-                return cmd.Execute() > 0;
+        /// <summary>
+        /// Creates a character
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="type"></param>
+        /// <param name="town"></param>
+        /// <returns></returns>
+        public bool CreateCharacter(string username, string name, byte type, string stats, string body, string location, int level)
+        {
+            using (var conn = this.GetConnection())
+            {
+                using (var mc = new MySqlCommand("INSERT INTO `charac0`(`c_id`, `c_sheadera`, `c_sheaderb`, `c_sheaderc`, `c_headera`, `c_headerb`, `c_headerc`, `d_cdate`, `d_udate`, `c_status`, `m_body`) VALUES(@name, @username, @type, @level, @stats, @location, '0', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'A', @body)", conn))
+                {
+                    mc.Parameters.AddWithValue("@name", name);
+                    mc.Parameters.AddWithValue("@username", username);
+                    mc.Parameters.AddWithValue("@type", type.ToString());
+                    mc.Parameters.AddWithValue("@level", level.ToString());
+                    mc.Parameters.AddWithValue("@stats", stats);
+                    mc.Parameters.AddWithValue("@location", location);
+                    mc.Parameters.AddWithValue("@body", body);
+                    return mc.ExecuteNonQuery() != 0;
+                }
             }
         }
     }

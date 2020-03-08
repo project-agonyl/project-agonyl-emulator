@@ -60,6 +60,7 @@
     <Compile Include="Database\Model\Charac0.cs" />
     <Compile Include="Database\MySqlDataReaderExtension.cs" />
     <Compile Include="Database\Redis.cs" />
+    <Compile Include="Data\Constants.cs" />
     <Compile Include="Data\Database.cs" />
     <Compile Include="Data\Exceptions.cs" />
     <Compile Include="Data\GameData.cs" />
@@ -68,9 +69,10 @@
     <Compile Include="Data\Game\Item.cs" />
     <Compile Include="Network\Connection.cs" />
     <Compile Include="Network\ConnectionManager.cs" />
+    <Compile Include="Network\Marshalling.cs" />
+    <Compile Include="Network\MessageStructures.cs" />
     <Compile Include="Network\Op.cs" />
     <Compile Include="Network\Packet.cs" />
-    <Compile Include="Network\PacketBuilder.cs" />
     <Compile Include="Network\PacketHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />

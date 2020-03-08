@@ -260,6 +260,15 @@ namespace Agonyl.Shared.Network
         }
 
         /// <summary>
+        /// Returns all the bytes from buffer.
+        /// </summary>
+        /// <returns></returns>
+        public byte[] GetBuffer()
+        {
+            return _buffer;
+        }
+
+        /// <summary>
         /// Reads given amount of bytes from buffer and returns them as hex string.
         /// </summary>
         /// <param name="length"></param>
@@ -638,15 +647,15 @@ namespace Agonyl.Shared.Network
                     switch (_buffer[11])
                     {
                         case 0x11:
-                            opCode = Network.Op.C2G_CLIENT_EXIT;
+                            opCode = Network.Op.C2S_CLIENT_EXIT;
                             break;
 
                         case 0x13:
-                            opCode = Network.Op.C2G_CAN_INTERACT_NPC;
+                            opCode = Network.Op.C2S_CAN_INTERACT_NPC;
                             break;
 
                         default:
-                            opCode = Network.Op.C2G_UNKNOWN;
+                            opCode = Network.Op.C2S_UNKNOWN;
                             break;
                     }
                     break;
@@ -655,19 +664,19 @@ namespace Agonyl.Shared.Network
                     switch (_buffer[11])
                     {
                         case 0xC0:
-                            opCode = Network.Op.C2G_PAYMENT_INFO;
+                            opCode = Network.Op.C2S_PAYMENT_INFO;
                             break;
 
                         case 0x19:
-                            opCode = Network.Op.C2G_WARP_COMPLETE;
+                            opCode = Network.Op.C2S_WARP_COMPLETE;
                             break;
 
                         case 0x12:
-                            opCode = Network.Op.C2G_MOVE_CHARACTER;
+                            opCode = Network.Op.C2S_MOVE_CHARACTER;
                             break;
 
                         default:
-                            opCode = Network.Op.C2G_UNKNOWN;
+                            opCode = Network.Op.C2S_UNKNOWN;
                             break;
                     }
                     break;
@@ -676,11 +685,11 @@ namespace Agonyl.Shared.Network
                     switch (_buffer[11])
                     {
                         case 0x17:
-                            opCode = Network.Op.C2G_RECHARGE_POTION;
+                            opCode = Network.Op.C2S_RECHARGE_POTION;
                             break;
 
                         default:
-                            opCode = Network.Op.C2G_UNKNOWN;
+                            opCode = Network.Op.C2S_UNKNOWN;
                             break;
                     }
                     break;
@@ -689,15 +698,15 @@ namespace Agonyl.Shared.Network
                     switch (_buffer[11])
                     {
                         case 0x11:
-                            opCode = Network.Op.C2G_WARP_LOCATION;
+                            opCode = Network.Op.C2S_WARP_LOCATION;
                             break;
 
                         case 0x38:
-                            opCode = Network.Op.C2G_CHARACTER_LIST;
+                            opCode = Network.Op.C2S_CHARACTER_LIST;
                             break;
 
                         default:
-                            opCode = Network.Op.C2G_UNKNOWN;
+                            opCode = Network.Op.C2S_UNKNOWN;
                             break;
                     }
                     break;
@@ -706,11 +715,11 @@ namespace Agonyl.Shared.Network
                     switch (_buffer[11])
                     {
                         case 0x11:
-                            opCode = Network.Op.C2G_WARP_REQUEST;
+                            opCode = Network.Op.C2S_WARP_REQUEST;
                             break;
 
                         default:
-                            opCode = Network.Op.C2G_UNKNOWN;
+                            opCode = Network.Op.C2S_UNKNOWN;
                             break;
                     }
                     break;
@@ -719,11 +728,11 @@ namespace Agonyl.Shared.Network
                     switch (_buffer[11])
                     {
                         case 0x16:
-                            opCode = Network.Op.C2G_HEALER_WINDOW_OPEN;
+                            opCode = Network.Op.C2S_HEALER_WINDOW_OPEN;
                             break;
 
                         default:
-                            opCode = Network.Op.C2G_UNKNOWN;
+                            opCode = Network.Op.C2S_UNKNOWN;
                             break;
                     }
                     break;
@@ -732,11 +741,11 @@ namespace Agonyl.Shared.Network
                     switch (_buffer[11])
                     {
                         case 0x50:
-                            opCode = Network.Op.C2G_RECHARGE_POTIONS_FULL;
+                            opCode = Network.Op.C2S_RECHARGE_POTIONS_FULL;
                             break;
 
                         default:
-                            opCode = Network.Op.C2G_UNKNOWN;
+                            opCode = Network.Op.C2S_UNKNOWN;
                             break;
                     }
                     break;
@@ -745,15 +754,15 @@ namespace Agonyl.Shared.Network
                     switch (_buffer[11])
                     {
                         case 0xA0:
-                            opCode = Network.Op.C2G_DELETE_CHARACTER;
+                            opCode = Network.Op.C2S_CHARACTER_DELETE_REQUEST;
                             break;
 
                         case 0x12:
-                            opCode = Network.Op.C2G_MOVED_CHARACTER;
+                            opCode = Network.Op.C2S_MOVED_CHARACTER;
                             break;
 
                         default:
-                            opCode = Network.Op.C2G_UNKNOWN;
+                            opCode = Network.Op.C2S_UNKNOWN;
                             break;
                     }
                     break;
@@ -762,19 +771,19 @@ namespace Agonyl.Shared.Network
                     switch (_buffer.Length)
                     {
                         case 37:
-                            opCode = Network.Op.C2G_SELECT_CHARACTER;
+                            opCode = Network.Op.C2S_SELECT_CHARACTER;
                             break;
 
                         case 22:
-                            opCode = Network.Op.C2G_PING;
+                            opCode = Network.Op.C2S_PING;
                             break;
 
                         case 35:
-                            opCode = Network.Op.C2G_CREATE_CHARACTER;
+                            opCode = Network.Op.C2S_CHARACTER_CREATE_REQUEST;
                             break;
 
                         default:
-                            opCode = Network.Op.C2G_UNKNOWN;
+                            opCode = Network.Op.C2S_UNKNOWN;
                             break;
                     }
                     break;

@@ -257,6 +257,22 @@ namespace Agonyl.Shared.Network
             //Send
             _socket.Send(buffer);
         }
+
+        /// <summary>
+        /// Sends packet to client.
+        /// </summary>
+        /// <param name="buffer"></param>
+        public virtual void Send(byte[] buffer)
+        {
+            if (_socket == null || this.State == ConnectionState.Closed)
+                return;
+
+            // Encrypt packet
+            _crypto.Encrypt(ref buffer);
+
+            //Send
+            _socket.Send(buffer);
+        }
     }
 
     public enum ConnectionState

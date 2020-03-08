@@ -14,11 +14,11 @@ namespace Agonyl.Shared.Data
     /// </summary>
     public class GameData
     {
-        public Dictionary<int, Item> Items;
+        public Dictionary<uint, Item> Items;
 
         public GameData()
         {
-            Items = new Dictionary<int, Item>();
+            Items = new Dictionary<uint, Item>();
         }
     }
 }

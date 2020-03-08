@@ -8,7 +8,7 @@ namespace Agonyl.Shared.Data.Game
 {
     public class Item
     {
-        public int ItemCode { get; set; }
+        public uint ItemCode { get; set; }
         public byte SlotIndex { get; set; }
         public string ItemName { get; set; }
         public byte ItemType { get; set; }

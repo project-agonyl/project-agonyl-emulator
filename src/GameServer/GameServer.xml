@@ -32,4 +32,72 @@
     <SQuestDirectory>SQuest</SQuestDirectory>
     <TyrDirectory>tyr</TyrDirectory>
   </DataConfig>
+  <StarterGear>
+    <Warrior>
+      <item id="1024" option="0" />
+      <item id="3282" option="0" />
+      <item id="3272" option="0" />
+      <item id="3277" option="0" />
+      <item id="3292" option="0" />
+      <item id="3287" option="0" />
+    </Warrior>
+    <Holyknight>
+      <item id="1048" option="0" />
+      <item id="3322" option="0" />
+      <item id="3307" option="0" />
+      <item id="3297" option="0" />
+      <item id="3302" option="0" />
+      <item id="3317" option="0" />
+      <item id="3312" option="0" />
+    </Holyknight>
+    <Mage>
+      <item id="2066" option="0" />
+      <item id="3337" option="0" />
+      <item id="3327" option="0" />
+      <item id="3332" option="0" />
+      <item id="3347" option="0" />
+      <item id="3342" option="0" />
+    </Mage>
+    <Archer>
+      <item id="1110" option="0" />
+      <item id="3677" option="0" />
+      <item id="3657" option="0" />
+      <item id="3667" option="0" />
+      <item id="3697" option="0" />
+      <item id="3687" option="0" />
+    </Archer>
+  </StarterGear>
+  <StarterStats>
+    <Warrior>
+      30;0;16;30;20;0;75;20;120;30
+    </Warrior>
+    <Holyknight>
+      30;0;20;25;20;0;50;30;110;40
+    </Holyknight>
+    <Mage>
+      20;26;12;20;40;0;30;80;30;120
+    </Mage>
+    <Archer>
+      30;0;16;25;25;0;75;37;100;50
+    </Archer>
+  </StarterStats>
+  <StarterBody>
+    <Warrior>
+      EXP=0\_1SKILL=0;0;0\_1PK=0\_1RTM=0\_1SINFO=0\_1WEAR=\_1WAR=0;0;0\_1SQUEST=0\_1FAVOR=\_1PSKILL=0;0;0;0;0;0\_1SKLSLT=0;0;0\_1SKILLEX=0;0;0\_1SKLSLTEX=0;0;0;0;0;0;0;0;0;0;0;0;0\_1INVEN=\_1PETINV=\_1PETACT=\_1LORE=0\_1LQUEST=0\_1CQUEST=65535;0;0;0;0;0;0;0\_1RESRV0=0\_1RESRV1=0\_1
+    </Warrior>
+    <Holyknight>
+      EXP=0\_1SKILL=0;0;0\_1PK=0\_1RTM=0\_1SINFO=0\_1WEAR=\_1WAR=0;0;0\_1SQUEST=0\_1FAVOR=\_1PSKILL=0;0;0;0;0;0\_1SKLSLT=0;0;0\_1SKILLEX=0;0;0\_1SKLSLTEX=0;0;0;0;0;0;0;0;0;0;0;0;0\_1INVEN=\_1PETINV=\_1PETACT=\_1LORE=0\_1LQUEST=0\_1CQUEST=65535;0;0;0;0;0;0;0\_1RESRV0=0\_1RESRV1=0\_1
+    </Holyknight>
+    <Mage>
+      EXP=0\_1SKILL=2147483648;0;0\_1PK=0\_1RTM=0\_1SINFO=0\_1WEAR=\_1WAR=0;0;0\_1SQUEST=0\_1FAVOR=\_1PSKILL=0;0;0;0;0;0\_1SKLSLT=0;0;0\_1SKILLEX=0;0;0\_1SKLSLTEX=0;0;0;0;0;0;0;0;0;0;0;0;0\_1INVEN=\_1PETINV=\_1PETACT=\_1LORE=0\_1LQUEST=0\_1CQUEST=65535;0;0;0;0;0;0;0\_1RESRV0=0\_1RESRV1=0\_1
+    </Mage>
+    <Archer>
+      EXP=0\_1SKILL=0;0;0\_1PK=0\_1RTM=0\_1SINFO=0\_1WEAR=17494;1569;4294967295;17518;100;4294967295;20061;3105;4294967295;20041;4129;4294967295;20051;5153;4294967295;20081;6177;4294967295;20071;7201;4294967295\_1WAR=0;0;0\_1SQUEST=0\_1FAVOR=\_1PSKILL=0;0;0;0;0;0\_1SKLSLT=0;0;0\_1SKILLEX=0;0;0\_1SKLSLTEX=0;0;0;0;0;0;0;0;0;0;0;0;0\_1INVEN=\_1PETINV=\_1PETACT=\_1LORE=0\_1LQUEST=0\_1CQUEST=65535;0;0;0;0;0;0;0\_1RESRV0=0\_1RESRV1=0\_1
+    </Archer>
+  </StarterBody>
+  <StarterLevel>1</StarterLevel>
+  <StarterLocation>
+    <Temoz>1;35441</Temoz>
+    <Quanato>7;26751</Quanato>
+  </StarterLocation>
 </Config>

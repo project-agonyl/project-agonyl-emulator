@@ -15,9 +15,9 @@ namespace Agonyl.Login.Network
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="msg"></param>
-        public static void L2C_MESSAGE(LoginConnection conn, string msg)
+        public static void S2C_LOGIN_MESSAGE(LoginConnection conn, string msg)
         {
-            var packet = new Packet(Op.L2C_MESSAGE);
+            var packet = new Packet(Op.S2C_LOGIN_MESSAGE);
             var header = new byte[] { 0x5c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0xe0, 0x01 };
             if (msg.Length > 70)
                 msg = msg.Substring(0, 69);
@@ -31,9 +31,9 @@ namespace Agonyl.Login.Network
         /// Sends server list.
         /// </summary>
         /// <param name="conn"></param>
-        public static void L2C_SERVER_LIST(LoginConnection conn, string serverName)
+        public static void S2C_SERVER_LIST(LoginConnection conn, string serverName)
         {
-            var packet = new Packet(Op.L2C_SERVER_LIST);
+            var packet = new Packet(Op.S2C_SERVER_LIST);
             var header = new byte[] { 0x6f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0xe1, 0x01, 0x00, 0x00 };
             packet.PutBytes(header);
             packet.PutString(serverName);
@@ -49,9 +49,9 @@ namespace Agonyl.Login.Network
         /// Sends login ok message to client.
         /// </summary>
         /// <param name="conn"></param>
-        public static void L2C_LOGIN_OK(LoginConnection conn)
+        public static void S2C_LOGIN_OK(LoginConnection conn)
         {
-            var packet = new Packet(Op.L2C_LOGIN_OK);
+            var packet = new Packet(Op.S2C_LOGIN_OK);
             packet.PutByte(0x0a);
             packet.PutEmptyBin(7);
             packet.PutByte(0x01);
@@ -65,9 +65,9 @@ namespace Agonyl.Login.Network
         /// <param name="conn"></param>
         /// <param name="serverHost"></param>
         /// <param name="serverPort"></param>
-        public static void L2C_SERVER_DETAILS(LoginConnection conn, string serverHost, int serverPort)
+        public static void S2C_SERVER_DETAILS(LoginConnection conn, string serverHost, int serverPort)
         {
-            var packet = new Packet(Op.L2C_SERVER_DETAILS);
+            var packet = new Packet(Op.S2C_SERVER_DETAILS);
             var header = new byte[] { 0x22, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0xe2, 0x11, 0x38, 0x54, 0x00 };
             packet.PutBytes(header);
             packet.PutString(serverHost);

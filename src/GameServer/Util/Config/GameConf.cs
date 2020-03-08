@@ -5,6 +5,7 @@
 #endregion copyright
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Agonyl.Shared.Util.Config;
 
@@ -19,6 +20,21 @@ namespace Agonyl.Game.Util.Config
 
         public string TeleportTextFileName { get; protected set; }
         public string ItemDirectory { get; protected set; }
+        public List<string> StarterGearWarrior = new List<string>();
+        public List<string> StarterGearHK = new List<string>();
+        public List<string> StarterGearMage = new List<string>();
+        public List<string> StarterGearArcher = new List<string>();
+        public string StarterStatsWarrior { get; protected set; }
+        public string StarterStatsHK { get; protected set; }
+        public string StarterStatsMage { get; protected set; }
+        public string StarterStatsArcher { get; protected set; }
+        public string StarterBodyWarrior { get; protected set; }
+        public string StarterBodyHK { get; protected set; }
+        public string StarterBodyMage { get; protected set; }
+        public string StarterBodyArcher { get; protected set; }
+        public ushort StarterLevel { get; protected set; }
+        public string StarterLocationTemoz { get; protected set; }
+        public string StarterLocationQuanato { get; protected set; }
 
         /// <summary>
         /// Initializes default config.
@@ -66,10 +82,123 @@ namespace Agonyl.Game.Util.Config
                         }
                     }
                 }
+                var StarterGear = XmlDocument.GetElementsByTagName("StarterGear")[0];
+                if (StarterGear != null)
+                {
+                    foreach (System.Xml.XmlNode child in StarterGear.ChildNodes)
+                    {
+                        switch (child.Name)
+                        {
+                            case "Warrior":
+                                foreach (System.Xml.XmlNode subChild in child.ChildNodes)
+                                {
+                                    this.StarterGearWarrior.Add(subChild.Attributes["id"].Value + ";" + subChild.Attributes["option"].Value);
+                                }
+                                break;
+
+                            case "Holyknight":
+                                foreach (System.Xml.XmlNode subChild in child)
+                                {
+                                    this.StarterGearHK.Add(subChild.Attributes["id"].Value + ";" + subChild.Attributes["option"].Value);
+                                }
+                                break;
+
+                            case "Mage":
+                                foreach (System.Xml.XmlNode subChild in child)
+                                {
+                                    this.StarterGearMage.Add(subChild.Attributes["id"].Value + ";" + subChild.Attributes["option"].Value);
+                                }
+                                break;
+
+                            case "Archer":
+                                foreach (System.Xml.XmlNode subChild in child)
+                                {
+                                    this.StarterGearArcher.Add(subChild.Attributes["id"].Value + ";" + subChild.Attributes["option"].Value);
+                                }
+                                break;
+                        }
+                    }
+                }
+                var StarterStats = XmlDocument.GetElementsByTagName("StarterStats")[0];
+                if (StarterStats != null)
+                {
+                    foreach (System.Xml.XmlNode child in StarterStats.ChildNodes)
+                    {
+                        switch (child.Name)
+                        {
+                            case "Warrior":
+                                this.StarterStatsWarrior = child.InnerText;
+                                break;
+
+                            case "Holyknight":
+                                this.StarterStatsHK = child.InnerText;
+                                break;
+
+                            case "Mage":
+                                this.StarterStatsMage = child.InnerText;
+                                break;
+
+                            case "Archer":
+                                this.StarterStatsArcher = child.InnerText;
+                                break;
+                        }
+                    }
+                }
+                var StarterBody = XmlDocument.GetElementsByTagName("StarterBody")[0];
+                if (StarterBody != null)
+                {
+                    foreach (System.Xml.XmlNode child in StarterBody.ChildNodes)
+                    {
+                        switch (child.Name)
+                        {
+                            case "Warrior":
+                                this.StarterBodyWarrior = child.InnerText;
+                                break;
+
+                            case "Holyknight":
+                                this.StarterBodyHK = child.InnerText;
+                                break;
+
+                            case "Mage":
+                                this.StarterBodyMage = child.InnerText;
+                                break;
+
+                            case "Archer":
+                                this.StarterBodyArcher = child.InnerText;
+                                break;
+                        }
+                    }
+                }
+                var StarterLevel = XmlDocument.GetElementsByTagName("StarterLevel")[0];
+                if (StarterLevel != null)
+                {
+                    this.StarterLevel = Convert.ToUInt16(StarterLevel.InnerText);
+                }
+                else
+                {
+                    this.StarterLevel = 1;
+                }
+                var StarterLocation = XmlDocument.GetElementsByTagName("StarterLocation")[0];
+                if (StarterLocation != null)
+                {
+                    foreach (System.Xml.XmlNode child in StarterLocation.ChildNodes)
+                    {
+                        switch (child.Name)
+                        {
+                            case "Temoz":
+                                this.StarterLocationTemoz = child.InnerText;
+                                break;
+
+                            case "Quanato":
+                                this.StarterLocationQuanato = child.InnerText;
+                                break;
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
-                Shared.Util.Log.Error(ex.Message);
+                Shared.Util.Log.Exception(ex);
             }
         }
 

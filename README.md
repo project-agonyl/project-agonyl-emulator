@@ -25,6 +25,7 @@ Currently available features
 1. Account validation and login
 2. Showing of server details and server selection
 3. Character listing
+4. Character create
 
 Client
 ------

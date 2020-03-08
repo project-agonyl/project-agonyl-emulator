@@ -18,25 +18,25 @@ namespace Agonyl.Login.Network
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="packet"></param>
-        [PacketHandler(Op.C2L_LOGIN)]
-        public void C2L_LOGIN(LoginConnection conn, Packet packet)
+        [PacketHandler(Op.C2S_LOGIN)]
+        public void C2S_LOGIN(LoginConnection conn, Packet packet)
         {
             packet.SetReadPointer(10);
             var username = packet.GetString(20);
             packet.SetReadPointer(31);
             var password = packet.GetString(20);
             if (!LoginServer.Instance.ASDDatabase.AccountExists(username, password))
-                Send.L2C_MESSAGE(conn, "Invalid ID/password");
+                Send.S2C_LOGIN_MESSAGE(conn, "Invalid ID/password");
             else
             {
                 if (LoginServer.Instance.Redis.IsLoggedIn(username))
-                    Send.L2C_MESSAGE(conn, "Account already logged in");
+                    Send.S2C_LOGIN_MESSAGE(conn, "Account already logged in");
                 else
                 {
                     Log.Info(username + " account successfully logged in");
                     conn.Username = username;
-                    Send.L2C_LOGIN_OK(conn);
-                    Send.L2C_SERVER_LIST(conn, LoginServer.Instance.Conf.ServerName);
+                    Send.S2C_LOGIN_OK(conn);
+                    Send.S2C_SERVER_LIST(conn, LoginServer.Instance.Conf.ServerName);
                 }
             }
         }
@@ -46,11 +46,11 @@ namespace Agonyl.Login.Network
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="packet"></param>
-        [PacketHandler(Op.C2L_SERVER_DETAILS)]
-        public void C2L_SERVER_DETAILS(LoginConnection conn, Packet packet)
+        [PacketHandler(Op.C2S_SERVER_DETAILS)]
+        public void C2S_SERVER_DETAILS(LoginConnection conn, Packet packet)
         {
             LoginServer.Instance.Redis.AddLoggedInAccount(conn.Username);
-            Send.L2C_SERVER_DETAILS(conn, LoginServer.Instance.Conf.GameServerHost, LoginServer.Instance.Conf.GameServerPort);
+            Send.S2C_SERVER_DETAILS(conn, LoginServer.Instance.Conf.GameServerHost, LoginServer.Instance.Conf.GameServerPort);
         }
     }
 }
