@@ -34,6 +34,49 @@ namespace Agonyl.Shared.Network
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct CHARACTER_DATA
+    {
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 21)]
+        public string CharacterName;
+
+        public byte Class;
+        public ushort Level;
+        public uint Exp;
+        public uint MapId;
+        public uint Location;
+
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 28)]
+        public byte[] SkillInfo;
+
+        public uint Woonz;
+        public uint CurrentHPPot;
+        public uint CurrentMPPot;
+        public uint Lore;
+        public ushort RemainingStats;
+        public ushort Strength;
+        public ushort Intelligence;
+        public ushort Dexterity;
+        public ushort Vitality;
+        public ushort Mana;
+        public uint MaxHPPot;
+        public uint MaxMPPot;
+        public ushort CurrentHP;
+        public ushort CurrentMP;
+        public ushort Damage;
+        public ushort MagicDamage;
+        public ushort Defense;
+
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 12)]
+        public byte[] ShueInfo;
+
+        public ushort MaxHP;
+        public ushort MaxMP;
+
+        [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.Struct, SizeConst = 944)]
+        public byte[] Unknown;
+    }
+
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public class MSG_HEAD_WITH_PROTOCOL : Marshalling
     {
         public uint Size;
@@ -164,6 +207,20 @@ namespace Agonyl.Shared.Network
         {
             MsgHeader = new MSG_S2C_HEADER(Constants.S2C_CHARACTER_DELETE_ACK_PROTOCOL);
             MsgHeader.Size = this.GetSize();
+        }
+    }
+
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public class MSG_S2C_WORLD_LOGIN : Marshalling
+    {
+        public MSG_S2C_HEADER MsgHeader;
+        public CHARACTER_DATA CharacterData;
+
+        public MSG_S2C_WORLD_LOGIN()
+        {
+            MsgHeader = new MSG_S2C_HEADER(Constants.S2C_WORLD_LOGIN_PROTOCOL);
+            MsgHeader.Size = this.GetSize();
+            CharacterData = new CHARACTER_DATA();
         }
     }
 }
