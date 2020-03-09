@@ -26,6 +26,7 @@ Currently available features
 2. Showing of server details and server selection
 3. Character listing
 4. Character create
+5. Character delete
 
 Client
 ------

@@ -98,15 +98,16 @@ namespace Agonyl.Shared.Database
         /// <summary>
         /// Returns true if a character with the given name exists on account.
         /// </summary>
+        /// <param name="username"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public bool CharacterExists(int accountId, string name)
+        public bool CharacterExists(string username, string name)
         {
             using (var conn = this.GetConnection())
             {
                 using (var mc = new MySqlCommand("SELECT LOWER(`c_id`) FROM `charac0` WHERE `c_sheadera` = @accountId AND `c_id` = LOWER(@name)", conn))
                 {
-                    mc.Parameters.AddWithValue("@accountId", accountId);
+                    mc.Parameters.AddWithValue("@accountId", username);
                     mc.Parameters.AddWithValue("@name", name);
 
                     using (var reader = mc.ExecuteReader())
@@ -171,6 +172,23 @@ namespace Agonyl.Shared.Database
                     mc.Parameters.AddWithValue("@stats", stats);
                     mc.Parameters.AddWithValue("@location", location);
                     mc.Parameters.AddWithValue("@body", body);
+                    return mc.ExecuteNonQuery() != 0;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deletes a character
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public bool DeleteCharacter(string name)
+        {
+            using (var conn = this.GetConnection())
+            {
+                using (var mc = new MySqlCommand("UPDATE `charac0` SET `c_status` = 'X' WHERE `c_id` = @name", conn))
+                {
+                    mc.Parameters.AddWithValue("@name", name);
                     return mc.ExecuteNonQuery() != 0;
                 }
             }

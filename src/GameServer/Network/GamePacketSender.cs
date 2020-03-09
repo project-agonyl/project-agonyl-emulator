@@ -123,5 +123,12 @@ namespace Agonyl.Game.Network
             }
             conn.Send(msg.Serialize());
         }
+
+        public static void S2C_CHARACTER_DELETE_ACK(GameConnection conn, string name)
+        {
+            var msg = new MSG_S2C_CHARACTER_DELETE_ACK();
+            msg.CharacterName = name;
+            conn.Send(msg.Serialize());
+        }
     }
 }

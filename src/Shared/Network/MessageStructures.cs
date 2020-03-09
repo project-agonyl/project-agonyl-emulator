@@ -151,4 +151,19 @@ namespace Agonyl.Shared.Network
             WearList = new MSG_ITEM_WEAR[10];
         }
     }
+
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public class MSG_S2C_CHARACTER_DELETE_ACK : Marshalling
+    {
+        public MSG_S2C_HEADER MsgHeader;
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 21)]
+        public string CharacterName;
+
+        public MSG_S2C_CHARACTER_DELETE_ACK()
+        {
+            MsgHeader = new MSG_S2C_HEADER(Constants.S2C_CHARACTER_DELETE_ACK_PROTOCOL);
+            MsgHeader.Size = this.GetSize();
+        }
+    }
 }

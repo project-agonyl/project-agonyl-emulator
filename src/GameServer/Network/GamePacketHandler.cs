@@ -93,8 +93,35 @@ namespace Agonyl.Game.Network
                 }
                 else
                 {
-                    Send.S2C_ERROR(conn, Constants.S2C_ERROR_CODE_DUPLICATE_CHARACTER, "Character name already in use");
+                    Send.S2C_ERROR(conn, Constants.S2C_ERROR_CODE_CHARACTER_INVALID, "Could not create character at this time");
                 }
+            }
+        }
+
+        /// <summary>
+        /// Sent on deleting a character
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="packet"></param>
+        [PacketHandler(Op.C2S_CHARACTER_DELETE_REQUEST)]
+        public void C2S_DELETE_CHARACTER(GameConnection conn, Packet packet)
+        {
+            packet.SetReadPointer(12);
+            var name = packet.GetString(13);
+            if (GameServer.Instance.ASDDatabase.CharacterExists(conn.Account.Username, name))
+            {
+                if (GameServer.Instance.ASDDatabase.DeleteCharacter(name))
+                {
+                    Send.S2C_CHARACTER_DELETE_ACK(conn, name);
+                }
+                else
+                {
+                    Send.S2C_ERROR(conn, Constants.S2C_ERROR_CODE_CHARACTER_INVALID, "Could not delete character at this time");
+                }
+            }
+            else
+            {
+                Send.S2C_ERROR(conn, Constants.S2C_ERROR_CODE_CHARACTER_NOT_FOUND, "Character not found in the account");
             }
         }
 
