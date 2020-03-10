@@ -8,21 +8,25 @@ namespace Agonyl.Shared.Data.Game
 {
     public class IT0ItemLevel
     {
-        /// <summary>
-        /// Additional attack/defense
-        /// </summary>
-        public byte AdditionalAttribute { get; set; }
-
         public byte Level { get; set; }
+        public ushort AttributeRange { get; set; }
 
         /// <summary>
         /// Attack/defense
         /// </summary>
-        public short Attribute { get; set; }
+        public ushort Attribute { get; set; }
 
-        public short AttackRange { get; set; }
-        public byte RedOption { get; set; }
-        public byte GreyOption { get; set; }
-        public byte BlueOption { get; set; }
+        public ushort Strength { get; set; }
+        public ushort Intelligence { get; set; }
+        public ushort Dexterity { get; set; }
+
+        /// <summary>
+        /// Additional attack/defense
+        /// </summary>
+        public ushort AdditionalAttribute { get; set; }
+
+        public ushort RedOption { get; set; }
+        public ushort GreyOption { get; set; }
+        public ushort BlueOption { get; set; }
     }
 }

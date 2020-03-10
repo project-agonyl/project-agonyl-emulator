@@ -206,5 +206,25 @@ namespace Agonyl.Game.Util.Config
         {
             return this.BaseGameDataPath + Path.DirectorySeparatorChar + this.ItemDirectory + Path.DirectorySeparatorChar + "0";
         }
+
+        public string GetIT1Path()
+        {
+            return this.BaseGameDataPath + Path.DirectorySeparatorChar + this.ItemDirectory + Path.DirectorySeparatorChar + "1";
+        }
+
+        public string GetIT2Path()
+        {
+            return this.BaseGameDataPath + Path.DirectorySeparatorChar + this.ItemDirectory + Path.DirectorySeparatorChar + "2";
+        }
+
+        public string GetIT3Path()
+        {
+            return this.BaseGameDataPath + Path.DirectorySeparatorChar + this.ItemDirectory + Path.DirectorySeparatorChar + "3";
+        }
+
+        public string GetIT0exPath()
+        {
+            return this.BaseGameDataPath + Path.DirectorySeparatorChar + this.ItemDirectory + Path.DirectorySeparatorChar + "0ex";
+        }
     }
 }

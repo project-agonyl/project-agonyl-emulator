@@ -6,45 +6,42 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Agonyl.Shared.Util
 {
     public static class Functions
     {
-        public static short ReverseHexBytesToInt16(byte[] bytes)
+        public static ushort ReverseHexBytesToUInt16(byte[] bytes)
         {
             Array.Reverse(bytes);
-            return BytesToInt16(bytes);
+            return BytesToUInt16(bytes);
         }
 
-        public static short BytesToInt16(byte[] bytes)
+        public static ushort BytesToUInt16(byte[] bytes)
         {
-            return BitConverter.ToInt16(bytes, 0);
+            return BitConverter.ToUInt16(bytes, 0);
         }
 
-        public static int ReverseHexBytesToInt32(byte[] bytes)
-        {
-            Array.Reverse(bytes);
-            return BytesToInt32(bytes);
-        }
-
-        public static int BytesToInt32(byte[] bytes)
-        {
-            return BitConverter.ToInt32(bytes, 0);
-        }
-
-        public static long ReverseHexBytesToInt64(byte[] bytes)
+        public static uint ReverseHexBytesToUInt32(byte[] bytes)
         {
             Array.Reverse(bytes);
-            return BytesToInt64(bytes);
+            return BytesToUInt32(bytes);
         }
 
-        public static long BytesToInt64(byte[] bytes)
+        public static uint BytesToUInt32(byte[] bytes)
         {
-            return BitConverter.ToInt64(bytes, 0);
+            return BitConverter.ToUInt32(bytes, 0);
+        }
+
+        public static ulong ReverseHexBytesToUInt64(byte[] bytes)
+        {
+            Array.Reverse(bytes);
+            return BytesToUInt64(bytes);
+        }
+
+        public static ulong BytesToUInt64(byte[] bytes)
+        {
+            return BitConverter.ToUInt64(bytes, 0);
         }
 
         public static byte[] ByteSlice(ref byte[] source, int StartIndex, int length)

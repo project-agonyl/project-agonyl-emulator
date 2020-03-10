@@ -27,7 +27,7 @@ namespace Agonyl.Game
         public GameConf Conf { get; private set; }
 
         /// <summary>
-        /// Game server's database.
+        /// Game server's data loaded from files.
         /// </summary>
         public GameData GameData { get; protected set; }
 
@@ -109,14 +109,40 @@ namespace Agonyl.Game
 
         private void LoadItemFiles()
         {
-            Log.Info("Loading item data...");
+            Log.Info("Loading item data please wait...");
             this.LoadIT0();
+            this.LoadIT1();
+            this.LoadIT2();
+            this.LoadIT3();
             Log.Info("Loaded " + this.GameData.Items.Count + " items");
         }
 
         private void LoadIT0()
         {
+            Log.Info("Loading IT0 data...");
             var parser = new IT0Parser(this.Conf.GetIT0Path());
+            var IT0exParser = new IT0exParser(this.Conf.GetIT0exPath());
+            parser.ParseFile(ref this.GameData.Items, ref IT0exParser);
+        }
+
+        private void LoadIT1()
+        {
+            Log.Info("Loading IT1 data...");
+            var parser = new IT1Parser(this.Conf.GetIT1Path());
+            parser.ParseFile(ref this.GameData.Items);
+        }
+
+        private void LoadIT2()
+        {
+            Log.Info("Loading IT2 data...");
+            var parser = new IT2Parser(this.Conf.GetIT2Path());
+            parser.ParseFile(ref this.GameData.Items);
+        }
+
+        private void LoadIT3()
+        {
+            Log.Info("Loading IT3 data...");
+            var parser = new IT3Parser(this.Conf.GetIT3Path());
             parser.ParseFile(ref this.GameData.Items);
         }
     }

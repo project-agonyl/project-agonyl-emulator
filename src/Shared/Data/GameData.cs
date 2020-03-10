@@ -20,5 +20,14 @@ namespace Agonyl.Shared.Data
         {
             Items = new Dictionary<uint, Item>();
         }
+
+        public Item GetItemByCode(uint code)
+        {
+            if (!this.Items.ContainsKey(code))
+            {
+                return new Item();
+            }
+            return Items[code];
+        }
     }
 }

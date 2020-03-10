@@ -7,7 +7,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Agonyl.Game.Util
+namespace Agonyl.Shared.Util
 {
     public abstract class BinaryFileParser
     {
