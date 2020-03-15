@@ -69,6 +69,8 @@
     <Compile Include="Data\Game\IT1ItemProperty.cs" />
     <Compile Include="Data\Game\IT2ItemProperty.cs" />
     <Compile Include="Data\Game\Item.cs" />
+    <Compile Include="Data\Game\Map.cs" />
+    <Compile Include="Data\Game\NPC.cs" />
     <Compile Include="Network\Connection.cs" />
     <Compile Include="Network\ConnectionManager.cs" />
     <Compile Include="Network\Marshalling.cs" />
@@ -93,6 +95,7 @@
     <Compile Include="Util\IT2Parser.cs" />
     <Compile Include="Util\IT3Parser.cs" />
     <Compile Include="Util\Log.cs" />
+    <Compile Include="Util\NdtParser.cs" />
     <Compile Include="Util\Security\Crypt.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -15,10 +15,12 @@ namespace Agonyl.Shared.Data
     public class GameData
     {
         public Dictionary<uint, Item> Items;
+        public Dictionary<uint, Map> Maps;
 
         public GameData()
         {
             Items = new Dictionary<uint, Item>();
+            Maps = new Dictionary<uint, Map>();
         }
 
         public Item GetItemByCode(uint code)
