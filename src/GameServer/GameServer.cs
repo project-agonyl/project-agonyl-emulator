@@ -121,8 +121,8 @@ namespace Agonyl.Game
         {
             Log.Info("Loading IT0 data...");
             var parser = new IT0Parser(this.Conf.GetIT0Path());
-            var IT0exParser = new IT0exParser(this.Conf.GetIT0exPath());
-            parser.ParseFile(ref this.GameData.Items, ref IT0exParser);
+            var iT0exParser = new IT0exParser(this.Conf.GetIT0exPath());
+            parser.ParseFile(ref this.GameData.Items, ref iT0exParser);
         }
 
         private void LoadIT1()

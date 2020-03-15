@@ -19,7 +19,7 @@
     </ASD>
   </Databases>
   <DataConfig>
-    <BaseDirectory>GameData</BaseDirectory>
+    <BasePath>D:\a3server\GameServer\GameData</BasePath>
     <TeleportTextFileName>Teleport.txt</TeleportTextFileName>
     <ItemDirectory>Item</ItemDirectory>
     <MapDirectory>map</MapDirectory>

@@ -51,6 +51,7 @@ namespace Agonyl.Shared.Util
         public static string LogFile
         {
             get { return _logFile; }
+
             set
             {
                 if (value != null)
@@ -58,24 +59,32 @@ namespace Agonyl.Shared.Util
                     var pathToFile = Path.GetDirectoryName(value);
 
                     if (!Directory.Exists(pathToFile))
+                    {
                         Directory.CreateDirectory(pathToFile);
+                    }
 
                     if (File.Exists(value))
                     {
                         if (Archive != null)
                         {
                             if (!Directory.Exists(Archive))
+                            {
                                 Directory.CreateDirectory(Archive);
+                            }
 
                             var time = File.GetLastWriteTime(value);
                             var archive = Path.Combine(Archive, time.ToString("yyyy-MM-dd_hh-mm"));
                             var archiveFilePath = Path.Combine(archive, Path.GetFileName(value));
 
                             if (!Directory.Exists(archive))
+                            {
                                 Directory.CreateDirectory(archive);
+                            }
 
                             if (File.Exists(archiveFilePath))
+                            {
                                 File.Delete(archiveFilePath);
+                            }
 
                             File.Move(value, archiveFilePath);
                         }
@@ -123,7 +132,9 @@ namespace Agonyl.Shared.Util
             if (description != null)
             {
                 if (Hide.HasFlag(LogLevel.Exception))
+                {
                     description += " See log file for more details.";
+                }
 
                 WriteLine(LogLevel.Error, description, args);
             }
@@ -136,7 +147,7 @@ namespace Agonyl.Shared.Util
             var donePerc = (100f / max * current);
             var done = (int)Math.Ceiling(20f / max * current);
 
-            Write(LogLevel.Info, false, "[" + ("".PadRight(done, '#') + "".PadLeft(20 - done, '.')) + "] {0,5}%\r", donePerc.ToString("0.0", CultureInfo.InvariantCulture));
+            Write(LogLevel.Info, false, "[" + (string.Empty.PadRight(done, '#') + string.Empty.PadLeft(20 - done, '.')) + "] {0,5}%\r", donePerc.ToString("0.0", CultureInfo.InvariantCulture));
         }
 
         public static void WriteLine(LogLevel level, string format, params object[] args)
@@ -146,7 +157,7 @@ namespace Agonyl.Shared.Util
 
         public static void WriteLine()
         {
-            WriteLine(LogLevel.None, "");
+            WriteLine(LogLevel.None, string.Empty);
         }
 
         public static void Write(LogLevel level, string format, params object[] args)
@@ -171,12 +182,16 @@ namespace Agonyl.Shared.Util
                     }
 
                     if (level != LogLevel.None)
+                    {
                         Console.Write("[{0}]", level);
+                    }
 
                     Console.ForegroundColor = ConsoleColor.Gray;
 
                     if (level != LogLevel.None)
+                    {
                         Console.Write(" - ");
+                    }
 
                     Console.Write(format, args);
                 }
@@ -187,7 +202,10 @@ namespace Agonyl.Shared.Util
                     {
                         file.Write(DateTime.Now + " ");
                         if (level != LogLevel.None)
+                        {
                             file.Write("[{0}] - ", level);
+                        }
+
                         file.Write(format, args);
                         file.Flush();
                     }

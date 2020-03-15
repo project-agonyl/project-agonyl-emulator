@@ -36,10 +36,10 @@ namespace Agonyl.Game.Network
 
         protected override void OnAfterClose()
         {
-            if (Account != null && GameServer.Instance.Redis.IsLoggedIn(Account.Username))
+            if (this.Account != null && GameServer.Instance.Redis.IsLoggedIn(this.Account.Username))
             {
-                Log.Info(Account.Username + " account has left the game server");
-                GameServer.Instance.Redis.RemoveLoggedInAccount(Account.Username);
+                Log.Info(this.Account.Username + " account has left the game server");
+                GameServer.Instance.Redis.RemoveLoggedInAccount(this.Account.Username);
             }
         }
     }

@@ -16,7 +16,6 @@ namespace Agonyl.Shared.Database
         /// Returns true if accounts exists.
         /// </summary>
         /// <param name="username"></param>
-        /// <returns></returns>
         public bool AccountExists(string username)
         {
             using (var conn = this.GetConnection())
@@ -25,7 +24,9 @@ namespace Agonyl.Shared.Database
                 mc.Parameters.AddWithValue("@username", username);
 
                 using (var reader = mc.ExecuteReader())
+                {
                     return reader.HasRows;
+                }
             }
         }
 
@@ -34,7 +35,6 @@ namespace Agonyl.Shared.Database
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
-        /// <returns></returns>
         public bool AccountExists(string username, string password)
         {
             using (var conn = this.GetConnection())
@@ -44,7 +44,9 @@ namespace Agonyl.Shared.Database
                 mc.Parameters.AddWithValue("@password", password);
 
                 using (var reader = mc.ExecuteReader())
+                {
                     return reader.HasRows;
+                }
             }
         }
 
@@ -56,8 +58,13 @@ namespace Agonyl.Shared.Database
                 mc.Parameters.AddWithValue("@username", username);
 
                 using (var reader = mc.ExecuteReader())
+                {
                     if (reader.Read())
+                    {
                         return Convert.ToInt32(reader["c_id"].ToString());
+                    }
+                }
+
                 return 0;
             }
         }
@@ -66,7 +73,7 @@ namespace Agonyl.Shared.Database
         /// Returns all characters of an account
         /// </summary>
         /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="username"></param>
         public IEnumerable<Model.Charac0> GetCharacterList(string username)
         {
             using (var conn = this.GetConnection())
@@ -100,7 +107,6 @@ namespace Agonyl.Shared.Database
         /// </summary>
         /// <param name="username"></param>
         /// <param name="name"></param>
-        /// <returns></returns>
         public bool CharacterExists(string username, string name)
         {
             using (var conn = this.GetConnection())
@@ -111,7 +117,9 @@ namespace Agonyl.Shared.Database
                     mc.Parameters.AddWithValue("@name", name);
 
                     using (var reader = mc.ExecuteReader())
+                    {
                         return reader.HasRows;
+                    }
                 }
             }
         }
@@ -120,7 +128,6 @@ namespace Agonyl.Shared.Database
         /// Returns true if a character with the given name exists.
         /// </summary>
         /// <param name="name"></param>
-        /// <returns></returns>
         public bool CharacterExists(string name)
         {
             using (var conn = this.GetConnection())
@@ -130,7 +137,9 @@ namespace Agonyl.Shared.Database
                     mc.Parameters.AddWithValue("@name", name);
 
                     using (var reader = mc.ExecuteReader())
+                    {
                         return reader.HasRows;
+                    }
                 }
             }
         }
@@ -139,7 +148,7 @@ namespace Agonyl.Shared.Database
         /// Returns character count of an account.
         /// </summary>
         /// <param name="name"></param>
-        /// <returns></returns>
+        /// <param name="username"></param>
         public long CharacterCount(string username)
         {
             using (var conn = this.GetConnection())
@@ -155,10 +164,14 @@ namespace Agonyl.Shared.Database
         /// <summary>
         /// Creates a character
         /// </summary>
+        /// <param name="username"></param>
         /// <param name="name"></param>
         /// <param name="type"></param>
+        /// <param name="stats"></param>
+        /// <param name="body"></param>
+        /// <param name="location"></param>
+        /// <param name="level"></param>
         /// <param name="town"></param>
-        /// <returns></returns>
         public bool CreateCharacter(string username, string name, byte type, string stats, string body, string location, int level)
         {
             using (var conn = this.GetConnection())
@@ -181,7 +194,6 @@ namespace Agonyl.Shared.Database
         /// Deletes a character
         /// </summary>
         /// <param name="name"></param>
-        /// <returns></returns>
         public bool DeleteCharacter(string name)
         {
             using (var conn = this.GetConnection())

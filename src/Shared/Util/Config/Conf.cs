@@ -107,16 +107,16 @@ namespace Agonyl.Shared.Util.Config
             this.ASDDbPassword = "agonyl";
             this.RedisHost = "127.0.0.1";
             this.RedisPort = 6379;
-            this.RedisPassword = "";
+            this.RedisPassword = string.Empty;
             try
             {
-                XmlDocument = new XmlDocument();
-                XmlDocument.Load(this.ConfFile);
-                var ServerNode = XmlDocument.GetElementsByTagName("Server")[0];
-                if (ServerNode != null)
+                this.XmlDocument = new XmlDocument();
+                this.XmlDocument.Load(this.ConfFile);
+                var serverNode = this.XmlDocument.GetElementsByTagName("Server")[0];
+                if (serverNode != null)
                 {
-                    this.ServerId = ServerNode.Attributes["id"].Value != null ? Convert.ToInt32(ServerNode.Attributes["id"].Value) : this.ServerId;
-                    foreach (XmlNode child in ServerNode.ChildNodes)
+                    this.ServerId = serverNode.Attributes["id"].Value != null ? Convert.ToInt32(serverNode.Attributes["id"].Value) : this.ServerId;
+                    foreach (XmlNode child in serverNode.ChildNodes)
                     {
                         switch (child.Name)
                         {
@@ -125,6 +125,7 @@ namespace Agonyl.Shared.Util.Config
                                 {
                                     this.ServerName = child.InnerText;
                                 }
+
                                 break;
 
                             case "Host":
@@ -132,6 +133,7 @@ namespace Agonyl.Shared.Util.Config
                                 {
                                     this.Host = child.InnerText;
                                 }
+
                                 break;
 
                             case "Port":
@@ -139,14 +141,16 @@ namespace Agonyl.Shared.Util.Config
                                 {
                                     this.Port = Convert.ToInt32(child.InnerText);
                                 }
+
                                 break;
                         }
                     }
                 }
-                var RedisNode = XmlDocument.GetElementsByTagName("Redis")[0];
-                if (RedisNode != null)
+
+                var redisNode = this.XmlDocument.GetElementsByTagName("Redis")[0];
+                if (redisNode != null)
                 {
-                    foreach (XmlNode child in RedisNode.ChildNodes)
+                    foreach (XmlNode child in redisNode.ChildNodes)
                     {
                         switch (child.Name)
                         {
@@ -155,6 +159,7 @@ namespace Agonyl.Shared.Util.Config
                                 {
                                     this.RedisHost = child.InnerText;
                                 }
+
                                 break;
 
                             case "Port":
@@ -162,6 +167,7 @@ namespace Agonyl.Shared.Util.Config
                                 {
                                     this.RedisPort = Convert.ToInt32(child.InnerText);
                                 }
+
                                 break;
 
                             case "Password":
@@ -169,14 +175,16 @@ namespace Agonyl.Shared.Util.Config
                                 {
                                     this.RedisPassword = child.InnerText;
                                 }
+
                                 break;
                         }
                     }
                 }
-                var AsdNode = XmlDocument.GetElementsByTagName("ASD")[0];
-                if (AsdNode != null)
+
+                var asdNode = this.XmlDocument.GetElementsByTagName("ASD")[0];
+                if (asdNode != null)
                 {
-                    foreach (XmlNode child in AsdNode.ChildNodes)
+                    foreach (XmlNode child in asdNode.ChildNodes)
                     {
                         switch (child.Name)
                         {
@@ -185,6 +193,7 @@ namespace Agonyl.Shared.Util.Config
                                 {
                                     this.ASDDbName = child.InnerText;
                                 }
+
                                 break;
 
                             case "Host":
@@ -192,6 +201,7 @@ namespace Agonyl.Shared.Util.Config
                                 {
                                     this.ASDDbHost = child.InnerText;
                                 }
+
                                 break;
 
                             case "Port":
@@ -199,6 +209,7 @@ namespace Agonyl.Shared.Util.Config
                                 {
                                     this.ASDDbPort = Convert.ToInt32(child.InnerText);
                                 }
+
                                 break;
 
                             case "Username":
@@ -206,6 +217,7 @@ namespace Agonyl.Shared.Util.Config
                                 {
                                     this.ASDDbUserName = child.InnerText;
                                 }
+
                                 break;
 
                             case "Password":
@@ -213,6 +225,7 @@ namespace Agonyl.Shared.Util.Config
                                 {
                                     this.ASDDbPassword = child.InnerText;
                                 }
+
                                 break;
                         }
                     }

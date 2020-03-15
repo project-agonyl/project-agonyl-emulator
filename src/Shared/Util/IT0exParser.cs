@@ -14,7 +14,8 @@ namespace Agonyl.Shared.Util
 {
     public class IT0exParser : BinaryFileParser
     {
-        public IT0exParser(string FilePath) : base(FilePath)
+        public IT0exParser(string filePath)
+            : base(filePath)
         {
         }
     }

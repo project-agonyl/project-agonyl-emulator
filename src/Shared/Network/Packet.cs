@@ -36,7 +36,7 @@ namespace Agonyl.Shared.Network
         /// <param name="buffer"></param>
         public Packet(byte[] buffer)
         {
-            _buffer = buffer;
+            this._buffer = buffer;
 
             this.Length = buffer.Length;
             this.Op = this.GetOpCode();
@@ -49,7 +49,7 @@ namespace Agonyl.Shared.Network
         /// <param name="opIndex"></param>
         public Packet(byte[] buffer, int opIndex)
         {
-            _buffer = buffer;
+            this._buffer = buffer;
 
             this.Length = buffer.Length;
             this.Op = (int)buffer[opIndex];
@@ -61,7 +61,7 @@ namespace Agonyl.Shared.Network
         /// <param name="op"></param>
         public Packet(int op)
         {
-            _buffer = new byte[DefaultSize];
+            this._buffer = new byte[DefaultSize];
             this.Op = op;
         }
 
@@ -69,11 +69,12 @@ namespace Agonyl.Shared.Network
         /// Throws if not enough bytes are left to read a value with the given length.
         /// </summary>
         /// <param name="needed"></param>
-        /// <returns></returns>
         private void AssertGotEnough(int needed)
         {
-            if (_ptr + needed > this.Length)
+            if (this._ptr + needed > this.Length)
+            {
                 throw new InvalidOperationException("Not enough bytes left to read a '" + needed + "' byte value.");
+            }
         }
 
         /// <summary>
@@ -83,20 +84,21 @@ namespace Agonyl.Shared.Network
         /// <param name="needed"></param>
         private void EnsureSpace(int needed)
         {
-            if (_ptr + needed > this.Length)
-                Array.Resize(ref _buffer, _buffer.Length + DefaultSize);
+            if (this._ptr + needed > this.Length)
+            {
+                Array.Resize(ref this._buffer, this._buffer.Length + DefaultSize);
+            }
         }
 
         /// <summary>
         /// Reads byte from buffer.
         /// </summary>
-        /// <returns></returns>
         public byte GetByte()
         {
             this.AssertGotEnough(1);
 
-            var val = _buffer[_ptr];
-            _ptr += sizeof(byte);
+            var val = this._buffer[this._ptr];
+            this._ptr += sizeof(byte);
 
             return val;
         }
@@ -104,7 +106,6 @@ namespace Agonyl.Shared.Network
         /// <summary>
         /// Reads byte from buffer and returns it as bool (true != 0).
         /// </summary>
-        /// <returns></returns>
         public bool GetBool()
         {
             return (this.GetByte() != 0);
@@ -113,13 +114,12 @@ namespace Agonyl.Shared.Network
         /// <summary>
         /// Reads short from buffer.
         /// </summary>
-        /// <returns></returns>
         public short GetShort()
         {
             this.AssertGotEnough(2);
 
-            var val = BitConverter.ToInt16(_buffer, _ptr);
-            _ptr += sizeof(short);
+            var val = BitConverter.ToInt16(this._buffer, this._ptr);
+            this._ptr += sizeof(short);
 
             return val;
         }
@@ -127,13 +127,12 @@ namespace Agonyl.Shared.Network
         /// <summary>
         /// Reads int from buffer.
         /// </summary>
-        /// <returns></returns>
         public int GetInt()
         {
             this.AssertGotEnough(4);
 
-            var val = BitConverter.ToInt32(_buffer, _ptr);
-            _ptr += sizeof(int);
+            var val = BitConverter.ToInt32(this._buffer, this._ptr);
+            this._ptr += sizeof(int);
 
             return val;
         }
@@ -141,13 +140,12 @@ namespace Agonyl.Shared.Network
         /// <summary>
         /// Reads long from buffer.
         /// </summary>
-        /// <returns></returns>
         public long GetLong()
         {
             this.AssertGotEnough(8);
 
-            var val = BitConverter.ToInt64(_buffer, _ptr);
-            _ptr += sizeof(long);
+            var val = BitConverter.ToInt64(this._buffer, this._ptr);
+            this._ptr += sizeof(long);
 
             return val;
         }
@@ -155,13 +153,12 @@ namespace Agonyl.Shared.Network
         /// <summary>
         /// Reads float from buffer.
         /// </summary>
-        /// <returns></returns>
         public float GetFloat()
         {
             this.AssertGotEnough(4);
 
-            var val = BitConverter.ToSingle(_buffer, _ptr);
-            _ptr += sizeof(float);
+            var val = BitConverter.ToSingle(this._buffer, this._ptr);
+            this._ptr += sizeof(float);
 
             return val;
         }
@@ -171,19 +168,20 @@ namespace Agonyl.Shared.Network
         /// UTF8 string. Stops reading at the first null-byte.
         /// </summary>
         /// <param name="length"></param>
-        /// <returns></returns>
         public string GetString(int length)
         {
             this.AssertGotEnough(length);
 
-            var val = Encoding.UTF8.GetString(_buffer, _ptr, length);
+            var val = Encoding.UTF8.GetString(this._buffer, this._ptr, length);
 
             // Relatively fast way to get rid of null bytes.
             var nullIndex = val.IndexOf((char)0);
             if (nullIndex != -1)
+            {
                 val = val.Substring(0, nullIndex);
+            }
 
-            _ptr += length;
+            this._ptr += length;
 
             return val;
         }
@@ -192,7 +190,6 @@ namespace Agonyl.Shared.Network
         /// Reads length-prefixed string from buffer and returns it as
         /// UTF8 string.
         /// </summary>
-        /// <returns></returns>
         public string GetLpString()
         {
             this.AssertGotEnough(sizeof(short));
@@ -205,15 +202,14 @@ namespace Agonyl.Shared.Network
         /// Reads null-terminated string from buffer and returns it as UTF8.
         /// </summary>
         /// <param name="length"></param>
-        /// <returns></returns>
         public string GetString()
         {
-            for (var i = _ptr; i < _buffer.Length; ++i)
+            for (var i = this._ptr; i < this._buffer.Length; ++i)
             {
-                if (_buffer[i] == 0)
+                if (this._buffer[i] == 0)
                 {
-                    var val = Encoding.UTF8.GetString(_buffer, _ptr, i - _ptr);
-                    _ptr += val.Length + 1;
+                    var val = Encoding.UTF8.GetString(this._buffer, this._ptr, i - this._ptr);
+                    this._ptr += val.Length + 1;
                     return val;
                 }
             }
@@ -225,12 +221,13 @@ namespace Agonyl.Shared.Network
         /// Reads struct from buffer.
         /// </summary>
         /// <typeparam name="TStruct"></typeparam>
-        /// <returns></returns>
         public TStruct GetStruct<TStruct>() where TStruct : new()
         {
             var type = typeof(TStruct);
             if (!type.IsValueType || type.IsPrimitive)
+            {
                 throw new Exception("GetObj can only marshal to structs.");
+            }
 
             var size = Marshal.SizeOf(typeof(TStruct));
             var buffer = this.GetBin(size);
@@ -247,14 +244,13 @@ namespace Agonyl.Shared.Network
         /// Reads given amount of bytes from buffer.
         /// </summary>
         /// <param name="length"></param>
-        /// <returns></returns>
         public byte[] GetBin(int length)
         {
             this.AssertGotEnough(length);
 
             var val = new byte[length];
-            Buffer.BlockCopy(_buffer, _ptr, val, 0, length);
-            _ptr += length;
+            Buffer.BlockCopy(this._buffer, this._ptr, val, 0, length);
+            this._ptr += length;
 
             return val;
         }
@@ -262,20 +258,18 @@ namespace Agonyl.Shared.Network
         /// <summary>
         /// Returns all the bytes from buffer.
         /// </summary>
-        /// <returns></returns>
         public byte[] GetBuffer()
         {
-            return _buffer;
+            return this._buffer;
         }
 
         /// <summary>
         /// Reads given amount of bytes from buffer and returns them as hex string.
         /// </summary>
         /// <param name="length"></param>
-        /// <returns></returns>
         public string GetBinAsHex(int length)
         {
-            return BitConverter.ToString(this.GetBin(length)).ToString().Replace("-", "").ToUpper();
+            return BitConverter.ToString(this.GetBin(length)).ToString().Replace("-", string.Empty).ToUpper();
         }
 
         /// <summary>
@@ -285,7 +279,9 @@ namespace Agonyl.Shared.Network
         public void PutBytes(byte[] val)
         {
             for (var i = 0; i < val.Length; i++)
+            {
                 this.PutByte(val[i]);
+            }
         }
 
         /// <summary>
@@ -296,7 +292,7 @@ namespace Agonyl.Shared.Network
         {
             this.EnsureSpace(1);
 
-            _buffer[_ptr++] = (byte)(val);
+            this._buffer[this._ptr++] = (byte)(val);
             this.Length += sizeof(byte);
         }
 
@@ -317,8 +313,8 @@ namespace Agonyl.Shared.Network
         {
             this.EnsureSpace(2);
 
-            _buffer[_ptr++] = (byte)(val >> (8 * 0));
-            _buffer[_ptr++] = (byte)(val >> (8 * 1));
+            this._buffer[this._ptr++] = (byte)(val >> (8 * 0));
+            this._buffer[this._ptr++] = (byte)(val >> (8 * 1));
             this.Length += sizeof(short);
         }
 
@@ -330,10 +326,10 @@ namespace Agonyl.Shared.Network
         {
             this.EnsureSpace(4);
 
-            _buffer[_ptr++] = (byte)(val >> (8 * 0));
-            _buffer[_ptr++] = (byte)(val >> (8 * 1));
-            _buffer[_ptr++] = (byte)(val >> (8 * 2));
-            _buffer[_ptr++] = (byte)(val >> (8 * 3));
+            this._buffer[this._ptr++] = (byte)(val >> (8 * 0));
+            this._buffer[this._ptr++] = (byte)(val >> (8 * 1));
+            this._buffer[this._ptr++] = (byte)(val >> (8 * 2));
+            this._buffer[this._ptr++] = (byte)(val >> (8 * 3));
             this.Length += sizeof(int);
         }
 
@@ -341,14 +337,14 @@ namespace Agonyl.Shared.Network
         {
             this.EnsureSpace(8);
 
-            _buffer[_ptr++] = (byte)(val >> (8 * 0));
-            _buffer[_ptr++] = (byte)(val >> (8 * 1));
-            _buffer[_ptr++] = (byte)(val >> (8 * 2));
-            _buffer[_ptr++] = (byte)(val >> (8 * 3));
-            _buffer[_ptr++] = (byte)(val >> (8 * 4));
-            _buffer[_ptr++] = (byte)(val >> (8 * 5));
-            _buffer[_ptr++] = (byte)(val >> (8 * 6));
-            _buffer[_ptr++] = (byte)(val >> (8 * 7));
+            this._buffer[this._ptr++] = (byte)(val >> (8 * 0));
+            this._buffer[this._ptr++] = (byte)(val >> (8 * 1));
+            this._buffer[this._ptr++] = (byte)(val >> (8 * 2));
+            this._buffer[this._ptr++] = (byte)(val >> (8 * 3));
+            this._buffer[this._ptr++] = (byte)(val >> (8 * 4));
+            this._buffer[this._ptr++] = (byte)(val >> (8 * 5));
+            this._buffer[this._ptr++] = (byte)(val >> (8 * 6));
+            this._buffer[this._ptr++] = (byte)(val >> (8 * 7));
             this.Length += sizeof(long);
         }
 
@@ -361,10 +357,10 @@ namespace Agonyl.Shared.Network
             this.EnsureSpace(4);
 
             var bVal = BitConverter.GetBytes(val);
-            _buffer[_ptr++] = bVal[0];
-            _buffer[_ptr++] = bVal[1];
-            _buffer[_ptr++] = bVal[2];
-            _buffer[_ptr++] = bVal[3];
+            this._buffer[this._ptr++] = bVal[0];
+            this._buffer[this._ptr++] = bVal[1];
+            this._buffer[this._ptr++] = bVal[2];
+            this._buffer[this._ptr++] = bVal[3];
             this.Length += sizeof(float);
         }
 
@@ -381,11 +377,13 @@ namespace Agonyl.Shared.Network
             this.EnsureSpace(length);
 
             if (val == null)
-                val = "";
+            {
+                val = string.Empty;
+            }
 
             var bytes = Encoding.UTF8.GetBytes(val);
-            Buffer.BlockCopy(bytes, 0, _buffer, _ptr, Math.Min(bytes.Length, length));
-            _ptr += length;
+            Buffer.BlockCopy(bytes, 0, this._buffer, this._ptr, Math.Min(bytes.Length, length));
+            this._ptr += length;
             this.Length += length;
         }
 
@@ -393,14 +391,19 @@ namespace Agonyl.Shared.Network
         /// Writes null-terminated string to buffer.
         /// </summary>
         /// <param name="val"></param>
+        /// <param name="terminator"></param>
         public void PutString(string val, bool terminator = false)
         {
             if (val == null)
-                val = "";
+            {
+                val = string.Empty;
+            }
 
             // Append terminator
-            if (val == "" || (val.Length > 0 && val[val.Length - 1] != '\0' && terminator))
+            if (val == string.Empty || (val.Length > 0 && val[val.Length - 1] != '\0' && terminator))
+            {
                 val += '\0';
+            }
 
             this.PutBin(Encoding.UTF8.GetBytes(val));
         }
@@ -413,11 +416,15 @@ namespace Agonyl.Shared.Network
         public void PutLpString(string val)
         {
             if (val == null)
-                val = "";
+            {
+                val = string.Empty;
+            }
 
             // Append terminator
-            if (val == "" || (val.Length > 0 && val[val.Length - 1] != '\0'))
+            if (val == string.Empty || (val.Length > 0 && val[val.Length - 1] != '\0'))
+            {
                 val += '\0';
+            }
 
             var bytes = Encoding.UTF8.GetBytes(val);
             this.PutShort(bytes.Length);
@@ -432,8 +439,8 @@ namespace Agonyl.Shared.Network
         {
             this.EnsureSpace(val.Length);
 
-            Buffer.BlockCopy(val, 0, _buffer, _ptr, val.Length);
-            _ptr += val.Length;
+            Buffer.BlockCopy(val, 0, this._buffer, this._ptr, val.Length);
+            this._ptr += val.Length;
             this.Length += val.Length;
         }
 
@@ -444,12 +451,16 @@ namespace Agonyl.Shared.Network
         public void PutBinFromHex(string hex)
         {
             if (hex == null)
+            {
                 throw new ArgumentNullException("hex");
+            }
 
-            hex = hex.Trim().Replace(" ", "").Replace("-", "").Replace("\r", "").Replace("\n", "");
+            hex = hex.Trim().Replace(" ", string.Empty).Replace("-", string.Empty).Replace("\r", string.Empty).Replace("\n", string.Empty);
 
-            if (hex == "")
+            if (hex == string.Empty)
+            {
                 return;
+            }
 
             var val =
                 Enumerable.Range(0, hex.Length)
@@ -467,7 +478,9 @@ namespace Agonyl.Shared.Network
         public void PutEmptyBin(int amount)
         {
             if (amount <= 0)
+            {
                 return;
+            }
 
             this.PutBin(new byte[amount]);
         }
@@ -480,7 +493,9 @@ namespace Agonyl.Shared.Network
         {
             var type = val.GetType();
             if (!type.IsValueType || type.IsPrimitive)
+            {
                 throw new Exception("PutBin only takes byte[] and structs.");
+            }
 
             var size = Marshal.SizeOf(val);
             var arr = new byte[size];
@@ -497,6 +512,7 @@ namespace Agonyl.Shared.Network
         /// Writes the reverse hex of the given integer.
         /// </summary>
         /// <param name="value"></param>
+        /// <param name="length"></param>
         public void PutReverseHexOfInt(int value, int length = 4)
         {
             var tempByte = this.IntToReverseHexBytes(value, length);
@@ -511,6 +527,7 @@ namespace Agonyl.Shared.Network
                 this.PutShort(0);
                 zlibPacketFunc(this);
             }
+
             // If compressed, write data into a new, temporary packet,
             // and then write the data from that packet into this one,
             // after compressing it.
@@ -525,7 +542,9 @@ namespace Agonyl.Shared.Network
                 using (var ms = new MemoryStream())
                 {
                     using (var ds = new DeflateStream(ms, CompressionMode.Compress))
+                    {
                         ds.Write(buffer, 0, len);
+                    }
 
                     var compressedVal = ms.ToArray();
 
@@ -541,31 +560,32 @@ namespace Agonyl.Shared.Network
         /// </summary>
         /// <param name="buffer"></param>
         /// <param name="offset"></param>
-        /// <returns></returns>
         public byte[] Build(ref byte[] buffer, int offset)
         {
-            Buffer.BlockCopy(_buffer, 0, buffer, offset, this.Length);
+            Buffer.BlockCopy(this._buffer, 0, buffer, offset, this.Length);
 
-            return _buffer;
+            return this._buffer;
         }
 
         /// <summary>
         /// Returns buffer as formatted hex string.
         /// </summary>
-        /// <returns></returns>
         public override string ToString()
         {
             var sb = new StringBuilder();
-            var buffer = _buffer;
+            var buffer = this._buffer;
             var length = this.Length;
             var tableSize = Network.Op.GetSize(this.Op);
             var opName = Network.Op.GetName(this.Op);
-            var spacer = "".PadLeft(78, '-');
+            var spacer = string.Empty.PadLeft(78, '-');
 
             sb.AppendLine(spacer);
             sb.AppendFormat("Op: {0:X4} {1}, Size: {2}", this.Op, opName, length);
             if (tableSize != 0)
+            {
                 sb.AppendFormat(" (Table: {0}, Garbage: {1})", tableSize, length - tableSize);
+            }
+
             sb.AppendLine();
             sb.AppendLine(spacer);
 
@@ -577,26 +597,37 @@ namespace Agonyl.Shared.Network
                 for (var j = 0; j < 16; ++j, ++k)
                 {
                     if (i + j > length - 1)
+                    {
                         break;
+                    }
+
                     sb.Append(buffer[i + j].ToString("X2") + ' ');
                     if (j == 7)
+                    {
                         sb.Append(' ');
+                    }
                 }
 
-                sb.Append("".PadLeft((16 - k) * 3, ' '));
+                sb.Append(string.Empty.PadLeft((16 - k) * 3, ' '));
                 sb.Append("  ");
 
                 for (var j = 0; j < 16; ++j)
                 {
                     if (i + j > length - 1)
+                    {
                         break;
+                    }
 
                     var b = buffer[i + j];
                     // Only display ANSI characters, and no curly braces.
                     if (b >= 32 && b <= 126 && b != 123 && b != 125)
+                    {
                         sb.Append((char)b);
+                    }
                     else
+                    {
                         sb.Append('.');
+                    }
                 }
 
                 sb.AppendLine();
@@ -610,13 +641,18 @@ namespace Agonyl.Shared.Network
         public void SetReadPointer(int index = 0)
         {
             if (index >= this.Length)
+            {
                 index = this.Length - 1;
-            _ptr = index;
+            }
+
+            this._ptr = index;
         }
 
         /// <summary>
         /// Returns packet with byte equivalent of int
         /// </summary>
+        /// <param name="num"></param>
+        /// <param name="length"></param>
         private byte[] IntToReverseHexBytes(int num, int length = 4)
         {
             var hexPort = string.Format("{0:x}", num);
@@ -624,6 +660,7 @@ namespace Agonyl.Shared.Network
             {
                 hexPort = "0" + hexPort;
             }
+
             var tempByte = new byte[length];
             var j = 0;
             for (var i = hexPort.Length - 1; i > 0; i -= 2)
@@ -632,19 +669,21 @@ namespace Agonyl.Shared.Network
                 {
                     break;
                 }
+
                 tempByte[j] = Convert.ToByte(hexPort[i - 1] + hexPort[i].ToString(), 16);
                 j++;
             }
+
             return tempByte;
         }
 
         private int GetOpCode()
         {
             int opCode;
-            switch (_buffer[10])
+            switch (this._buffer[10])
             {
                 case 0x08:
-                    switch (_buffer[11])
+                    switch (this._buffer[11])
                     {
                         case 0x11:
                             opCode = Network.Op.C2S_CLIENT_EXIT;
@@ -658,10 +697,11 @@ namespace Agonyl.Shared.Network
                             opCode = Network.Op.C2S_UNKNOWN;
                             break;
                     }
+
                     break;
 
                 case 0x00:
-                    switch (_buffer[11])
+                    switch (this._buffer[11])
                     {
                         case 0xC0:
                             opCode = Network.Op.C2S_PAYMENT_INFO;
@@ -679,10 +719,11 @@ namespace Agonyl.Shared.Network
                             opCode = Network.Op.C2S_UNKNOWN;
                             break;
                     }
+
                     break;
 
                 case 0x67:
-                    switch (_buffer[11])
+                    switch (this._buffer[11])
                     {
                         case 0x17:
                             opCode = Network.Op.C2S_RECHARGE_POTION;
@@ -692,10 +733,11 @@ namespace Agonyl.Shared.Network
                             opCode = Network.Op.C2S_UNKNOWN;
                             break;
                     }
+
                     break;
 
                 case 0x11:
-                    switch (_buffer[11])
+                    switch (this._buffer[11])
                     {
                         case 0x11:
                             opCode = Network.Op.C2S_WARP_LOCATION;
@@ -709,10 +751,11 @@ namespace Agonyl.Shared.Network
                             opCode = Network.Op.C2S_UNKNOWN;
                             break;
                     }
+
                     break;
 
                 case 0x12:
-                    switch (_buffer[11])
+                    switch (this._buffer[11])
                     {
                         case 0x11:
                             opCode = Network.Op.C2S_WARP_REQUEST;
@@ -722,10 +765,11 @@ namespace Agonyl.Shared.Network
                             opCode = Network.Op.C2S_UNKNOWN;
                             break;
                     }
+
                     break;
 
                 case 0x06:
-                    switch (_buffer[11])
+                    switch (this._buffer[11])
                     {
                         case 0x16:
                             opCode = Network.Op.C2S_HEALER_WINDOW_OPEN;
@@ -735,10 +779,11 @@ namespace Agonyl.Shared.Network
                             opCode = Network.Op.C2S_UNKNOWN;
                             break;
                     }
+
                     break;
 
                 case 0x1C:
-                    switch (_buffer[11])
+                    switch (this._buffer[11])
                     {
                         case 0x50:
                             opCode = Network.Op.C2S_RECHARGE_POTIONS_FULL;
@@ -748,10 +793,11 @@ namespace Agonyl.Shared.Network
                             opCode = Network.Op.C2S_UNKNOWN;
                             break;
                     }
+
                     break;
 
                 case 0x02:
-                    switch (_buffer[11])
+                    switch (this._buffer[11])
                     {
                         case 0xA0:
                             opCode = Network.Op.C2S_CHARACTER_DELETE_REQUEST;
@@ -765,10 +811,11 @@ namespace Agonyl.Shared.Network
                             opCode = Network.Op.C2S_UNKNOWN;
                             break;
                     }
+
                     break;
 
                 default:
-                    switch (_buffer.Length)
+                    switch (this._buffer.Length)
                     {
                         case 37:
                             opCode = Network.Op.C2S_SELECT_CHARACTER;
@@ -786,8 +833,10 @@ namespace Agonyl.Shared.Network
                             opCode = Network.Op.C2S_UNKNOWN;
                             break;
                     }
+
                     break;
             }
+
             return opCode;
         }
 

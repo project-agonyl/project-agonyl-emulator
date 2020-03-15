@@ -8,7 +8,8 @@ namespace Agonyl.Shared.Util
 {
     public class NdtParser : BinaryFileParser
     {
-        public NdtParser(string FilePath) : base(FilePath)
+        public NdtParser(string filePath)
+            : base(filePath)
         {
         }
     }

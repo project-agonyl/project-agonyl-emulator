@@ -38,10 +38,10 @@ namespace Agonyl.Login.Util.Config
             this.GameServerPort = 9867;
             try
             {
-                var GameServerNode = XmlDocument.GetElementsByTagName("GameServer")[0];
-                if (GameServerNode != null)
+                var gameServerNode = this.XmlDocument.GetElementsByTagName("GameServer")[0];
+                if (gameServerNode != null)
                 {
-                    foreach (System.Xml.XmlNode child in GameServerNode.ChildNodes)
+                    foreach (System.Xml.XmlNode child in gameServerNode.ChildNodes)
                     {
                         switch (child.Name)
                         {
@@ -50,6 +50,7 @@ namespace Agonyl.Login.Util.Config
                                 {
                                     this.GameServerHost = child.InnerText;
                                 }
+
                                 break;
 
                             case "Port":
@@ -57,6 +58,7 @@ namespace Agonyl.Login.Util.Config
                                 {
                                     this.GameServerPort = Convert.ToInt32(child.InnerText);
                                 }
+
                                 break;
                         }
                     }

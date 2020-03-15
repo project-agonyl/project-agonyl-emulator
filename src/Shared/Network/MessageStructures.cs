@@ -106,23 +106,23 @@ namespace Agonyl.Shared.Network
 
         public MSG_S2C_HEADER()
         {
-            Ctrl = 0x03;
-            Cmd = 0xFF;
+            this.Ctrl = 0x03;
+            this.Cmd = 0xFF;
         }
 
         public MSG_S2C_HEADER(uint uid, ushort protocol)
         {
-            PCID = uid;
-            Ctrl = 0x03;
-            Cmd = 0xFF;
-            Protocol = protocol;
+            this.PCID = uid;
+            this.Ctrl = 0x03;
+            this.Cmd = 0xFF;
+            this.Protocol = protocol;
         }
 
         public MSG_S2C_HEADER(ushort protocol)
         {
-            Ctrl = 0x03;
-            Cmd = 0xFF;
-            Protocol = protocol;
+            this.Ctrl = 0x03;
+            this.Cmd = 0xFF;
+            this.Protocol = protocol;
         }
     }
 
@@ -137,8 +137,8 @@ namespace Agonyl.Shared.Network
 
         public MSG_S2C_ERROR()
         {
-            MsgHeader = new MSG_S2C_HEADER(Constants.S2C_ERROR_PROTOCOL);
-            MsgHeader.Size = this.GetSize();
+            this.MsgHeader = new MSG_S2C_HEADER(Constants.S2C_ERROR_PROTOCOL);
+            this.MsgHeader.Size = this.GetSize();
         }
     }
 
@@ -152,9 +152,9 @@ namespace Agonyl.Shared.Network
 
         public MSG_S2C_CHARACTER_LIST()
         {
-            MsgHeader = new MSG_S2C_HEADER(Constants.S2C_CHARACTER_LIST_PROTOCOL);
-            MsgHeader.Size = this.GetSize();
-            CharInfo = new CHARACTER_INFO[5];
+            this.MsgHeader = new MSG_S2C_HEADER(Constants.S2C_CHARACTER_LIST_PROTOCOL);
+            this.MsgHeader.Size = this.GetSize();
+            this.CharInfo = new CHARACTER_INFO[5];
         }
     }
 
@@ -170,8 +170,8 @@ namespace Agonyl.Shared.Network
 
         public MSG_C2S_CHARACTER_CREATE_REQUEST()
         {
-            MsgHeader = new MSG_HEAD_WITH_PROTOCOL();
-            MsgHeader.Size = this.GetSize();
+            this.MsgHeader = new MSG_HEAD_WITH_PROTOCOL();
+            this.MsgHeader.Size = this.GetSize();
         }
     }
 
@@ -189,9 +189,9 @@ namespace Agonyl.Shared.Network
 
         public MSG_S2C_CHARACTER_CREATE_ACK()
         {
-            MsgHeader = new MSG_S2C_HEADER(Constants.S2C_CHARACTER_CREATE_ACK_PROTOCOL);
-            MsgHeader.Size = this.GetSize();
-            WearList = new MSG_ITEM_WEAR[10];
+            this.MsgHeader = new MSG_S2C_HEADER(Constants.S2C_CHARACTER_CREATE_ACK_PROTOCOL);
+            this.MsgHeader.Size = this.GetSize();
+            this.WearList = new MSG_ITEM_WEAR[10];
         }
     }
 
@@ -205,8 +205,8 @@ namespace Agonyl.Shared.Network
 
         public MSG_S2C_CHARACTER_DELETE_ACK()
         {
-            MsgHeader = new MSG_S2C_HEADER(Constants.S2C_CHARACTER_DELETE_ACK_PROTOCOL);
-            MsgHeader.Size = this.GetSize();
+            this.MsgHeader = new MSG_S2C_HEADER(Constants.S2C_CHARACTER_DELETE_ACK_PROTOCOL);
+            this.MsgHeader.Size = this.GetSize();
         }
     }
 
@@ -218,9 +218,9 @@ namespace Agonyl.Shared.Network
 
         public MSG_S2C_WORLD_LOGIN()
         {
-            MsgHeader = new MSG_S2C_HEADER(Constants.S2C_WORLD_LOGIN_PROTOCOL);
-            MsgHeader.Size = this.GetSize();
-            CharacterData = new CHARACTER_DATA();
+            this.MsgHeader = new MSG_S2C_HEADER(Constants.S2C_WORLD_LOGIN_PROTOCOL);
+            this.MsgHeader.Size = this.GetSize();
+            this.CharacterData = new CHARACTER_DATA();
         }
     }
 }

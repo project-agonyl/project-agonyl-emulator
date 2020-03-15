@@ -18,8 +18,8 @@ namespace Agonyl.Shared.Database
         /// <exception cref="Exception">Thrown if connection couldn't be established.</exception>
         public void Init(string host, string user, string pass, string db)
         {
-            _connectionString = string.Format("server={0}; database={1}; uid={2}; password={3}; charset=utf8; pooling=true; min pool size=0; max pool size=100;", host, db, user, pass);
-            _dbName = db;
+            this._connectionString = string.Format("server={0}; database={1}; uid={2}; password={3}; charset=utf8; pooling=true; min pool size=0; max pool size=100;", host, db, user, pass);
+            this._dbName = db;
             this.TestConnection();
         }
 
@@ -37,7 +37,9 @@ namespace Agonyl.Shared.Database
             finally
             {
                 if (conn != null)
+                {
                     conn.Close();
+                }
             }
         }
 
@@ -46,7 +48,7 @@ namespace Agonyl.Shared.Database
         /// </summary>
         public string GetDbName()
         {
-            return _dbName;
+            return this._dbName;
         }
 
         /// <summary>
@@ -54,10 +56,12 @@ namespace Agonyl.Shared.Database
         /// </summary>
         protected MySqlConnection GetConnection()
         {
-            if (_connectionString == null)
+            if (this._connectionString == null)
+            {
                 throw new Exception(this._dbName + " database connection has not been initialized.");
+            }
 
-            var result = new MySqlConnection(_connectionString);
+            var result = new MySqlConnection(this._connectionString);
             result.Open();
             return result;
         }

@@ -73,8 +73,8 @@ namespace Agonyl.Shared.Network
 
             var ipAddress = this.Host == "0.0.0.0" ? IPAddress.Any : IPAddress.Parse(this.Host);
 
-            _socket.Bind(new IPEndPoint(ipAddress, this.Port));
-            _socket.Listen(10);
+            this._socket.Bind(new IPEndPoint(ipAddress, this.Port));
+            this._socket.Listen(10);
 
             this.BeginAccept();
         }
@@ -84,7 +84,7 @@ namespace Agonyl.Shared.Network
         /// </summary>
         private void BeginAccept()
         {
-            _socket.BeginAccept(this.OnAccept, null);
+            this._socket.BeginAccept(this.OnAccept, null);
         }
 
         /// <summary>
@@ -92,15 +92,15 @@ namespace Agonyl.Shared.Network
         /// </summary>
         private void ResetSocket()
         {
-            if (_socket != null)
+            if (this._socket != null)
             {
-                try { _socket.Shutdown(SocketShutdown.Both); }
+                try { this._socket.Shutdown(SocketShutdown.Both); }
                 catch { }
-                try { _socket.Close(2); }
+                try { this._socket.Close(2); }
                 catch { }
             }
 
-            _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            this._socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Agonyl.Shared.Network
         {
             try
             {
-                var connectionSocket = _socket.EndAccept(result);
+                var connectionSocket = this._socket.EndAccept(result);
 
                 var connection = new TConnection();
                 connection.SetSocket(connectionSocket);

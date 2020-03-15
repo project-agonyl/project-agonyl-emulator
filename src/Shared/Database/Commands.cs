@@ -27,8 +27,8 @@ namespace Agonyl.Shared.Database
         /// <param name="trans"></param>
         protected SimpleCommand(string command, MySqlConnection conn, MySqlTransaction trans = null)
         {
-            _mc = new MySqlCommand(command, conn, trans);
-            _set = new Dictionary<string, object>();
+            this._mc = new MySqlCommand(command, conn, trans);
+            this._set = new Dictionary<string, object>();
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Agonyl.Shared.Database
         /// <param name="value"></param>
         public void AddParameter(string name, object value)
         {
-            _mc.Parameters.AddWithValue(name, value);
+            this._mc.Parameters.AddWithValue(name, value);
         }
 
         /// <summary>
@@ -48,13 +48,12 @@ namespace Agonyl.Shared.Database
         /// <param name="value"></param>
         public void Set(string field, object value)
         {
-            _set[field] = value;
+            this._set[field] = value;
         }
 
         /// <summary>
         /// Executes command.
         /// </summary>
-        /// <returns></returns>
         public abstract int Execute();
 
         /// <summary>
@@ -62,7 +61,7 @@ namespace Agonyl.Shared.Database
         /// </summary>
         public void Dispose()
         {
-            _mc.Dispose();
+            this._mc.Dispose();
         }
     }
 
@@ -104,23 +103,26 @@ namespace Agonyl.Shared.Database
         /// <summary>
         /// Runs MySqlCommand.ExecuteNonQuery
         /// </summary>
-        /// <returns></returns>
         public override int Execute()
         {
             // Build setting part
             var sb = new StringBuilder();
-            foreach (var parameter in _set.Keys)
+            foreach (var parameter in this._set.Keys)
+            {
                 sb.AppendFormat("`{0}` = @{0}, ", parameter);
+            }
 
             // Add setting part
-            _mc.CommandText = string.Format(_mc.CommandText, sb.ToString().Trim(' ', ','));
+            this._mc.CommandText = string.Format(this._mc.CommandText, sb.ToString().Trim(' ', ','));
 
             // Add parameters
-            foreach (var parameter in _set)
-                _mc.Parameters.AddWithValue("@" + parameter.Key, parameter.Value);
+            foreach (var parameter in this._set)
+            {
+                this._mc.Parameters.AddWithValue("@" + parameter.Key, parameter.Value);
+            }
 
             // Run
-            return _mc.ExecuteNonQuery();
+            return this._mc.ExecuteNonQuery();
         }
     }
 
@@ -147,7 +149,7 @@ namespace Agonyl.Shared.Database
         /// <summary>
         /// Returns last insert id.
         /// </summary>
-        public long LastId { get { return _mc.LastInsertedId; } }
+        public long LastId { get { return this._mc.LastInsertedId; } }
 
         /// <summary>
         /// Creates new insert command.
@@ -163,13 +165,12 @@ namespace Agonyl.Shared.Database
         /// <summary>
         /// Runs MySqlCommand.ExecuteNonQuery
         /// </summary>
-        /// <returns></returns>
         public override int Execute()
         {
             // Build values part
             var sb1 = new StringBuilder();
             var sb2 = new StringBuilder();
-            foreach (var parameter in _set.Keys)
+            foreach (var parameter in this._set.Keys)
             {
                 sb1.AppendFormat("`{0}`, ", parameter);
                 sb2.AppendFormat("@{0}, ", parameter);
@@ -177,14 +178,16 @@ namespace Agonyl.Shared.Database
 
             // Add values part
             var values = "(" + (sb1.ToString().Trim(' ', ',')) + ") VALUES (" + (sb2.ToString().Trim(' ', ',')) + ")";
-            _mc.CommandText = string.Format(_mc.CommandText, values);
+            this._mc.CommandText = string.Format(this._mc.CommandText, values);
 
             // Add parameters
-            foreach (var parameter in _set)
-                _mc.Parameters.AddWithValue("@" + parameter.Key, parameter.Value);
+            foreach (var parameter in this._set)
+            {
+                this._mc.Parameters.AddWithValue("@" + parameter.Key, parameter.Value);
+            }
 
             // Run
-            return _mc.ExecuteNonQuery();
+            return this._mc.ExecuteNonQuery();
         }
     }
 }

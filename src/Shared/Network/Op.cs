@@ -89,20 +89,28 @@ namespace Agonyl.Shared.Network
             _sizes[C2S_UNKNOWN] = 0;
 
             foreach (var field in typeof(Op).GetFields(BindingFlags.Public | BindingFlags.Static))
+            {
                 _names[(int)field.GetValue(null)] = field.Name;
+            }
         }
 
         public static int GetSize(int op)
         {
             if (!_sizes.TryGetValue(op, out var size))
+            {
                 return -1;
+            }
+
             return size;
         }
 
         public static string GetName(int op)
         {
             if (!_names.TryGetValue(op, out var name))
+            {
                 return "?";
+            }
+
             return name;
         }
     }

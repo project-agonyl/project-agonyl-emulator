@@ -29,9 +29,14 @@ namespace Agonyl.Shared.Database
         public Redis(string host, int port, string password = "")
         {
             if (password.Length != 0)
-                _connectionString = string.Format("{0}:{1},password={2},defaultDatabase=0", host, port, password);
+            {
+                this._connectionString = string.Format("{0}:{1},password={2},defaultDatabase=0", host, port, password);
+            }
             else
-                _connectionString = string.Format("{0}:{1},defaultDatabase=0", host, port);
+            {
+                this._connectionString = string.Format("{0}:{1},defaultDatabase=0", host, port);
+            }
+
             this.Initialize();
         }
 
@@ -57,6 +62,7 @@ namespace Agonyl.Shared.Database
         /// <summary>
         /// Returns whether username exists in the logged in account list
         /// </summary>
+        /// <param name="username"></param>
         public bool IsLoggedIn(string username)
         {
             var accountList = JsonConvert.DeserializeObject<List<string>>(this.Db.StringGet(Constants.KEY_LOGGED_IN_ACCOUNTS));
@@ -66,22 +72,30 @@ namespace Agonyl.Shared.Database
         /// <summary>
         /// Adds username to logged in account list
         /// </summary>
+        /// <param name="username"></param>
         public void AddLoggedInAccount(string username)
         {
             var accountList = JsonConvert.DeserializeObject<List<string>>(this.Db.StringGet(Constants.KEY_LOGGED_IN_ACCOUNTS));
             if (!accountList.Contains(username))
+            {
                 accountList.Add(username);
+            }
+
             this.Db.StringSet(Constants.KEY_LOGGED_IN_ACCOUNTS, JsonConvert.SerializeObject(accountList));
         }
 
         /// <summary>
         /// Removes username to logged in account list
         /// </summary>
+        /// <param name="username"></param>
         public void RemoveLoggedInAccount(string username)
         {
             var accountList = JsonConvert.DeserializeObject<List<string>>(this.Db.StringGet(Constants.KEY_LOGGED_IN_ACCOUNTS));
             if (accountList.Contains(username))
+            {
                 accountList.Remove(username);
+            }
+
             this.Db.StringSet(Constants.KEY_LOGGED_IN_ACCOUNTS, JsonConvert.SerializeObject(accountList));
         }
     }

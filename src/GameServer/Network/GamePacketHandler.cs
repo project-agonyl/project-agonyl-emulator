@@ -82,11 +82,13 @@ namespace Agonyl.Game.Network
                         stats = GameServer.Instance.Conf.StarterStatsArcher;
                         break;
                 }
+
                 if (decodedPacket.CharacterTown == Constants.TOWN_QUANATO)
                 {
                     location = GameServer.Instance.Conf.StarterLocationQuanato;
                     body = body.Replace("SINFO=0", "SINFO=1");
                 }
+
                 if (GameServer.Instance.ASDDatabase.CreateCharacter(conn.Account.Username, decodedPacket.CharacterName, decodedPacket.CharacterType, stats, body, location, level))
                 {
                     Send.S2C_CHARACTER_CREATE_ACK(conn, decodedPacket.CharacterName, decodedPacket.CharacterType);

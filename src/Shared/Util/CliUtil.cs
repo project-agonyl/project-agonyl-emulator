@@ -32,6 +32,7 @@ namespace Agonyl.Shared.Util
         /// <summary>
         /// Writes logo and credits to Console.
         /// </summary>
+        /// <param name="consoleTitle"></param>
         /// <param name="color">Color of the logo.</param>
         public static void WriteHeader(string consoleTitle, ConsoleColor color)
         {
@@ -54,7 +55,7 @@ namespace Agonyl.Shared.Util
         /// </summary>
         public static void WriteSeperator()
         {
-            Console.WriteLine("".PadLeft(Console.WindowWidth, '_'));
+            Console.WriteLine(string.Empty.PadLeft(Console.WindowWidth, '_'));
         }
 
         /// <summary>
@@ -65,7 +66,9 @@ namespace Agonyl.Shared.Util
         {
             var longestLine = lines.Max(a => a.Length);
             foreach (var line in lines)
+            {
                 WriteLineCentered(line, longestLine);
+            }
         }
 
         /// <summary>
@@ -77,7 +80,9 @@ namespace Agonyl.Shared.Util
         private static void WriteLineCentered(string line, int referenceLength = -1)
         {
             if (referenceLength < 0)
+            {
                 referenceLength = line.Length;
+            }
 
             Console.WriteLine(line.PadLeft(line.Length + Console.WindowWidth / 2 - referenceLength / 2));
         }
@@ -85,7 +90,9 @@ namespace Agonyl.Shared.Util
         public static void LoadingTitle()
         {
             if (!Console.Title.StartsWith("* "))
+            {
                 Console.Title = "* " + Console.Title;
+            }
         }
 
         public static void RunningTitle()
@@ -105,6 +112,7 @@ namespace Agonyl.Shared.Util
                 Log.Info("Press Enter to exit.");
                 Console.ReadLine();
             }
+
             Log.Info("Exiting...");
             Environment.Exit(exitCode);
         }

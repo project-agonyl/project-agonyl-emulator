@@ -30,7 +30,6 @@ namespace Agonyl.Shared.Data
         /// </summary>
         /// <param name="path">File to load</param>
         /// <param name="clear">Clear database before loading?</param>
-        /// <returns></returns>
         int Load(string path, bool clear);
 
         /// <summary>
@@ -39,7 +38,6 @@ namespace Agonyl.Shared.Data
         /// <param name="files">Files to load</param>
         /// <param name="cache">Path to an optional cache file (null for none)</param>
         /// <param name="clear">Clear database before loading?</param>
-        /// <returns></returns>
         int Load(string[] files, string cache, bool clear);
 
         /// <summary>
@@ -55,7 +53,7 @@ namespace Agonyl.Shared.Data
         public TList Entries = new TList();
         protected List<DatabaseWarningException> _warnings = new List<DatabaseWarningException>();
 
-        public List<DatabaseWarningException> Warnings { get { return _warnings; } }
+        public List<DatabaseWarningException> Warnings { get { return this._warnings; } }
 
         public int Count { get { return this.Entries.Count; } }
 
@@ -80,7 +78,9 @@ namespace Agonyl.Shared.Data
         public override int Load(string path, bool clear)
         {
             if (clear)
+            {
                 this.Clear();
+            }
 
             this.Warnings.Clear();
 
@@ -92,7 +92,9 @@ namespace Agonyl.Shared.Data
         public override int Load(string[] files, string cache, bool clear)
         {
             if (clear)
+            {
                 this.Clear();
+            }
 
             this.Warnings.Clear();
 
@@ -112,13 +114,17 @@ namespace Agonyl.Shared.Data
             if (!fromFiles)
             {
                 if (!this.LoadFromCache(cache))
+                {
                     this.LoadFromFiles(files);
+                }
             }
             else
             {
                 this.LoadFromFiles(files);
                 if (cache != null)
+                {
                     this.CreateCache(cache);
+                }
             }
 
             this.AfterLoad();
@@ -129,7 +135,9 @@ namespace Agonyl.Shared.Data
         protected void LoadFromFiles(string[] paths)
         {
             foreach (var path in paths.Where(a => File.Exists(a)))
+            {
                 this.LoadFromFile(path);
+            }
         }
 
         protected bool LoadFromCache(string path)

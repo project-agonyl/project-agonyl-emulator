@@ -18,11 +18,14 @@ namespace Agonyl.Login.Network
 
         public override void Send(Packet packet)
         {
-            if (_socket == null || this.State == ConnectionState.Closed)
+            if (this._socket == null || this.State == ConnectionState.Closed)
+            {
                 return;
+            }
+
             var buffer = new byte[packet.Length];
             packet.Build(ref buffer, 0);
-            _socket.Send(buffer);
+            this._socket.Send(buffer);
         }
 
         /// <summary>
@@ -44,10 +47,10 @@ namespace Agonyl.Login.Network
 
         protected override void OnAfterClose()
         {
-            if (Username != null && LoginServer.Instance.Redis.IsLoggedIn(Username))
+            if (this.Username != null && LoginServer.Instance.Redis.IsLoggedIn(this.Username))
             {
-                Log.Info(Username + " account has left the login server");
-                LoginServer.Instance.Redis.RemoveLoggedInAccount(Username);
+                Log.Info(this.Username + " account has left the login server");
+                LoginServer.Instance.Redis.RemoveLoggedInAccount(this.Username);
             }
         }
     }

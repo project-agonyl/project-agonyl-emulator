@@ -19,21 +19,34 @@ namespace Agonyl.Game.Util.Config
         public string BaseGameDataPath { get; protected set; }
 
         public string TeleportTextFileName { get; protected set; }
+
         public string ItemDirectory { get; protected set; }
+
         public List<string> StarterGearWarrior = new List<string>();
         public List<string> StarterGearHK = new List<string>();
         public List<string> StarterGearMage = new List<string>();
         public List<string> StarterGearArcher = new List<string>();
+
         public string StarterStatsWarrior { get; protected set; }
+
         public string StarterStatsHK { get; protected set; }
+
         public string StarterStatsMage { get; protected set; }
+
         public string StarterStatsArcher { get; protected set; }
+
         public string StarterBodyWarrior { get; protected set; }
+
         public string StarterBodyHK { get; protected set; }
+
         public string StarterBodyMage { get; protected set; }
+
         public string StarterBodyArcher { get; protected set; }
+
         public ushort StarterLevel { get; protected set; }
+
         public string StarterLocationTemoz { get; protected set; }
+
         public string StarterLocationQuanato { get; protected set; }
 
         /// <summary>
@@ -52,18 +65,19 @@ namespace Agonyl.Game.Util.Config
             this.ItemDirectory = "item";
             try
             {
-                var DataConfig = XmlDocument.GetElementsByTagName("DataConfig")[0];
-                if (DataConfig != null)
+                var dataConfig = this.XmlDocument.GetElementsByTagName("DataConfig")[0];
+                if (dataConfig != null)
                 {
-                    foreach (System.Xml.XmlNode child in DataConfig.ChildNodes)
+                    foreach (System.Xml.XmlNode child in dataConfig.ChildNodes)
                     {
                         switch (child.Name)
                         {
-                            case "BaseDirectory":
+                            case "BasePath":
                                 if (child.InnerText != null)
                                 {
-                                    this.BaseGameDataPath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + Path.DirectorySeparatorChar + child.InnerText;
+                                    this.BaseGameDataPath = child.InnerText;
                                 }
+
                                 break;
 
                             case "TeleportTextFileName":
@@ -71,6 +85,7 @@ namespace Agonyl.Game.Util.Config
                                 {
                                     this.TeleportTextFileName = child.InnerText;
                                 }
+
                                 break;
 
                             case "ItemDirectory":
@@ -78,14 +93,16 @@ namespace Agonyl.Game.Util.Config
                                 {
                                     this.ItemDirectory = child.InnerText;
                                 }
+
                                 break;
                         }
                     }
                 }
-                var StarterGear = XmlDocument.GetElementsByTagName("StarterGear")[0];
-                if (StarterGear != null)
+
+                var starterGear = this.XmlDocument.GetElementsByTagName("StarterGear")[0];
+                if (starterGear != null)
                 {
-                    foreach (System.Xml.XmlNode child in StarterGear.ChildNodes)
+                    foreach (System.Xml.XmlNode child in starterGear.ChildNodes)
                     {
                         switch (child.Name)
                         {
@@ -94,6 +111,7 @@ namespace Agonyl.Game.Util.Config
                                 {
                                     this.StarterGearWarrior.Add(subChild.Attributes["id"].Value + ";" + subChild.Attributes["option"].Value);
                                 }
+
                                 break;
 
                             case "Holyknight":
@@ -101,6 +119,7 @@ namespace Agonyl.Game.Util.Config
                                 {
                                     this.StarterGearHK.Add(subChild.Attributes["id"].Value + ";" + subChild.Attributes["option"].Value);
                                 }
+
                                 break;
 
                             case "Mage":
@@ -108,6 +127,7 @@ namespace Agonyl.Game.Util.Config
                                 {
                                     this.StarterGearMage.Add(subChild.Attributes["id"].Value + ";" + subChild.Attributes["option"].Value);
                                 }
+
                                 break;
 
                             case "Archer":
@@ -115,14 +135,16 @@ namespace Agonyl.Game.Util.Config
                                 {
                                     this.StarterGearArcher.Add(subChild.Attributes["id"].Value + ";" + subChild.Attributes["option"].Value);
                                 }
+
                                 break;
                         }
                     }
                 }
-                var StarterStats = XmlDocument.GetElementsByTagName("StarterStats")[0];
-                if (StarterStats != null)
+
+                var starterStats = this.XmlDocument.GetElementsByTagName("StarterStats")[0];
+                if (starterStats != null)
                 {
-                    foreach (System.Xml.XmlNode child in StarterStats.ChildNodes)
+                    foreach (System.Xml.XmlNode child in starterStats.ChildNodes)
                     {
                         switch (child.Name)
                         {
@@ -144,10 +166,11 @@ namespace Agonyl.Game.Util.Config
                         }
                     }
                 }
-                var StarterBody = XmlDocument.GetElementsByTagName("StarterBody")[0];
-                if (StarterBody != null)
+
+                var starterBody = this.XmlDocument.GetElementsByTagName("StarterBody")[0];
+                if (starterBody != null)
                 {
-                    foreach (System.Xml.XmlNode child in StarterBody.ChildNodes)
+                    foreach (System.Xml.XmlNode child in starterBody.ChildNodes)
                     {
                         switch (child.Name)
                         {
@@ -169,19 +192,21 @@ namespace Agonyl.Game.Util.Config
                         }
                     }
                 }
-                var StarterLevel = XmlDocument.GetElementsByTagName("StarterLevel")[0];
-                if (StarterLevel != null)
+
+                var starterLevel = this.XmlDocument.GetElementsByTagName("StarterLevel")[0];
+                if (starterLevel != null)
                 {
-                    this.StarterLevel = Convert.ToUInt16(StarterLevel.InnerText);
+                    this.StarterLevel = Convert.ToUInt16(starterLevel.InnerText);
                 }
                 else
                 {
                     this.StarterLevel = 1;
                 }
-                var StarterLocation = XmlDocument.GetElementsByTagName("StarterLocation")[0];
-                if (StarterLocation != null)
+
+                var starterLocation = this.XmlDocument.GetElementsByTagName("StarterLocation")[0];
+                if (starterLocation != null)
                 {
-                    foreach (System.Xml.XmlNode child in StarterLocation.ChildNodes)
+                    foreach (System.Xml.XmlNode child in starterLocation.ChildNodes)
                     {
                         switch (child.Name)
                         {

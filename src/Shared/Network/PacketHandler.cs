@@ -45,7 +45,7 @@ namespace Agonyl.Shared.Network
         /// </summary>
         public PacketHandler()
         {
-            _handlers = new Dictionary<int, PacketHandlerFunc>();
+            this._handlers = new Dictionary<int, PacketHandlerFunc>();
         }
 
         /// <summary>
@@ -57,8 +57,10 @@ namespace Agonyl.Shared.Network
         {
             PacketHandlerFunc handler;
 
-            lock (_handlers)
-                _handlers.TryGetValue(packet.Op, out handler);
+            lock (this._handlers)
+            {
+                this._handlers.TryGetValue(packet.Op, out handler);
+            }
 
             if (handler == null)
             {
@@ -86,8 +88,10 @@ namespace Agonyl.Shared.Network
         /// <param name="handler"></param>
         public void Register(int op, PacketHandlerFunc handler)
         {
-            lock (_handlers)
-                _handlers[op] = handler;
+            lock (this._handlers)
+            {
+                this._handlers[op] = handler;
+            }
         }
 
         /// <summary>
@@ -97,8 +101,10 @@ namespace Agonyl.Shared.Network
         /// <param name="handler"></param>
         public void Register(int op, IPacketHandler<TConnection> handler)
         {
-            lock (_handlers)
-                _handlers[op] = handler.Handle;
+            lock (this._handlers)
+            {
+                this._handlers[op] = handler.Handle;
+            }
         }
 
         /// <summary>
@@ -114,7 +120,9 @@ namespace Agonyl.Shared.Network
                     {
                         var func = (PacketHandlerFunc)Delegate.CreateDelegate(typeof(PacketHandlerFunc), this, method);
                         foreach (var op in attr.Ops)
+                        {
                             this.Register(op, func);
+                        }
                     }
                 }
                 catch (Exception ex)

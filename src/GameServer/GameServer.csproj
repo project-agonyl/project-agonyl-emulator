@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="Data\Account.cs" />
     <Compile Include="GameServer.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Network\GameConnection.cs" />
     <Compile Include="Network\GamePacketHandler.cs" />
     <Compile Include="Network\GamePacketSender.cs" />
@@ -72,6 +73,7 @@
     <None Include="liblua51.so">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="GameServer.xml">
@@ -88,6 +90,9 @@
       <Name>Shared</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

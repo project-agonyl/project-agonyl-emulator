@@ -14,7 +14,6 @@ namespace Agonyl.Shared.Network
         /// <summary>
         /// Serialize the class
         /// </summary>
-        /// <returns></returns>
         public byte[] Serialize()
         {
             // allocate a byte array for the struct data
@@ -46,6 +45,7 @@ namespace Agonyl.Shared.Network
         /// Deserialize the class from packet
         /// </summary>
         /// <param name="buffer"></param>
+        /// <param name="packet"></param>
         public void Deserialize(ref Packet packet)
         {
             var gch = GCHandle.Alloc(packet.GetBuffer(), GCHandleType.Pinned);

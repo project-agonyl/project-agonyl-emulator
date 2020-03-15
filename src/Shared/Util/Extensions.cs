@@ -14,6 +14,9 @@ namespace Agonyl.Shared.Util
         /// <summary>
         /// Calculates differences between 2 strings.
         /// </summary>
+        /// <param name="str"></param>
+        /// <param name="compare"></param>
+        /// <param name="caseSensitive"></param>
         /// <remarks>
         /// http://en.wikipedia.org/wiki/Levenshtein_distance
         /// </remarks>
@@ -37,13 +40,24 @@ namespace Agonyl.Shared.Util
             var result = new int[sLen + 1, cLen + 1];
 
             if (sLen == 0)
+            {
                 return cLen;
+            }
 
             if (cLen == 0)
+            {
                 return sLen;
+            }
 
-            for (var i = 0; i <= sLen; result[i, 0] = i++) ;
-            for (var i = 0; i <= cLen; result[0, i] = i++) ;
+            for (var i = 0; i <= sLen; result[i, 0] = i++)
+            {
+                ;
+            }
+
+            for (var i = 0; i <= cLen; result[0, i] = i++)
+            {
+                ;
+            }
 
             for (var i = 1; i <= sLen; i++)
             {
@@ -64,7 +78,6 @@ namespace Agonyl.Shared.Util
         /// IPAddress.Parse("127.0.0.1").ToInt32(); // 0x0100007F
         /// </example>
         /// <param name="ipAddress"></param>
-        /// <returns></returns>
         public static int ToInt32(this IPAddress ipAddress)
         {
             return BitConverter.ToInt32(ipAddress.GetAddressBytes(), 0);
@@ -74,7 +87,6 @@ namespace Agonyl.Shared.Util
         /// Returns DateTime as 32-bit unix timestamp.
         /// </summary>
         /// <param name="dt"></param>
-        /// <returns></returns>
         public static int ToUnixTimeSeconds(this DateTime dt)
         {
             var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);

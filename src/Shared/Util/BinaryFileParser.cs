@@ -13,9 +13,9 @@ namespace Agonyl.Shared.Util
     {
         public string FilePath { get; protected set; }
 
-        protected BinaryFileParser(string FilePath)
+        protected BinaryFileParser(string filePath)
         {
-            this.FilePath = FilePath;
+            this.FilePath = filePath;
             if (!File.Exists(this.FilePath))
             {
                 throw new FileNotFoundException("Data file '" + this.FilePath + "' couldn't be found.", this.FilePath);

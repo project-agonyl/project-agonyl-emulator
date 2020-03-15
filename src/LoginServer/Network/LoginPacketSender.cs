@@ -20,7 +20,10 @@ namespace Agonyl.Login.Network
             var packet = new Packet(Op.S2C_LOGIN_MESSAGE);
             var header = new byte[] { 0x5c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0xe0, 0x01 };
             if (msg.Length > 70)
+            {
                 msg = msg.Substring(0, 69);
+            }
+
             packet.PutBytes(header);
             packet.PutString(msg);
             packet.PutEmptyBin(92 - 11 - msg.Length);
@@ -31,6 +34,7 @@ namespace Agonyl.Login.Network
         /// Sends server list.
         /// </summary>
         /// <param name="conn"></param>
+        /// <param name="serverName"></param>
         public static void S2C_SERVER_LIST(LoginConnection conn, string serverName)
         {
             var packet = new Packet(Op.S2C_SERVER_LIST);

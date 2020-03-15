@@ -19,8 +19,8 @@ namespace Agonyl.Shared.Data
 
         public GameData()
         {
-            Items = new Dictionary<uint, Item>();
-            Maps = new Dictionary<uint, Map>();
+            this.Items = new Dictionary<uint, Item>();
+            this.Maps = new Dictionary<uint, Map>();
         }
 
         public Item GetItemByCode(uint code)
@@ -29,7 +29,8 @@ namespace Agonyl.Shared.Data
             {
                 return new Item();
             }
-            return Items[code];
+
+            return this.Items[code];
         }
     }
 }

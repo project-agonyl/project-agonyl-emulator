@@ -35,14 +35,19 @@ namespace Agonyl.Shared
         /// </summary>
         public virtual void Run()
         {
-            if (_running)
+            if (this._running)
+            {
                 throw new Exception("Server is already running.");
-            _running = true;
+            }
+
+            this._running = true;
         }
 
         /// <summary>
         /// Initializes ASD database connection with data from Conf.
         /// </summary>
+        /// <param name="db"></param>
+        /// <param name="conf"></param>
         protected void InitDatabase(Base db, Conf conf)
         {
             try

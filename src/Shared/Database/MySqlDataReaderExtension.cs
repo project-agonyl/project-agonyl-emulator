@@ -19,7 +19,6 @@ namespace Agonyl.Shared.Database
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="index"></param>
-        /// <returns></returns>
         private static bool IsDBNull(this MySqlDataReader reader, string index)
         {
             return reader.IsDBNull(reader.GetOrdinal(index));
@@ -30,13 +29,16 @@ namespace Agonyl.Shared.Database
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="index"></param>
-        /// <returns></returns>
         public static string GetStringSafe(this MySqlDataReader reader, string index)
         {
             if (IsDBNull(reader, index))
+            {
                 return null;
+            }
             else
+            {
                 return reader.GetString(index);
+            }
         }
 
         /// <summary>
@@ -44,7 +46,6 @@ namespace Agonyl.Shared.Database
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="index"></param>
-        /// <returns></returns>
         public static DateTime GetDateTimeSafe(this MySqlDataReader reader, string index)
         {
             return reader[index] as DateTime? ?? DateTime.MinValue;

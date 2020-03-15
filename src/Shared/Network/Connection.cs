@@ -62,9 +62,9 @@ namespace Agonyl.Shared.Network
         /// </summary>
         public Connection()
         {
-            _buffer = new byte[1024 * 500];
-            _backBuffer = new byte[ushort.MaxValue];
-            _crypto = new Crypt();
+            this._buffer = new byte[1024 * 500];
+            this._backBuffer = new byte[ushort.MaxValue];
+            this._crypto = new Crypt();
 
             this.State = ConnectionState.Open;
             this.Address = "?:?";
@@ -78,10 +78,12 @@ namespace Agonyl.Shared.Network
         /// <exception cref="InvalidOperationException">Thrown if socket was already set.</exception>
         public void SetSocket(Socket socket)
         {
-            if (_socket != null)
+            if (this._socket != null)
+            {
                 throw new InvalidOperationException("Socket is already set.");
+            }
 
-            _socket = socket;
+            this._socket = socket;
             this.Address = ((IPEndPoint)socket.RemoteEndPoint).ToString();
         }
 
@@ -98,9 +100,9 @@ namespace Agonyl.Shared.Network
 
             this.State = ConnectionState.Closed;
 
-            try { _socket.Shutdown(SocketShutdown.Both); }
+            try { this._socket.Shutdown(SocketShutdown.Both); }
             catch { }
-            try { _socket.Close(); }
+            try { this._socket.Close(); }
             catch { }
 
             this.OnClosed();
@@ -112,7 +114,7 @@ namespace Agonyl.Shared.Network
         /// </summary>
         public void BeginReceive()
         {
-            _socket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, this.OnReceive, null);
+            this._socket.BeginReceive(this._buffer, 0, this._buffer.Length, SocketFlags.None, this.OnReceive, null);
         }
 
         /// <summary>
@@ -128,7 +130,7 @@ namespace Agonyl.Shared.Network
         {
             try
             {
-                var length = _socket.EndReceive(result);
+                var length = this._socket.EndReceive(result);
                 var read = 0;
 
                 // Client disconnected
@@ -142,27 +144,33 @@ namespace Agonyl.Shared.Network
 
                 while (read < length)
                 {
-                    var packetLength = BitConverter.ToUInt16(_buffer, read);
+                    var packetLength = BitConverter.ToUInt16(this._buffer, read);
                     if (packetLength > length)
                     {
-                        Log.Debug(BitConverter.ToString(_buffer, read, length - read));
+                        Log.Debug(BitConverter.ToString(this._buffer, read, length - read));
                         throw new Exception("Packet length greater than buffer length (" + packetLength + " > " + length + ").");
                     }
 
                     // Read packet from buffer
                     var packetBuffer = new byte[packetLength];
-                    Buffer.BlockCopy(_buffer, read, packetBuffer, 0, packetLength);
+                    Buffer.BlockCopy(this._buffer, read, packetBuffer, 0, packetLength);
                     read += packetLength;
 
-                    if (this.ShouldDecrypt && !(_buffer[10] == 0x11 && _buffer[11] == 0x38))
-                        _crypto.Decrypt(ref packetBuffer);
+                    if (this.ShouldDecrypt && !(this._buffer[10] == 0x11 && this._buffer[11] == 0x38))
+                    {
+                        this._crypto.Decrypt(ref packetBuffer);
+                    }
 
                     // Get packet
                     Packet packet;
                     if (this.ShouldDecrypt)
+                    {
                         packet = new Packet(packetBuffer);
+                    }
                     else
+                    {
                         packet = new Packet(packetBuffer, 9);
+                    }
 
                     // Check size from table?
                     var size = Op.GetSize(packet.Op);
@@ -210,14 +218,18 @@ namespace Agonyl.Shared.Network
         {
             this.Closed?.Invoke(this, null);
 
-            lock (_cleanUpLock)
+            lock (this._cleanUpLock)
             {
-                if (!_cleanedUp)
+                if (!this._cleanedUp)
+                {
                     this.CleanUp();
+                }
                 else
+                {
                     Log.Warning("Trying to clean already cleaned connection.");
+                }
 
-                _cleanedUp = true;
+                this._cleanedUp = true;
             }
         }
 
@@ -244,18 +256,20 @@ namespace Agonyl.Shared.Network
         /// <param name="packet"></param>
         public virtual void Send(Packet packet)
         {
-            if (_socket == null || this.State == ConnectionState.Closed)
+            if (this._socket == null || this.State == ConnectionState.Closed)
+            {
                 return;
+            }
 
             // Create packet
             var buffer = new byte[packet.Length];
             packet.Build(ref buffer, 0);
 
             // Encrypt packet
-            _crypto.Encrypt(ref buffer);
+            this._crypto.Encrypt(ref buffer);
 
             //Send
-            _socket.Send(buffer);
+            this._socket.Send(buffer);
         }
 
         /// <summary>
@@ -264,14 +278,16 @@ namespace Agonyl.Shared.Network
         /// <param name="buffer"></param>
         public virtual void Send(byte[] buffer)
         {
-            if (_socket == null || this.State == ConnectionState.Closed)
+            if (this._socket == null || this.State == ConnectionState.Closed)
+            {
                 return;
+            }
 
             // Encrypt packet
-            _crypto.Encrypt(ref buffer);
+            this._crypto.Encrypt(ref buffer);
 
             //Send
-            _socket.Send(buffer);
+            this._socket.Send(buffer);
         }
     }
 

@@ -28,7 +28,7 @@ namespace Agonyl.Game.Network
                     characterListPacket.CharInfo[i].Class = Convert.ToByte(characters[i].c_sheaderb);
                     characterListPacket.CharInfo[i].Level = Convert.ToUInt32(characters[i].c_sheaderc);
                     characterListPacket.CharInfo[i].WearList = new MSG_ITEM_WEAR[10];
-                    var itemArray = characters[i].GetWear().Replace("_1WEAR=", "").Split(';');
+                    var itemArray = characters[i].GetWear().Replace("_1WEAR=", string.Empty).Split(';');
                     var wearIndex = 0;
                     for (var j = 0; j < itemArray.Length; j += 3)
                     {
@@ -36,20 +36,23 @@ namespace Agonyl.Game.Network
                         {
                             break;
                         }
-                        decimal value;
-                        if (!decimal.TryParse(itemArray[j], out value))
+
+                        if (!decimal.TryParse(itemArray[j], out _))
                         {
                             continue;
                         }
+
                         if (!GameServer.Instance.GameData.Items.ContainsKey(Convert.ToUInt32(itemArray[j]) & 0x3FFF))
                         {
                             continue;
                         }
+
                         uint option = 0;
-                        if (decimal.TryParse(itemArray[j + 1], out value))
+                        if (decimal.TryParse(itemArray[j + 1], out _))
                         {
                             option = Convert.ToUInt32(itemArray[j + 1]);
                         }
+
                         characterListPacket.CharInfo[i].WearList[wearIndex] = new MSG_ITEM_WEAR();
                         characterListPacket.CharInfo[i].WearList[wearIndex].ItemPtr = 0;
                         characterListPacket.CharInfo[i].WearList[wearIndex].ItemCode = Convert.ToUInt32(itemArray[j]);
@@ -64,6 +67,7 @@ namespace Agonyl.Game.Network
                     characterListPacket.CharInfo[i].Class = 255;
                 }
             }
+
             conn.Send(characterListPacket.Serialize());
         }
 
@@ -95,32 +99,37 @@ namespace Agonyl.Game.Network
                     starterGear = GameServer.Instance.Conf.StarterGearArcher;
                     break;
             }
+
             for (var i = 0; i < starterGear.Count; i++)
             {
                 if (i == 10)
                 {
                     break;
                 }
+
                 var itemArray = starterGear[i].Split(';');
-                decimal value;
-                if (!decimal.TryParse(itemArray[0], out value))
+                if (!decimal.TryParse(itemArray[0], out _))
                 {
                     continue;
                 }
+
                 if (!GameServer.Instance.GameData.Items.ContainsKey(Convert.ToUInt32(itemArray[0]) & 0x3FFF))
                 {
                     continue;
                 }
+
                 uint option = 0;
-                if (itemArray.Length >= 2 && decimal.TryParse(itemArray[1], out value))
+                if (itemArray.Length >= 2 && decimal.TryParse(itemArray[1], out _))
                 {
                     option = Convert.ToUInt32(itemArray[1]);
                 }
+
                 msg.WearList[i].ItemPtr = 0;
                 msg.WearList[i].ItemCode = Convert.ToUInt32(itemArray[0]);
                 msg.WearList[i].ItemOption = option;
                 msg.WearList[i].WearSlot = GameServer.Instance.GameData.Items[Convert.ToUInt32(itemArray[0]) & 0x3FFF].SlotIndex;
             }
+
             conn.Send(msg.Serialize());
         }
 

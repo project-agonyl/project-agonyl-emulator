@@ -44,20 +44,20 @@ namespace Agonyl.Shared.Util
             return BitConverter.ToUInt64(bytes, 0);
         }
 
-        public static byte[] ByteSlice(ref byte[] source, int StartIndex, int length)
+        public static byte[] ByteSlice(ref byte[] source, int startIndex, int length)
         {
             var dest = new byte[length];
-            Array.Copy(source, StartIndex, dest, 0, length);
+            Array.Copy(source, startIndex, dest, 0, length);
             return dest;
         }
 
-        public static string InsertWearIntoMbody(string MBody, List<string> Wear)
+        public static string InsertWearIntoMbody(string mBody, List<string> wear)
         {
-            var toInsert = "";
-            foreach (var item in Wear)
+            var toInsert = string.Empty;
+            foreach (var item in wear)
             {
                 var rnd = new Random();
-                if (toInsert == "")
+                if (toInsert == string.Empty)
                 {
                     toInsert += item + ";" + rnd.Next(10000000, 999999999).ToString();
                 }
@@ -66,7 +66,8 @@ namespace Agonyl.Shared.Util
                     toInsert += ";" + item + ";" + rnd.Next(10000000, 999999999).ToString();
                 }
             }
-            var splitArray = MBody.Split('\\');
+
+            var splitArray = mBody.Split('\\');
             for (var i = 0; i < splitArray.Length; i++)
             {
                 if (splitArray[i].StartsWith("_1WEAR"))
@@ -74,6 +75,7 @@ namespace Agonyl.Shared.Util
                     splitArray[i] = "_1WEAR=" + toInsert;
                 }
             }
+
             return string.Join("\\", splitArray).Trim();
         }
     }

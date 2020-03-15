@@ -22,7 +22,7 @@ namespace Agonyl.Shared.Util.Commands
 
         protected CommandManager()
         {
-            _commands = new Dictionary<string, TCommand>();
+            this._commands = new Dictionary<string, TCommand>();
         }
 
         /// <summary>
@@ -31,12 +31,13 @@ namespace Agonyl.Shared.Util.Commands
         /// <param name="command"></param>
         protected void Add(TCommand command)
         {
-            _commands[command.Name] = command;
+            this._commands[command.Name] = command;
         }
 
         /// <summary>
         /// Returns arguments parsed from line.
         /// </summary>
+        /// <param name="line"></param>
         /// <remarks>
         /// Matches words and multiple words in quotation.
         /// </remarks>
@@ -53,14 +54,18 @@ namespace Agonyl.Shared.Util.Commands
                 if ((i == line.Length || line[i] == ' ') && !quote)
                 {
                     if (i - n > 0)
+                    {
                         args.Add(line.Substring(n, i - n).Trim(' ', '"'));
+                    }
 
                     n = i + 1;
                     continue;
                 }
 
                 if (line[i] == '"')
+                {
                     quote = !quote;
+                }
             }
 
             return args.ToArray();
@@ -70,10 +75,9 @@ namespace Agonyl.Shared.Util.Commands
         /// Returns command or null, if the command doesn't exist.
         /// </summary>
         /// <param name="name"></param>
-        /// <returns></returns>
         public TCommand GetCommand(string name)
         {
-            _commands.TryGetValue(name, out var command);
+            this._commands.TryGetValue(name, out var command);
             return command;
         }
     }
@@ -85,14 +89,19 @@ namespace Agonyl.Shared.Util.Commands
     public abstract class Command<TFunc> where TFunc : class
     {
         public string Name { get; protected set; }
+
         public string Usage { get; protected set; }
+
         public string Description { get; protected set; }
+
         public TFunc Func { get; protected set; }
 
         protected Command(string name, string usage, string description, TFunc func)
         {
             if (!typeof(TFunc).IsSubclassOf(typeof(Delegate)))
+            {
                 throw new InvalidOperationException(typeof(TFunc).Name + " is not a delegate type");
+            }
 
             this.Name = name;
             this.Usage = usage;

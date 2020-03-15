@@ -21,12 +21,15 @@ namespace Agonyl.Login.Util
         private CommandResult HandleAuth(string command, IList<string> args)
         {
             if (args.Count < 3)
+            {
                 return CommandResult.InvalidArgument;
+            }
 
-            var accountName = args[1];
-
-            if (!int.TryParse(args[2], out var level))
+            _ = args[1];
+            if (!int.TryParse(args[2], out var _))
+            {
                 return CommandResult.InvalidArgument;
+            }
 
             // 			if (!LoginServer.Instance.Database.AccountExists(accountName))
             // 			{
@@ -53,7 +56,7 @@ namespace Agonyl.Login.Util
             }
 
             var accountName = args[1];
-            var password = args[2];
+            _ = args[2];
 
             // 			if (!LoginServer.Instance.Database.AccountExists(accountName))
             // 			{

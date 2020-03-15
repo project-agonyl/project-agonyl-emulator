@@ -17,7 +17,7 @@ namespace Agonyl.Shared.Util.Commands
     {
         public ConsoleCommands()
         {
-            _commands = new Dictionary<string, ConsoleCommand>();
+            this._commands = new Dictionary<string, ConsoleCommand>();
 
             this.Add("help", "Displays this help", this.HandleHelp);
             this.Add("exit", "Closes application/server", this.HandleExit);
@@ -32,7 +32,7 @@ namespace Agonyl.Shared.Util.Commands
         /// <param name="handler"></param>
         public void Add(string name, string description, ConsoleCommandFunc handler)
         {
-            this.Add(name, "", description, handler);
+            this.Add(name, string.Empty, description, handler);
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Agonyl.Shared.Util.Commands
         /// <param name="handler"></param>
         public void Add(string name, string usage, string description, ConsoleCommandFunc handler)
         {
-            _commands[name] = new ConsoleCommand(name, usage, description, handler);
+            this._commands[name] = new ConsoleCommand(name, usage, description, handler);
         }
 
         /// <summary>
@@ -60,7 +60,9 @@ namespace Agonyl.Shared.Util.Commands
 
                 var args = this.ParseLine(line);
                 if (args.Length == 0)
+                {
                     continue;
+                }
 
                 var command = this.GetCommand(args[0]);
                 if (command == null)
@@ -87,11 +89,13 @@ namespace Agonyl.Shared.Util.Commands
 
         protected virtual CommandResult HandleHelp(string command, IList<string> args)
         {
-            var maxLength = _commands.Values.Max(a => a.Name.Length);
+            var maxLength = this._commands.Values.Max(a => a.Name.Length);
 
             Log.Info("Available commands");
-            foreach (var cmd in _commands.Values.OrderBy(a => a.Name))
+            foreach (var cmd in this._commands.Values.OrderBy(a => a.Name))
+            {
                 Log.Info("  {0,-" + (maxLength + 2) + "}{1}", cmd.Name, cmd.Description);
+            }
 
             return CommandResult.Okay;
         }
