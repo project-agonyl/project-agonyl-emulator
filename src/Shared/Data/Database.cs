@@ -1,6 +1,6 @@
 ﻿#region copyright
 
-// Copyright (c) 2018 Project Agonyl
+// Copyright (c) 2020 Project Agonyl
 
 #endregion copyright
 
@@ -28,16 +28,16 @@ namespace Agonyl.Shared.Data
         /// <summary>
         /// Loads file if it exists, raises exception otherwise.
         /// </summary>
-        /// <param name="path">File to load</param>
-        /// <param name="clear">Clear database before loading?</param>
+        /// <param name="path">File to load.</param>
+        /// <param name="clear">Clear database before loading?.</param>
         int Load(string path, bool clear);
 
         /// <summary>
         /// Loads multiple files, ignores missing ones.
         /// </summary>
-        /// <param name="files">Files to load</param>
-        /// <param name="cache">Path to an optional cache file (null for none)</param>
-        /// <param name="clear">Clear database before loading?</param>
+        /// <param name="files">Files to load.</param>
+        /// <param name="cache">Path to an optional cache file (null for none).</param>
+        /// <param name="clear">Clear database before loading?.</param>
         int Load(string[] files, string cache, bool clear);
 
         /// <summary>

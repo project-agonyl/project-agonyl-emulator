@@ -1,6 +1,6 @@
 ﻿#region copyright
 
-// Copyright (c) 2018 Project Agonyl
+// Copyright (c) 2020 Project Agonyl
 
 #endregion copyright
 
@@ -101,7 +101,7 @@ namespace Agonyl.Shared.Database
         }
 
         /// <summary>
-        /// Runs MySqlCommand.ExecuteNonQuery
+        /// Runs MySqlCommand.ExecuteNonQuery.
         /// </summary>
         public override int Execute()
         {
@@ -163,7 +163,7 @@ namespace Agonyl.Shared.Database
         }
 
         /// <summary>
-        /// Runs MySqlCommand.ExecuteNonQuery
+        /// Runs MySqlCommand.ExecuteNonQuery.
         /// </summary>
         public override int Execute()
         {

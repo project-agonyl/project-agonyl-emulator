@@ -1,6 +1,6 @@
 ﻿#region copyright
 
-// Copyright (c) 2018 Project Agonyl
+// Copyright (c) 2020 Project Agonyl
 
 #endregion copyright
 
@@ -12,7 +12,7 @@ namespace Agonyl.Shared.Network
     public class Marshalling
     {
         /// <summary>
-        /// Serialize the class
+        /// Serialize the class.
         /// </summary>
         public byte[] Serialize()
         {
@@ -31,7 +31,7 @@ namespace Agonyl.Shared.Network
         }
 
         /// <summary>
-        /// Deserialize the class
+        /// Deserialize the class.
         /// </summary>
         /// <param name="buffer"></param>
         public void Deserialize(ref byte[] buffer)
@@ -42,7 +42,7 @@ namespace Agonyl.Shared.Network
         }
 
         /// <summary>
-        /// Deserialize the class from packet
+        /// Deserialize the class from packet.
         /// </summary>
         /// <param name="buffer"></param>
         /// <param name="packet"></param>

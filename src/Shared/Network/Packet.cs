@@ -1,6 +1,6 @@
 ﻿#region copyright
 
-// Copyright (c) 2018 Project Agonyl
+// Copyright (c) 2020 Project Agonyl
 
 #endregion copyright
 
@@ -649,7 +649,7 @@ namespace Agonyl.Shared.Network
         }
 
         /// <summary>
-        /// Returns packet with byte equivalent of int
+        /// Returns packet with byte equivalent of int.
         /// </summary>
         /// <param name="num"></param>
         /// <param name="length"></param>

@@ -1,6 +1,6 @@
 ﻿#region copyright
 
-// Copyright (c) 2018 Project Agonyl
+// Copyright (c) 2020 Project Agonyl
 
 #endregion copyright
 
@@ -16,7 +16,7 @@ namespace Agonyl.Game.Network
         public static readonly GamePacketHandler Instance = new GamePacketHandler();
 
         /// <summary>
-        /// Sent on clicking server name
+        /// Sent on clicking server name.
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="packet"></param>
@@ -36,7 +36,7 @@ namespace Agonyl.Game.Network
         }
 
         /// <summary>
-        /// Sent on creating new character
+        /// Sent on creating new character.
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="packet"></param>
@@ -101,7 +101,7 @@ namespace Agonyl.Game.Network
         }
 
         /// <summary>
-        /// Sent on deleting a character
+        /// Sent on deleting a character.
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="packet"></param>
@@ -128,7 +128,7 @@ namespace Agonyl.Game.Network
         }
 
         /// <summary>
-        /// Sent on client exits
+        /// Sent on client exits.
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="packet"></param>

@@ -1,6 +1,6 @@
 ﻿#region copyright
 
-// Copyright (c) 2018 Project Agonyl
+// Copyright (c) 2020 Project Agonyl
 
 #endregion copyright
 
@@ -13,7 +13,7 @@ namespace Agonyl.Shared.Data.Game
         public ushort AttributeRange { get; set; }
 
         /// <summary>
-        /// Attack/defense
+        /// Attack/defense.
         /// </summary>
         public ushort Attribute { get; set; }
 
@@ -24,7 +24,7 @@ namespace Agonyl.Shared.Data.Game
         public ushort Dexterity { get; set; }
 
         /// <summary>
-        /// Additional attack/defense
+        /// Additional attack/defense.
         /// </summary>
         public ushort AdditionalAttribute { get; set; }
 

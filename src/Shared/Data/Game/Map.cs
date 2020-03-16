@@ -1,6 +1,6 @@
 ﻿#region copyright
 
-// Copyright (c) 2018 Project Agonyl
+// Copyright (c) 2020 Project Agonyl
 
 #endregion copyright
 
@@ -14,18 +14,22 @@ namespace Agonyl.Shared.Data.Game
 
         public string Name { get; set; }
 
-        public Dictionary<ushort, NPC> Npcs;
+        public List<NPC> Shops;
+
+        public List<NPC> Monsters;
 
         public Map()
         {
-            this.Npcs = new Dictionary<ushort, NPC>();
+            this.Shops = new List<NPC>();
+            this.Monsters = new List<NPC>();
         }
 
         public Map(ushort id, string name = "")
         {
             this.Id = id;
             this.Name = name;
-            this.Npcs = new Dictionary<ushort, NPC>();
+            this.Shops = new List<NPC>();
+            this.Monsters = new List<NPC>();
         }
     }
 }

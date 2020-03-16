@@ -1,6 +1,6 @@
 ﻿#region copyright
 
-// Copyright (c) 2018 Project Agonyl
+// Copyright (c) 2020 Project Agonyl
 
 #endregion copyright
 
@@ -13,72 +13,72 @@ namespace Agonyl.Shared.Util.Config
     public class Conf
     {
         /// <summary>
-        /// IP of the server
+        /// IP of the server.
         /// </summary>
         public string Host { get; protected set; }
 
         /// <summary>
-        /// Port of the server
+        /// Port of the server.
         /// </summary>
         public int Port { get; protected set; }
 
         /// <summary>
-        /// ID of the server
+        /// ID of the server.
         /// </summary>
         public int ServerId { get; protected set; }
 
         /// <summary>
-        /// Name of the server
+        /// Name of the server.
         /// </summary>
         public string ServerName { get; protected set; }
 
         /// <summary>
-        /// ASD Database host
+        /// ASD Database host.
         /// </summary>
         public string ASDDbHost { get; protected set; }
 
         /// <summary>
-        /// ASD Database port
+        /// ASD Database port.
         /// </summary>
         public int ASDDbPort { get; protected set; }
 
         /// <summary>
-        /// Redis host
+        /// Redis host.
         /// </summary>
         public string RedisHost { get; protected set; }
 
         /// <summary>
-        /// Redis port
+        /// Redis port.
         /// </summary>
         public int RedisPort { get; protected set; }
 
         /// <summary>
-        /// Redis password
+        /// Redis password.
         /// </summary>
         public string RedisPassword { get; protected set; }
 
         /// <summary>
-        /// ASD Database name
+        /// ASD Database name.
         /// </summary>
         public string ASDDbName { get; protected set; }
 
         /// <summary>
-        /// ASD Database username
+        /// ASD Database username.
         /// </summary>
         public string ASDDbUserName { get; protected set; }
 
         /// <summary>
-        /// ASD Database password
+        /// ASD Database password.
         /// </summary>
         public string ASDDbPassword { get; protected set; }
 
         /// <summary>
-        /// Config file path
+        /// Config file path.
         /// </summary>
         public string ConfFile { get; protected set; }
 
         /// <summary>
-        /// Loaded config file data
+        /// Loaded config file data.
         /// </summary>
         public XmlDocument XmlDocument { get; protected set; }
 
@@ -91,7 +91,7 @@ namespace Agonyl.Shared.Util.Config
         }
 
         /// <summary>
-        /// Loads all required configuration
+        /// Loads all required configuration.
         /// </summary>
         public virtual void LoadAll()
         {

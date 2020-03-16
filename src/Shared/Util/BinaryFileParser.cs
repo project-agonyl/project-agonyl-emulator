@@ -1,6 +1,6 @@
 ﻿#region copyright
 
-// Copyright (c) 2018 Project Agonyl
+// Copyright (c) 2020 Project Agonyl
 
 #endregion copyright
 
@@ -9,7 +9,7 @@ using System.IO;
 
 namespace Agonyl.Shared.Util
 {
-    public abstract class BinaryFileParser
+    public class BinaryFileParser
     {
         public string FilePath { get; protected set; }
 

@@ -1,6 +1,6 @@
 ﻿#region copyright
 
-// Copyright (c) 2018 Project Agonyl
+// Copyright (c) 2020 Project Agonyl
 
 #endregion copyright
 
@@ -14,7 +14,7 @@ namespace Agonyl.Login.Network
         public static readonly LoginPacketHandler Instance = new LoginPacketHandler();
 
         /// <summary>
-        /// Sent when user tries to log in using the client
+        /// Sent when user tries to log in using the client.
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="packet"></param>
@@ -42,7 +42,7 @@ namespace Agonyl.Login.Network
         }
 
         /// <summary>
-        /// Sent when user selects a server
+        /// Sent when user selects a server.
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="packet"></param>

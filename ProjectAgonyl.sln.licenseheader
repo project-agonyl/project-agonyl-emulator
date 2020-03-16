@@ -1,6 +1,10 @@
 extensions: designer.cs generated.cs
 extensions: .cs .cpp .h
-// Copyright (c) 2018 Project Agonyl
+#region copyright
+
+// Copyright (c) 2020 Project Agonyl
+
+#endregion copyright
 extensions: .aspx .ascx
 <%-- 
 Copyright (c) 2018 Project Agonyl

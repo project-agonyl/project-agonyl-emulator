@@ -1,6 +1,6 @@
 ﻿#region copyright
 
-// Copyright (c) 2018 Project Agonyl
+// Copyright (c) 2020 Project Agonyl
 
 #endregion copyright
 
@@ -17,12 +17,12 @@ namespace Agonyl.Shared.Database
         private string _connectionString;
 
         /// <summary>
-        /// Redis server connection
+        /// Redis server connection.
         /// </summary>
         public ConnectionMultiplexer Connection { get; protected set; }
 
         /// <summary>
-        /// Redis database
+        /// Redis database.
         /// </summary>
         public IDatabase Db { get; protected set; }
 
@@ -52,7 +52,7 @@ namespace Agonyl.Shared.Database
         }
 
         /// <summary>
-        /// Resets logged in account list
+        /// Resets logged in account list.
         /// </summary>
         public void ResetLoggedInAccountList()
         {
@@ -60,7 +60,7 @@ namespace Agonyl.Shared.Database
         }
 
         /// <summary>
-        /// Returns whether username exists in the logged in account list
+        /// Returns whether username exists in the logged in account list.
         /// </summary>
         /// <param name="username"></param>
         public bool IsLoggedIn(string username)
@@ -70,7 +70,7 @@ namespace Agonyl.Shared.Database
         }
 
         /// <summary>
-        /// Adds username to logged in account list
+        /// Adds username to logged in account list.
         /// </summary>
         /// <param name="username"></param>
         public void AddLoggedInAccount(string username)
@@ -85,7 +85,7 @@ namespace Agonyl.Shared.Database
         }
 
         /// <summary>
-        /// Removes username to logged in account list
+        /// Removes username to logged in account list.
         /// </summary>
         /// <param name="username"></param>
         public void RemoveLoggedInAccount(string username)

@@ -1,6 +1,6 @@
 ﻿#region copyright
 
-// Copyright (c) 2018 Project Agonyl
+// Copyright (c) 2020 Project Agonyl
 
 #endregion copyright
 
@@ -11,7 +11,7 @@ using System.Linq;
 namespace Agonyl.Shared.Util.Commands
 {
     /// <summary>
-    /// Console command manager
+    /// Console command manager.
     /// </summary>
     public class ConsoleCommands : CommandManager<ConsoleCommand, ConsoleCommandFunc>
     {

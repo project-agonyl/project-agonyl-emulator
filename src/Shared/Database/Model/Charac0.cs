@@ -1,4 +1,10 @@
-﻿namespace Agonyl.Shared.Database.Model
+﻿#region copyright
+
+// Copyright (c) 2020 Project Agonyl
+
+#endregion copyright
+
+namespace Agonyl.Shared.Database.Model
 {
     public class Charac0
     {

@@ -1,6 +1,6 @@
 ﻿#region copyright
 
-// Copyright (c) 2018 Project Agonyl
+// Copyright (c) 2020 Project Agonyl
 
 #endregion copyright
 
@@ -29,7 +29,7 @@ namespace Agonyl.Shared.Util
     ///		}
     ///	}
     ///	</code>
-    ///	</example>
+    ///	.</example>
     public class FileReader : IEnumerable<FileReaderLine>, IDisposable
     {
         private string _filePath;

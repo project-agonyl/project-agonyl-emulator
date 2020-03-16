@@ -1,6 +1,6 @@
 ﻿#region copyright
 
-// Copyright (c) 2018 Project Agonyl
+// Copyright (c) 2020 Project Agonyl
 
 #endregion copyright
 
@@ -11,6 +11,7 @@ using Agonyl.Game.Util;
 using Agonyl.Game.Util.Config;
 using Agonyl.Shared;
 using Agonyl.Shared.Data;
+using Agonyl.Shared.Data.Game;
 using Agonyl.Shared.Database;
 using Agonyl.Shared.Network;
 using Agonyl.Shared.Util;
@@ -37,7 +38,7 @@ namespace Agonyl.Game
         public GameConsoleCommands ConsoleCommands { get; private set; }
 
         /// <summary>
-        /// LoginServer IPC handler
+        /// LoginServer IPC handler.
         /// </summary>
         public GameConnection LoginServerConnection { get; private set; }
 
@@ -94,6 +95,7 @@ namespace Agonyl.Game
             try
             {
                 this.LoadItemFiles();
+                this.LoadMapFiles();
             }
             catch (FileNotFoundException ex)
             {
@@ -144,6 +146,46 @@ namespace Agonyl.Game
             Log.Info("Loading IT3 data...");
             var parser = new IT3Parser(this.Conf.GetIT3Path());
             parser.ParseFile(ref this.GameData.Items);
+        }
+
+        private void LoadMapFiles()
+        {
+            Log.Info("Loading map data please wait...");
+            foreach (var mapId in this.Conf.Maps)
+            {
+                var map = new Map(mapId);
+                var parser = new NdtParser(this.Conf.GetNdtFilePath(mapId));
+                parser.ParseFile(ref map);
+                foreach (var shop in map.Shops)
+                {
+                    if (this.GameData.NPCData.ContainsKey(shop.Id))
+                    {
+                        continue;
+                    }
+
+                    var npcData = new NPCData();
+                    var npcDataParser = new NPCDataParser(this.Conf.GetNpcFilePath(shop.Id));
+                    npcDataParser.ParseData(ref npcData);
+                    this.GameData.NPCData.Add(shop.Id, npcData);
+                }
+
+                foreach (var monster in map.Monsters)
+                {
+                    if (this.GameData.NPCData.ContainsKey(monster.Id))
+                    {
+                        continue;
+                    }
+
+                    var npcData = new NPCData();
+                    var npcDataParser = new NPCDataParser(this.Conf.GetNpcFilePath(monster.Id));
+                    npcDataParser.ParseData(ref npcData);
+                    this.GameData.NPCData.Add(monster.Id, npcData);
+                }
+
+                this.GameData.Maps.Add(mapId, map);
+            }
+
+            Log.Info("Loaded " + this.GameData.Maps.Count + " maps");
         }
     }
 }

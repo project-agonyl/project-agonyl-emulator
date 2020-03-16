@@ -1,4 +1,10 @@
-﻿// This file is used by Code Analysis to maintain SuppressMessage
+﻿#region copyright
+
+// Copyright (c) 2020 Project Agonyl
+
+#endregion copyright
+
+// This file is used by Code Analysis to maintain SuppressMessage
 // attributes that are applied to this project.
 // Project-level suppressions either have no target or are given
 // a specific target and scoped to a namespace, type, member, etc.
@@ -355,7 +361,6 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "<Pending>", Scope = "type", Target = "~T:Agonyl.Shared.Util.IT3Parser")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "<Pending>", Scope = "type", Target = "~T:Agonyl.Shared.Util.NdtParser")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "<Pending>", Scope = "type", Target = "~T:Agonyl.Shared.Util.Security.Crypt")]
-
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:Elements should appear in the correct order", Justification = "<Pending>", Scope = "member", Target = "~E:Agonyl.Shared.Network.Connection.Closed")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:Elements should appear in the correct order", Justification = "<Pending>", Scope = "member", Target = "~F:Agonyl.Shared.Data.Game.Map.Npcs")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:Elements should appear in the correct order", Justification = "<Pending>", Scope = "member", Target = "~M:Agonyl.Shared.Data.CsvDatabaseWarningException.#ctor(System.String,System.Int32,System.String,System.Object[])")]

@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Agonyl.Shared</RootNamespace>
-    <AssemblyName>Common</AssemblyName>
+    <AssemblyName>Agonyl.Common</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -69,6 +69,7 @@
     <Compile Include="Data\Game\Item.cs" />
     <Compile Include="Data\Game\Map.cs" />
     <Compile Include="Data\Game\NPC.cs" />
+    <Compile Include="Data\Game\NPCData.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Network\Connection.cs" />
     <Compile Include="Network\ConnectionManager.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Util\IT3Parser.cs" />
     <Compile Include="Util\Log.cs" />
     <Compile Include="Util\NdtParser.cs" />
+    <Compile Include="Util\NPCDataParser.cs" />
     <Compile Include="Util\Security\Crypt.cs" />
   </ItemGroup>
   <ItemGroup>

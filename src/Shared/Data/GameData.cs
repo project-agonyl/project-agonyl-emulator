@@ -1,6 +1,6 @@
 ﻿#region copyright
 
-// Copyright (c) 2018 Project Agonyl
+// Copyright (c) 2020 Project Agonyl
 
 #endregion copyright
 
@@ -10,17 +10,19 @@ using Agonyl.Shared.Data.Game;
 namespace Agonyl.Shared.Data
 {
     /// <summary>
-    /// Stores all game related data loaded from server files
+    /// Stores all game related data loaded from server files.
     /// </summary>
     public class GameData
     {
         public Dictionary<uint, Item> Items;
-        public Dictionary<uint, Map> Maps;
+        public Dictionary<ushort, Map> Maps;
+        public Dictionary<ushort, NPCData> NPCData;
 
         public GameData()
         {
             this.Items = new Dictionary<uint, Item>();
-            this.Maps = new Dictionary<uint, Map>();
+            this.Maps = new Dictionary<ushort, Map>();
+            this.NPCData = new Dictionary<ushort, NPCData>();
         }
 
         public Item GetItemByCode(uint code)

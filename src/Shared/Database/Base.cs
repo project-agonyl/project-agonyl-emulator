@@ -1,4 +1,10 @@
-﻿using System;
+﻿#region copyright
+
+// Copyright (c) 2020 Project Agonyl
+
+#endregion copyright
+
+using System;
 using MySql.Data.MySqlClient;
 
 namespace Agonyl.Shared.Database

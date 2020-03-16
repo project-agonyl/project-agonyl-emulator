@@ -1,4 +1,10 @@
-﻿// This file is used by Code Analysis to maintain SuppressMessage
+﻿#region copyright
+
+// Copyright (c) 2020 Project Agonyl
+
+#endregion copyright
+
+// This file is used by Code Analysis to maintain SuppressMessage
 // attributes that are applied to this project.
 // Project-level suppressions either have no target or are given
 // a specific target and scoped to a namespace, type, member, etc.
@@ -50,7 +56,6 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:Elements should appear in the correct order", Justification = "<Pending>", Scope = "member", Target = "~M:Agonyl.Game.Util.Config.GameConf.#ctor")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1200:Using directives should be placed correctly", Justification = "<Pending>")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1404:Code analysis suppression should have justification", Justification = "<Pending>")]
-
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1129:Do not use default value type constructor", Justification = "<Pending>", Scope = "member", Target = "~M:Agonyl.Game.Network.Send.S2C_CHARACTER_LIST(Agonyl.Game.Network.GameConnection,Agonyl.Game.Data.Account)")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1124:Do not use regions", Justification = "<Pending>")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1124:Do not use regions", Justification = "<Pending>", Scope = "namespace", Target = "~N:Agonyl.Game.Data")]

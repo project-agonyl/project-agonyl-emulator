@@ -6,10 +6,8 @@
 
 namespace Agonyl.Shared.Data.Game
 {
-    public class IT2ItemProperty
+    public class NPCData
     {
-        public ushort RequiredLevel { get; set; }
-
-        public ushort SkillLevel { get; set; }
+        public string Name;
     }
 }

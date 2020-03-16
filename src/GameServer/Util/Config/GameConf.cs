@@ -1,6 +1,6 @@
 ﻿#region copyright
 
-// Copyright (c) 2018 Project Agonyl
+// Copyright (c) 2020 Project Agonyl
 
 #endregion copyright
 
@@ -14,7 +14,7 @@ namespace Agonyl.Game.Util.Config
     public class GameConf : Conf
     {
         /// <summary>
-        /// GameServer data path to read data files from
+        /// GameServer data path to read data files from.
         /// </summary>
         public string BaseGameDataPath { get; protected set; }
 
@@ -48,6 +48,12 @@ namespace Agonyl.Game.Util.Config
         public string StarterLocationTemoz { get; protected set; }
 
         public string StarterLocationQuanato { get; protected set; }
+
+        public string MapDirectory { get; protected set; }
+
+        public string NpcDirectory { get; protected set; }
+
+        public List<ushort> Maps { get; protected set; }
 
         /// <summary>
         /// Initializes default config.
@@ -92,6 +98,22 @@ namespace Agonyl.Game.Util.Config
                                 if (child.InnerText != null)
                                 {
                                     this.ItemDirectory = child.InnerText;
+                                }
+
+                                break;
+
+                            case "MapDirectory":
+                                if (child.InnerText != null)
+                                {
+                                    this.MapDirectory = child.InnerText;
+                                }
+
+                                break;
+
+                            case "NpcDirectory":
+                                if (child.InnerText != null)
+                                {
+                                    this.NpcDirectory = child.InnerText;
                                 }
 
                                 break;
@@ -220,6 +242,13 @@ namespace Agonyl.Game.Util.Config
                         }
                     }
                 }
+
+                this.Maps = new List<ushort>();
+                var maps = this.XmlDocument.GetElementsByTagName("Maps")[0];
+                if (maps != null)
+                {
+                    this.Maps = new List<ushort>(Array.ConvertAll(maps.InnerText.Split(','), s => ushort.Parse(s)));
+                }
             }
             catch (Exception ex)
             {
@@ -250,6 +279,21 @@ namespace Agonyl.Game.Util.Config
         public string GetIT0exPath()
         {
             return this.BaseGameDataPath + Path.DirectorySeparatorChar + this.ItemDirectory + Path.DirectorySeparatorChar + "0ex";
+        }
+
+        public string GetMapFilePath(ushort id)
+        {
+            return this.BaseGameDataPath + Path.DirectorySeparatorChar + this.MapDirectory + Path.DirectorySeparatorChar + id;
+        }
+
+        public string GetNdtFilePath(ushort id)
+        {
+            return this.BaseGameDataPath + Path.DirectorySeparatorChar + this.MapDirectory + Path.DirectorySeparatorChar + id + ".n_ndt";
+        }
+
+        public string GetNpcFilePath(ushort id)
+        {
+            return this.BaseGameDataPath + Path.DirectorySeparatorChar + this.NpcDirectory + Path.DirectorySeparatorChar + id;
         }
     }
 }

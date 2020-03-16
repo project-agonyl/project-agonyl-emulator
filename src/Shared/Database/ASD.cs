@@ -1,6 +1,6 @@
 ﻿#region copyright
 
-// Copyright (c) 2018 Project Agonyl
+// Copyright (c) 2020 Project Agonyl
 
 #endregion copyright
 
@@ -70,7 +70,7 @@ namespace Agonyl.Shared.Database
         }
 
         /// <summary>
-        /// Returns all characters of an account
+        /// Returns all characters of an account.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="username"></param>
@@ -162,7 +162,7 @@ namespace Agonyl.Shared.Database
         }
 
         /// <summary>
-        /// Creates a character
+        /// Creates a character.
         /// </summary>
         /// <param name="username"></param>
         /// <param name="name"></param>
@@ -191,7 +191,7 @@ namespace Agonyl.Shared.Database
         }
 
         /// <summary>
-        /// Deletes a character
+        /// Deletes a character.
         /// </summary>
         /// <param name="name"></param>
         public bool DeleteCharacter(string name)

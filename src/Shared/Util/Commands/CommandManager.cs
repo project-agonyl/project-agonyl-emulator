@@ -1,6 +1,6 @@
 ﻿#region copyright
 
-// Copyright (c) 2018 Project Agonyl
+// Copyright (c) 2020 Project Agonyl
 
 #endregion copyright
 
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Agonyl.Shared.Util.Commands
 {
     /// <summary>
-    /// Generalized command manager
+    /// Generalized command manager.
     /// </summary>
     /// <typeparam name="TCommand"></typeparam>
     /// <typeparam name="TFunc"></typeparam>
@@ -43,7 +43,7 @@ namespace Agonyl.Shared.Util.Commands
         /// </remarks>
         /// <example>
         /// arg0 arg1 arg2 -- 3 args: "arg0", "arg1", and "arg2"
-        /// arg0 arg1 "arg2 arg3" -- 3 args: "arg0", "arg1", and "arg2 arg3"
+        /// arg0 arg1 "arg2 arg3" -- 3 args: "arg0", "arg1", and "arg2 arg3".
         /// </example>
         protected string[] ParseLine(string line)
         {
@@ -83,7 +83,7 @@ namespace Agonyl.Shared.Util.Commands
     }
 
     /// <summary>
-    /// Generalized command holder
+    /// Generalized command holder.
     /// </summary>
     /// <typeparam name="TFunc"></typeparam>
     public abstract class Command<TFunc> where TFunc : class

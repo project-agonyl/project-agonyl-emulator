@@ -1,6 +1,6 @@
 ﻿#region copyright
 
-// Copyright (c) 2018 Project Agonyl
+// Copyright (c) 2020 Project Agonyl
 
 #endregion copyright
 
@@ -13,12 +13,12 @@ namespace Agonyl.Login.Util.Config
     public class LoginConf : Conf
     {
         /// <summary>
-        /// GameServer host
+        /// GameServer host.
         /// </summary>
         public string GameServerHost { get; protected set; }
 
         /// <summary>
-        /// GameServer port
+        /// GameServer port.
         /// </summary>
         public int GameServerPort { get; protected set; }
 

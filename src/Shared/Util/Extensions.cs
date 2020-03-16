@@ -1,6 +1,6 @@
 ﻿#region copyright
 
-// Copyright (c) 2018 Project Agonyl
+// Copyright (c) 2020 Project Agonyl
 
 #endregion copyright
 
@@ -18,7 +18,7 @@ namespace Agonyl.Shared.Util
         /// <param name="compare"></param>
         /// <param name="caseSensitive"></param>
         /// <remarks>
-        /// http://en.wikipedia.org/wiki/Levenshtein_distance
+        /// http://en.wikipedia.org/wiki/Levenshtein_distance.
         /// </remarks>
         /// <example>
         /// <code>
@@ -75,7 +75,7 @@ namespace Agonyl.Shared.Util
         /// Returns IP address as integer.
         /// </summary>
         /// <example>
-        /// IPAddress.Parse("127.0.0.1").ToInt32(); // 0x0100007F
+        /// IPAddress.Parse("127.0.0.1").ToInt32(); // 0x0100007F.
         /// </example>
         /// <param name="ipAddress"></param>
         public static int ToInt32(this IPAddress ipAddress)
