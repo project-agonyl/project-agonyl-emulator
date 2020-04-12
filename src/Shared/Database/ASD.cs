@@ -132,13 +132,45 @@ namespace Agonyl.Shared.Database
         {
             using (var conn = this.GetConnection())
             {
-                using (var mc = new MySqlCommand("SELECT `c_id` FROM `charac0` WHERE `c_id` = @name", conn))
+                using (var mc = new MySqlCommand("SELECT * FROM `charac0` WHERE `c_id` = @name", conn))
                 {
                     mc.Parameters.AddWithValue("@name", name);
 
                     using (var reader = mc.ExecuteReader())
                     {
                         return reader.HasRows;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns true if a character with the given name exists.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public Model.Charac0 GetCharacter(string name)
+        {
+            using (var conn = this.GetConnection())
+            {
+                using (var mc = new MySqlCommand("SELECT * FROM `charac0` WHERE `c_id` = @name", conn))
+                {
+                    mc.Parameters.AddWithValue("@name", name);
+
+                    using (var reader = mc.ExecuteReader())
+                    {
+                        reader.Read();
+                        return new Model.Charac0
+                        {
+                            c_id = reader["c_id"].ToString(),
+                            c_sheadera = reader["c_sheadera"].ToString(),
+                            c_sheaderb = reader["c_sheaderb"].ToString(),
+                            c_sheaderc = reader["c_sheaderc"].ToString(),
+                            c_headera = reader["c_headera"].ToString(),
+                            c_headerb = reader["c_headerb"].ToString(),
+                            c_headerc = reader["c_headerc"].ToString(),
+                            m_body = reader["m_body"].ToString(),
+                        };
                     }
                 }
             }

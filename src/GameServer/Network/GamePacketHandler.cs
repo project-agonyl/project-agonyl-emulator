@@ -60,6 +60,7 @@ namespace Agonyl.Game.Network
                 var location = GameServer.Instance.Conf.StarterLocationTemoz;
                 var body = GameServer.Instance.Conf.StarterBodyWarrior;
                 var level = GameServer.Instance.Conf.StarterLevel;
+
                 // Insert wear into body
                 switch (decodedPacket.CharacterType)
                 {
@@ -120,6 +121,37 @@ namespace Agonyl.Game.Network
                 {
                     Send.S2C_ERROR(conn, Constants.S2C_ERROR_CODE_CHARACTER_INVALID, "Could not delete character at this time");
                 }
+            }
+            else
+            {
+                Send.S2C_ERROR(conn, Constants.S2C_ERROR_CODE_CHARACTER_NOT_FOUND, "Character not found in the account");
+            }
+        }
+
+        [PacketHandler(Op.C2S_SELECT_CHARACTER)]
+        public void C2S_SELECT_CHARACTER(GameConnection conn, Packet packet)
+        {
+            packet.SetReadPointer(12);
+            var name = packet.GetString(13);
+            if (GameServer.Instance.ASDDatabase.CharacterExists(conn.Account.Username, name))
+            {
+                conn.Character = new Character();
+                conn.Character.Info = GameServer.Instance.ASDDatabase.GetCharacter(name);
+                conn.Character.Name = conn.Character.Info.c_id;
+                Send.S2C_CHARACTER_SELECT_ACK(conn);
+            }
+            else
+            {
+                Send.S2C_ERROR(conn, Constants.S2C_ERROR_CODE_CHARACTER_NOT_FOUND, "Character not found in the account");
+            }
+        }
+
+        [PacketHandler(Op.C2S_WORLD_LOGIN)]
+        public void C2S_WORLD_LOGIN(GameConnection conn, Packet packet)
+        {
+            if (conn.Character != null)
+            {
+                Send.S2C_WORLD_LOGIN(conn);
             }
             else
             {

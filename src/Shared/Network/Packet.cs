@@ -775,6 +775,24 @@ namespace Agonyl.Shared.Network
                             opCode = Network.Op.C2S_HEALER_WINDOW_OPEN;
                             break;
 
+                        case 0x11:
+                            opCode = Network.Op.C2S_SELECT_CHARACTER;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN;
+                            break;
+                    }
+
+                    break;
+
+                case 0x07:
+                    switch (this._buffer[11])
+                    {
+                        case 0x11:
+                            opCode = Network.Op.C2S_WORLD_LOGIN;
+                            break;
+
                         default:
                             opCode = Network.Op.C2S_UNKNOWN;
                             break;
@@ -817,10 +835,6 @@ namespace Agonyl.Shared.Network
                 default:
                     switch (this._buffer.Length)
                     {
-                        case 37:
-                            opCode = Network.Op.C2S_SELECT_CHARACTER;
-                            break;
-
                         case 22:
                             opCode = Network.Op.C2S_PING;
                             break;

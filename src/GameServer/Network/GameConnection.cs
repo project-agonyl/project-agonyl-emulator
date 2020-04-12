@@ -18,6 +18,11 @@ namespace Agonyl.Game.Network
         public Account Account { get; set; }
 
         /// <summary>
+        /// Holds selected character details.
+        /// </summary>
+        public Character Character { get; set; }
+
+        /// <summary>
         /// Handles game server packets.
         /// </summary>
         /// <param name="packet"></param>

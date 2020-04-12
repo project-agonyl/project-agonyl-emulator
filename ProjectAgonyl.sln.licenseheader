@@ -7,11 +7,11 @@ extensions: .cs .cpp .h
 #endregion copyright
 extensions: .aspx .ascx
 <%-- 
-Copyright (c) 2018 Project Agonyl
+Copyright (c) 2020 Project Agonyl
 --%>
 extensions: .vb
-'Copyright (c) 2018 Project Agonyl
+'Copyright (c) 2020 Project Agonyl
 extensions:  .xml .config .xsd
 <!--
-Copyright (c) 2018 Project Agonyl
+Copyright (c) 2020 Project Agonyl
 -->

@@ -25,7 +25,7 @@ namespace Agonyl.Shared.Network
         public const int S2C_CHARACTER_CREATE_ACK = 0x06;
         public const int S2C_DUPLICATE_CHARACTER = 0x07;
         public const int C2S_CHARACTER_DELETE_REQUEST = 0x08; // Size 33
-        public const int C2S_WORLD_ENTER = 0x09; // Size 33
+        public const int C2S_WORLD_LOGIN = 0x09; // Size 33
         public const int S2C_CHARACTER_WORLD_ENTER = 0x0A;
         public const int S2C_PACKET_37 = 0x0B;
         public const int S2C_PACKET_25 = 0x0C;
@@ -73,7 +73,7 @@ namespace Agonyl.Shared.Network
             _sizes[C2S_SELECT_CHARACTER] = 37;
             _sizes[C2S_CHARACTER_CREATE_REQUEST] = 35;
             _sizes[C2S_CHARACTER_DELETE_REQUEST] = 33;
-            _sizes[C2S_WORLD_ENTER] = 33;
+            _sizes[C2S_WORLD_LOGIN] = 33;
             _sizes[C2S_CAN_INTERACT_NPC] = 14;
             _sizes[C2S_HEALER_WINDOW_OPEN] = 16;
             _sizes[C2S_RECHARGE_POTION] = 14;
