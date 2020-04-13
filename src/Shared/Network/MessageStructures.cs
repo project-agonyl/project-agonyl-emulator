@@ -29,9 +29,9 @@ namespace Agonyl.Shared.Network
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct SOCIAL_INFO
     {
-        public uint Nation; // Default = 8
-        public uint Rank; //  Default = 8
-        public uint KnightIndex; //  Default = 16
+        public uint Rank;
+        public uint KnightIndex;
+        public uint Nation;
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -96,21 +96,21 @@ namespace Agonyl.Shared.Network
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct CHARACTER_INFO
     {
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 13)]
-        public string CharacterName;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 21)]
+        public string Name;
 
         public byte Type;
         public ushort Level;
         public uint Exp;
-        public ushort MapIndex;
+        public uint MapIndex;
         public uint CellIndex;
         public SKILL_INFO SkillList;
-        public byte PKCount;
-        public ushort RTime;
+        public uint PKCount;
+        public uint RTime;
         public SOCIAL_INFO SInfo;
         public uint Money;
-        public ushort StoredHp;
-        public ushort StoredMp;
+        public uint StoredHp;
+        public uint StoredMp;
         public uint Lore;
     }
 
@@ -141,8 +141,8 @@ namespace Agonyl.Shared.Network
         public ushort Dex;
         public ushort Vit;
         public ushort Mana;
-        public ushort HPCapacity;
-        public ushort MPCapacity;
+        public uint HPCapacity;
+        public uint MPCapacity;
         public ushort HP;
         public ushort MP;
         public CHARACTER_CALCULATED_STAT CalculatedStat;
@@ -391,6 +391,62 @@ namespace Agonyl.Shared.Network
             this.Unknown2 = 0xCC;
             this.Unknown3 = 1;
             this.Unknown4 = new byte[18];
+        }
+    }
+
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public class MSG_S2C_NPC_INITIALIZE : Marshalling
+    {
+        public MSG_S2C_HEADER MsgHeader;
+        public ushort NpcId;
+        public uint InternalId;
+
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 5)]
+        public byte[] Unknown1;
+
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 5)]
+        public byte[] Unknown2;
+
+        public ushort NpcLocation;
+        public ushort Unknown3;
+        public ushort NpcDirection;
+        public uint Unknown4;
+
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 30)]
+        public byte[] Unknown5;
+
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
+        public byte[] Unknown6;
+
+        public MSG_S2C_NPC_INITIALIZE()
+        {
+            this.MsgHeader = new MSG_S2C_HEADER(Constants.S2C_NPC_INITIALIZE_PROTOCOL);
+            this.MsgHeader.Size = this.GetSize();
+            this.Unknown1 = new byte[] { 0xf8, 0x2f, 0x20, 0xa1, 0x07 };
+            this.Unknown2 = new byte[5];
+            this.Unknown3 = 0;
+            this.Unknown4 = 0;
+            this.Unknown5 = new byte[]
+            {
+                0xff, 0xcd, 0x00, 0xff, 0xcd, 0x00, 0xff, 0xcd, 0x00, 0xff, 0xcd, 0x00, 0xff, 0xcd, 0x00,
+                0xff, 0xcd, 0x00, 0xff, 0xcd, 0x00, 0xff, 0xcd, 0x00, 0xff, 0xcd, 0x00, 0xff, 0xcd, 0x00,
+            };
+            this.Unknown2 = new byte[10];
+        }
+    }
+
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public class MSG_S2C_CHAT_INITIALIZE : Marshalling
+    {
+        public MSG_S2C_HEADER MsgHeader;
+
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
+        public byte[] Unknown;
+
+        public MSG_S2C_CHAT_INITIALIZE()
+        {
+            this.MsgHeader = new MSG_S2C_HEADER(Constants.S2C_CHAT_INITIALIZE_PROTOCOL);
+            this.Unknown = new byte[] { 0xff, 0x00, 0x1f, 0x00, 0xe3, 0x00 };
         }
     }
 }

@@ -151,6 +151,17 @@ namespace Agonyl.Game.Network
         public static void S2C_WORLD_LOGIN(GameConnection conn)
         {
             var msg = new MSG_S2C_WORLD_LOGIN();
+            msg.CharacterInfo = conn.Character.Info.GetMsgCharacterInfo();
+            msg.CharacterStat = conn.Character.Info.GetMsgCharacterStat();
+            using (var fs = new System.IO.FileStream("world_login.bin", System.IO.FileMode.Create, System.IO.FileAccess.Write))
+            {
+                fs.Write(msg.Serialize(), 0, msg.Serialize().Length);
+            }
+
+            conn.Send(msg.Serialize());
+            conn.Send(new MSG_S2C_UNKNOWN_37().Serialize());
+            conn.Send(new MSG_S2C_UNKNOWN_25().Serialize());
+            conn.Send(new MSG_S2C_CHAT_INITIALIZE().Serialize());
         }
     }
 }

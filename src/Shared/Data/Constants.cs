@@ -17,6 +17,8 @@ namespace Agonyl.Shared.Data
         public const ushort S2C_UNKNOWN_37_PROTOCOL = 0x1601;
         public const ushort S2C_UNKNOWN_25_PROTOCOL = 0x1461;
         public const ushort S2C_UNKNOWN_36_PROTOCOL = 0x2332;
+        public const ushort S2C_NPC_INITIALIZE_PROTOCOL = 0x1300;
+        public const ushort S2C_CHAT_INITIALIZE_PROTOCOL = 0x1803;
 
         public const ushort S2C_ERROR_CODE_DUPLICATE_CHARACTER = 0x1104;
         public const ushort S2C_ERROR_CODE_CHARACTER_INVALID = 0x1106;

@@ -138,6 +138,7 @@ namespace Agonyl.Game.Network
                 conn.Character = new Character();
                 conn.Character.Info = GameServer.Instance.ASDDatabase.GetCharacter(name);
                 conn.Character.Name = conn.Character.Info.c_id;
+                conn.Character.GameConnection = conn;
                 Send.S2C_CHARACTER_SELECT_ACK(conn);
             }
             else

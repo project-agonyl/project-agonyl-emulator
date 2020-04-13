@@ -4,6 +4,7 @@
 
 #endregion copyright
 
+using Agonyl.Game.Network;
 using Agonyl.Shared.Database.Model;
 
 namespace Agonyl.Game.Data
@@ -15,5 +16,7 @@ namespace Agonyl.Game.Data
         public string Name { get; set; }
 
         public Charac0 Info { get; set; }
+
+        public GameConnection GameConnection { get; set; }
     }
 }
