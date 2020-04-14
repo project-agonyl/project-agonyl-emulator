@@ -5,8 +5,6 @@
 #endregion copyright
 
 using System;
-using System.IO;
-using Agonyl.Shared.Data;
 using Agonyl.Shared.Database;
 using Agonyl.Shared.Util;
 using Agonyl.Shared.Util.Config;

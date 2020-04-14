@@ -57,6 +57,7 @@ namespace Agonyl.Shared.Network
         public uint Option2;
     }
 
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct ITEM
     {
         public ITEM_ID ItemId;
@@ -302,20 +303,20 @@ namespace Agonyl.Shared.Network
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public class MSG_S2C_WORLD_LOGIN : Marshalling
     {
-        public MSG_S2C_HEADER MsgHeader;
-        public CHARACTER_INFO CharacterInfo;
-        public CHARACTER_STAT CharacterStat;
+        public MSG_S2C_HEADER MsgHeader; // Size 12
+        public CHARACTER_INFO CharacterInfo; // Size 84
+        public CHARACTER_STAT CharacterStat; // Size 50
 
         [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.Struct, SizeConst = 10)]
-        public ITEM_WEAR[] WearList;
+        public ITEM_WEAR[] WearList; // Size 200
 
         [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.Struct, SizeConst = 30)]
-        public ITEM_INVENTORY[] InventoryList;
+        public ITEM_INVENTORY[] InventoryList; // Size 600
 
-        public PET_INFO PetActive;
+        public PET_INFO PetActive; // Size 20
 
         [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.Struct, SizeConst = 5)]
-        public PET_INFO[] PetInventory;
+        public PET_INFO[] PetInventory; // Size 100
 
         public MSG_S2C_WORLD_LOGIN()
         {
@@ -324,9 +325,6 @@ namespace Agonyl.Shared.Network
             this.CharacterInfo = new CHARACTER_INFO();
             this.CharacterInfo.SkillList = new SKILL_INFO();
             this.CharacterInfo.SInfo = new SOCIAL_INFO();
-            this.CharacterInfo.SInfo.Nation = 8;
-            this.CharacterInfo.SInfo.Rank = 8;
-            this.CharacterInfo.SInfo.KnightIndex = 16;
             this.CharacterStat = new CHARACTER_STAT();
             this.CharacterStat.CalculatedStat = new CHARACTER_CALCULATED_STAT();
             this.WearList = new ITEM_WEAR[10];
