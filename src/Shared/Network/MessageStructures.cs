@@ -147,6 +147,7 @@ namespace Agonyl.Shared.Network
         public ushort HP;
         public ushort MP;
         public CHARACTER_CALCULATED_STAT CalculatedStat;
+        public ushort Unknown; // Investigate what data this is
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
