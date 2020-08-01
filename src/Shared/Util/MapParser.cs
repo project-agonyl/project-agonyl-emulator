@@ -37,8 +37,9 @@ namespace Agonyl.Shared.Util
             var fileReadStart = BitConverter.GetBytes(map.Id).Length + map.Name.Length + sizeof(byte) + (map.WarpCount * 6);
             for (var i = fileReadStart; i < fileBytes.Length; i += 4)
             {
-                var currentCell = Functions.BytesToUInt32(fileBytes.Skip(i).Take(4).ToArray());
-                var currentCellBinary = Convert.ToString(currentCell, 2);
+                var currentCell = new byte[4];
+                Array.Copy(fileBytes, i, currentCell, 0, 4);
+                var currentCellBinary = Convert.ToString(Functions.BytesToUInt32(currentCell), 2);
                 map.NavigationMesh[x, y] = (byte)(currentCellBinary[currentCellBinary.Length - 1] == '1' ? 1 : 0);
                 if (x <= 255)
                 {
