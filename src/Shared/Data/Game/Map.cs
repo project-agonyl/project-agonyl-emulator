@@ -14,7 +14,7 @@ namespace Agonyl.Shared.Data.Game
 
         public string Name { get; set; }
 
-        public byte[,] NavigationMesh { get; set; }
+        public byte[,] NavigationMesh;
 
         public byte WarpCount { get; set; }
 
@@ -29,7 +29,7 @@ namespace Agonyl.Shared.Data.Game
             this.Shops = new List<NPC>();
             this.Monsters = new List<NPC>();
             this.WarpList = new List<Warp>();
-            this.NavigationMesh = new byte[256,256];
+            this.NavigationMesh = new byte[256, 256];
         }
 
         public Map(ushort id, string name = "")
