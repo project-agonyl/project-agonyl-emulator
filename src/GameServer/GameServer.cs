@@ -96,6 +96,7 @@ namespace Agonyl.Game
             {
                 this.LoadItemFiles();
                 this.LoadMapFiles();
+                this.LoadQuestFiles();
             }
             catch (FileNotFoundException ex)
             {
@@ -158,6 +159,8 @@ namespace Agonyl.Game
                 mapParser.ParseFile(ref map);
                 var parser = new NdtParser(this.Conf.GetNdtFilePath(mapId));
                 parser.ParseFile(ref map);
+                var ndtParser = new NdtParser(this.Conf.GetNdtFilePath(mapId));
+                ndtParser.ParseFile(ref map);
                 foreach (var shop in map.Shops)
                 {
                     if (this.GameData.NPCData.ContainsKey(shop.Id))
@@ -188,6 +191,25 @@ namespace Agonyl.Game
             }
 
             Log.Info("Loaded " + this.GameData.Maps.Count + " maps");
+        }
+
+        private void LoadQuestFiles()
+        {
+            Log.Info("Loading quest data please wait...");
+            if (Directory.Exists(this.Conf.GetQuestFolder()))
+            {
+                foreach (var file in Directory.GetFiles(this.Conf.GetQuestFolder(), "*.dat"))
+                {
+                    var questParser = new QuestParser(file);
+                    var quest = questParser.ParseFile();
+                    if (!this.GameData.Quests.ContainsKey(quest.Id))
+                    {
+                        this.GameData.Quests.Add(quest.Id, quest);
+                    }
+                }
+            }
+
+            Log.Info("Loaded " + this.GameData.Quests.Count + " quests");
         }
     }
 }
