@@ -6,6 +6,7 @@
 
 using System.Runtime.InteropServices;
 using Agonyl.Shared.Data;
+using Agonyl.Shared.Util;
 
 namespace Agonyl.Shared.Network
 {
@@ -289,15 +290,18 @@ namespace Agonyl.Shared.Network
     {
         public MSG_S2C_HEADER MsgHeader;
 
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 13)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 21)]
         public string CharacterName;
 
-        public uint InternalId;
+        public uint RandomNumer;
+
+        public ushort Map;
 
         public MSG_S2C_CHARACTER_SELECT_ACK()
         {
             this.MsgHeader = new MSG_S2C_HEADER(Constants.S2C_CHARACTER_SELECT_ACK_PROTOCOL);
             this.MsgHeader.Size = this.GetSize();
+            this.RandomNumer = Functions.GetRandomUint();
         }
     }
 

@@ -153,5 +153,10 @@ namespace Agonyl.Game.Data
                 currentInventoryIndex++;
             }
         }
+
+        public ushort GetMapNumberFromDbInfo()
+        {
+            return Convert.ToUInt16(this.Info.c_headerb.Split(';')[0]);
+        }
     }
 }

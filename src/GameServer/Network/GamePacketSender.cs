@@ -144,7 +144,7 @@ namespace Agonyl.Game.Network
         {
             var msg = new MSG_S2C_CHARACTER_SELECT_ACK();
             msg.CharacterName = conn.Character.Name;
-            msg.InternalId = 1;
+            msg.Map = conn.Character.GetMapNumberFromDbInfo();
             conn.Send(msg.Serialize());
         }
 

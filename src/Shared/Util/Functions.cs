@@ -78,5 +78,13 @@ namespace Agonyl.Shared.Util
 
             return string.Join("\\", splitArray).Trim();
         }
+
+        public static uint GetRandomUint()
+        {
+            var random = new Random();
+            var thirtyBits = (uint)random.Next(1 << 30);
+            var twoBits = (uint)random.Next(1 << 2);
+            return (thirtyBits << 2) | twoBits;
+        }
     }
 }
