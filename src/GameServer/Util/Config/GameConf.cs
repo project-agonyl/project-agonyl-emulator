@@ -53,6 +53,8 @@ namespace Agonyl.Game.Util.Config
 
         public string NpcDirectory { get; protected set; }
 
+        public string QuestDirectory { get; protected set; }
+
         public List<ushort> Maps { get; protected set; }
 
         /// <summary>
@@ -114,6 +116,14 @@ namespace Agonyl.Game.Util.Config
                                 if (child.InnerText != null)
                                 {
                                     this.NpcDirectory = child.InnerText;
+                                }
+
+                                break;
+
+                            case "QuestDirectory":
+                                if (child.InnerText != null)
+                                {
+                                    this.QuestDirectory = child.InnerText;
                                 }
 
                                 break;
@@ -294,6 +304,11 @@ namespace Agonyl.Game.Util.Config
         public string GetNpcFilePath(ushort id)
         {
             return this.BaseGameDataPath + Path.DirectorySeparatorChar + this.NpcDirectory + Path.DirectorySeparatorChar + id;
+        }
+
+        public string GetQuestFolder()
+        {
+            return this.BaseGameDataPath + Path.DirectorySeparatorChar + this.QuestDirectory;
         }
     }
 }

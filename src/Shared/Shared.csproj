@@ -71,6 +71,9 @@
     <Compile Include="Data\Game\NPC.cs" />
     <Compile Include="Data\Game\NPCAttack.cs" />
     <Compile Include="Data\Game\NPCData.cs" />
+    <Compile Include="Data\Game\Quest.cs" />
+    <Compile Include="Data\Game\QuestItemReward.cs" />
+    <Compile Include="Data\Game\QuestRequirement.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Network\Connection.cs" />
     <Compile Include="Network\ConnectionManager.cs" />
@@ -98,6 +101,7 @@
     <Compile Include="Util\Log.cs" />
     <Compile Include="Util\NdtParser.cs" />
     <Compile Include="Util\NPCDataParser.cs" />
+    <Compile Include="Util\QuestParser.cs" />
     <Compile Include="Util\Security\Crypt.cs" />
   </ItemGroup>
   <ItemGroup>

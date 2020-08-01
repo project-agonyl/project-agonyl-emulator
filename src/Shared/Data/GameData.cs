@@ -17,12 +17,14 @@ namespace Agonyl.Shared.Data
         public Dictionary<uint, Item> Items;
         public Dictionary<ushort, Map> Maps;
         public Dictionary<ushort, NPCData> NPCData;
+        public Dictionary<ushort, Quest> Quests;
 
         public GameData()
         {
             this.Items = new Dictionary<uint, Item>();
             this.Maps = new Dictionary<ushort, Map>();
             this.NPCData = new Dictionary<ushort, NPCData>();
+            this.Quests = new Dictionary<ushort, Quest>();
         }
 
         public Item GetItemByCode(uint code)
