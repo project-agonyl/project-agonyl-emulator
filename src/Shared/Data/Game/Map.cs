@@ -14,6 +14,12 @@ namespace Agonyl.Shared.Data.Game
 
         public string Name { get; set; }
 
+        public byte[,] NavigationMesh { get; set; }
+
+        public byte WarpCount { get; set; }
+
+        public List<Warp> WarpList;
+
         public List<NPC> Shops;
 
         public List<NPC> Monsters;
@@ -22,6 +28,8 @@ namespace Agonyl.Shared.Data.Game
         {
             this.Shops = new List<NPC>();
             this.Monsters = new List<NPC>();
+            this.WarpList = new List<Warp>();
+            this.NavigationMesh = new byte[256,256];
         }
 
         public Map(ushort id, string name = "")
@@ -30,6 +38,8 @@ namespace Agonyl.Shared.Data.Game
             this.Name = name;
             this.Shops = new List<NPC>();
             this.Monsters = new List<NPC>();
+            this.WarpList = new List<Warp>();
+            this.NavigationMesh = new byte[256, 256];
         }
     }
 }
