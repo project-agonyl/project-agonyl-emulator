@@ -69,6 +69,7 @@
     <Compile Include="Data\Game\Item.cs" />
     <Compile Include="Data\Game\Map.cs" />
     <Compile Include="Data\Game\NPC.cs" />
+    <Compile Include="Data\Game\NPCAttack.cs" />
     <Compile Include="Data\Game\NPCData.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Network\Connection.cs" />

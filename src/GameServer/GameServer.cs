@@ -154,8 +154,8 @@ namespace Agonyl.Game
             foreach (var mapId in this.Conf.Maps)
             {
                 var map = new Map(mapId);
-                var parser = new NdtParser(this.Conf.GetNdtFilePath(mapId));
-                parser.ParseFile(ref map);
+                var ndtParser = new NdtParser(this.Conf.GetNdtFilePath(mapId));
+                ndtParser.ParseFile(ref map);
                 foreach (var shop in map.Shops)
                 {
                     if (this.GameData.NPCData.ContainsKey(shop.Id))
