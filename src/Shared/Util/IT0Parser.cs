@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Agonyl.Shared.Data.Game;
 
 namespace Agonyl.Shared.Util
@@ -31,9 +30,9 @@ namespace Agonyl.Shared.Util
                     continue;
                 }
 
-                var currentIndex = Functions.BytesToUInt16(fileBytes.Skip(i + 2).Take(2).ToArray());
+                var currentIndex = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, i + 2));
                 var item = new Item();
-                item.ItemCode = Convert.ToUInt32((Functions.BytesToUInt16(fileBytes.Skip(i).Take(2).ToArray()) << 10) + currentIndex);
+                item.ItemCode = Convert.ToUInt32((Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, i)) << 10) + currentIndex);
                 if (data.ContainsKey(item.ItemCode))
                 {
                     continue;
@@ -41,41 +40,41 @@ namespace Agonyl.Shared.Util
 
                 item.SlotIndex = fileBytes[i + 4];
                 item.ItemType = fileBytes[i + 6];
-                item.ItemName = System.Text.Encoding.Default.GetString(fileBytes.Skip(i + 7).Take(30).ToArray());
-                item.NPCPrice = Functions.BytesToUInt32(fileBytes.Skip(i + 40).Take(4).ToArray());
+                item.ItemName = System.Text.Encoding.Default.GetString(Functions.SkipAndTakeLinqShim(ref fileBytes, 30, i + 7)).Trim();
+                item.NPCPrice = Functions.BytesToUInt32(Functions.SkipAndTakeLinqShim(ref fileBytes, 4, i + 40));
                 for (var j = 0; j < 10; j++)
                 {
                     var levelData = new IT0ItemLevel();
                     levelData.Level = Convert.ToByte(j + 1);
-                    levelData.AdditionalAttribute = Functions.BytesToUInt16(fileBytes.Skip(i + (18 * j) + 62).Take(2).ToArray());
-                    levelData.Strength = Functions.BytesToUInt16(fileBytes.Skip(i + (18 * j) + 64).Take(2).ToArray());
-                    levelData.Dexterity = Functions.BytesToUInt16(fileBytes.Skip(i + (18 * j) + 66).Take(2).ToArray());
-                    levelData.Intelligence = Functions.BytesToUInt16(fileBytes.Skip(i + (18 * j) + 68).Take(2).ToArray());
-                    levelData.Attribute = Functions.BytesToUInt16(fileBytes.Skip(i + (18 * j) + 70).Take(2).ToArray());
-                    levelData.AttributeRange = Functions.BytesToUInt16(fileBytes.Skip(i + (18 * j) + 72).Take(2).ToArray());
-                    levelData.BlueOption = Functions.BytesToUInt16(fileBytes.Skip(i + (18 * j) + 74).Take(2).ToArray());
-                    levelData.RedOption = Functions.BytesToUInt16(fileBytes.Skip(i + (18 * j) + 76).Take(2).ToArray());
-                    levelData.GreyOption = Functions.BytesToUInt16(fileBytes.Skip(i + (18 * j) + 78).Take(2).ToArray());
+                    levelData.AdditionalAttribute = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, i + (18 * j) + 62));
+                    levelData.Strength = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, i + (18 * j) + 64));
+                    levelData.Dexterity = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, i + (18 * j) + 66));
+                    levelData.Intelligence = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, i + (18 * j) + 68));
+                    levelData.Attribute = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, i + (18 * j) + 70));
+                    levelData.AttributeRange = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, i + (18 * j) + 72));
+                    levelData.BlueOption = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, i + (18 * j) + 74));
+                    levelData.RedOption = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, i + (18 * j) + 76));
+                    levelData.GreyOption = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, i + (18 * j) + 78));
                     item.IT0ItemProperty.ItemLevel.Add(levelData);
                 }
 
                 for (var k = 0; k < iT0exFileBytes.Length; k += 92)
                 {
-                    if (currentIndex == Functions.BytesToUInt16(iT0exFileBytes.Skip(k).Take(2).ToArray()))
+                    if (currentIndex == Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref iT0exFileBytes, 2, k)))
                     {
                         for (var j = 0; j < 5; j++)
                         {
                             var levelData = new IT0ItemLevel();
                             levelData.Level = Convert.ToByte(j + 11);
-                            levelData.AdditionalAttribute = Functions.BytesToUInt16(iT0exFileBytes.Skip(k + (18 * j) + 2).Take(2).ToArray());
-                            levelData.Strength = Functions.BytesToUInt16(iT0exFileBytes.Skip(k + (18 * j) + 4).Take(2).ToArray());
-                            levelData.Dexterity = Functions.BytesToUInt16(iT0exFileBytes.Skip(k + (18 * j) + 6).Take(2).ToArray());
-                            levelData.Intelligence = Functions.BytesToUInt16(iT0exFileBytes.Skip(k + (18 * j) + 8).Take(2).ToArray());
-                            levelData.Attribute = Functions.BytesToUInt16(iT0exFileBytes.Skip(k + (18 * j) + 10).Take(2).ToArray());
-                            levelData.AttributeRange = Functions.BytesToUInt16(iT0exFileBytes.Skip(k + (18 * j) + 12).Take(2).ToArray());
-                            levelData.BlueOption = Functions.BytesToUInt16(iT0exFileBytes.Skip(k + (18 * j) + 14).Take(2).ToArray());
-                            levelData.RedOption = Functions.BytesToUInt16(iT0exFileBytes.Skip(k + (18 * j) + 16).Take(2).ToArray());
-                            levelData.GreyOption = Functions.BytesToUInt16(iT0exFileBytes.Skip(k + (18 * j) + 18).Take(2).ToArray());
+                            levelData.AdditionalAttribute = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref iT0exFileBytes, 2, k + (18 * j) + 2));
+                            levelData.Strength = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref iT0exFileBytes, 2, k + (18 * j) + 4));
+                            levelData.Dexterity = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref iT0exFileBytes, 2, k + (18 * j) + 6));
+                            levelData.Intelligence = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref iT0exFileBytes, 2, k + (18 * j) + 8));
+                            levelData.Attribute = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref iT0exFileBytes, 2, k + (18 * j) + 10));
+                            levelData.AttributeRange = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref iT0exFileBytes, 2, k + (18 * j) + 12));
+                            levelData.BlueOption = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref iT0exFileBytes, 2, k + (18 * j) + 14));
+                            levelData.RedOption = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref iT0exFileBytes, 2, k + (18 * j) + 16));
+                            levelData.GreyOption = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref iT0exFileBytes, 2, k + (18 * j) + 18));
                             item.IT0ItemProperty.ItemLevel.Add(levelData);
                         }
 

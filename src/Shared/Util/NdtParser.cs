@@ -5,7 +5,6 @@
 #endregion copyright
 
 using System.IO;
-using System.Linq;
 using Agonyl.Shared.Data.Game;
 
 namespace Agonyl.Shared.Util
@@ -22,11 +21,11 @@ namespace Agonyl.Shared.Util
             var fileBytes = File.ReadAllBytes(this.FilePath);
             for (var i = 0; i < fileBytes.Length; i += 8)
             {
-                var npcId = Functions.BytesToUInt16(fileBytes.Skip(i).Take(2).ToArray());
+                var npcId = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, i));
                 var npc = new NPC()
                 {
                     Id = npcId,
-                    Location = Functions.BytesToUInt16(fileBytes.Skip(i + 2).Take(2).ToArray()),
+                    Location = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, i + 2)),
                     Orientation = fileBytes[i + 6],
                     SpawnStep = fileBytes[i + 7],
                 };

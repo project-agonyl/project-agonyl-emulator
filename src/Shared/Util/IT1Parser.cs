@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Agonyl.Shared.Data.Game;
 
 namespace Agonyl.Shared.Util
@@ -25,16 +24,16 @@ namespace Agonyl.Shared.Util
             for (var i = 0; i < fileBytes.Length; i += 52)
             {
                 var item = new Item();
-                item.SlotIndex = fileBytes[i]; // Investigate if this is right
                 item.ItemType = fileBytes[i];
-                item.ItemCode = Convert.ToUInt32((Functions.BytesToUInt16(fileBytes.Skip(i).Take(2).ToArray()) << 10) + Functions.BytesToUInt16(fileBytes.Skip(i + 2).Take(2).ToArray()));
-                item.ItemName = System.Text.Encoding.Default.GetString(fileBytes.Skip(i + 4).Take(30).ToArray());
-                item.NPCPrice = Functions.BytesToUInt32(fileBytes.Skip(i + 36).Take(4).ToArray());
-                item.IT1ItemProperty.RequiredLevel = Functions.BytesToUInt16(fileBytes.Skip(i + 42).Take(2).ToArray());
-                item.IT1ItemProperty.Attribute = Functions.BytesToUInt16(fileBytes.Skip(i + 44).Take(2).ToArray());
-                item.IT1ItemProperty.BlueOption = Functions.BytesToUInt16(fileBytes.Skip(i + 46).Take(2).ToArray());
-                item.IT1ItemProperty.RedOption = Functions.BytesToUInt16(fileBytes.Skip(i + 48).Take(2).ToArray());
-                item.IT1ItemProperty.GreyOption = Functions.BytesToUInt16(fileBytes.Skip(i + 50).Take(2).ToArray());
+                item.SlotIndex = (byte)(item.ItemType == 4 ? 8 : 9);
+                item.ItemCode = Convert.ToUInt32((Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, i)) << 10) + Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, i + 2)));
+                item.ItemName = System.Text.Encoding.Default.GetString(Functions.SkipAndTakeLinqShim(ref fileBytes, 30, i + 4)).Trim();
+                item.NPCPrice = Functions.BytesToUInt32(Functions.SkipAndTakeLinqShim(ref fileBytes, 4, i + 36));
+                item.IT1ItemProperty.RequiredLevel = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, i + 42));
+                item.IT1ItemProperty.Attribute = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, i + 44));
+                item.IT1ItemProperty.BlueOption = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, i + 46));
+                item.IT1ItemProperty.RedOption = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, i + 48));
+                item.IT1ItemProperty.GreyOption = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, i + 50));
                 data.Add(item.ItemCode, item);
             }
         }

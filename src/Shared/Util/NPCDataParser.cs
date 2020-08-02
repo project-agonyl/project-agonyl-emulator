@@ -5,7 +5,6 @@
 #endregion copyright
 
 using System.IO;
-using System.Linq;
 using Agonyl.Shared.Data.Game;
 
 namespace Agonyl.Shared.Util
@@ -20,9 +19,9 @@ namespace Agonyl.Shared.Util
         public void ParseData(ref NPCData npcData)
         {
             var fileBytes = File.ReadAllBytes(this.FilePath);
-            npcData.Name = System.Text.Encoding.Default.GetString(fileBytes.Take(20).ToArray());
-            npcData.Id = Functions.BytesToUInt16(fileBytes.Skip(20).Take(2).ToArray());
-            npcData.RespawnRate = Functions.BytesToUInt16(fileBytes.Skip(22).Take(2).ToArray());
+            npcData.Name = System.Text.Encoding.Default.GetString(Functions.SkipAndTakeLinqShim(ref fileBytes, 20)).Trim();
+            npcData.Id = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 20));
+            npcData.RespawnRate = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 22));
             npcData.AttackTypeInfo = fileBytes[24];
             npcData.TargetSelectionInfo = fileBytes[25];
             npcData.Defense = fileBytes[26];
@@ -33,22 +32,22 @@ namespace Agonyl.Shared.Util
                 {
                     Range = fileBytes[28 + (i * 8)],
                     Area = fileBytes[29 + (i * 8)],
-                    Damage = Functions.BytesToUInt16(fileBytes.Skip(32 + (i * 8)).Take(2).ToArray()),
-                    AdditionalDamage = Functions.BytesToUInt16(fileBytes.Skip(34 + (i * 8)).Take(2).ToArray()),
+                    Damage = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 32 + (i * 8))),
+                    AdditionalDamage = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 34 + (i * 8))),
                 };
             }
 
-            npcData.AttackSpeedLow = Functions.BytesToUInt16(fileBytes.Skip(52).Take(2).ToArray());
-            npcData.AttackSpeedHigh = Functions.BytesToUInt16(fileBytes.Skip(54).Take(2).ToArray());
-            npcData.MovementSpeed = Functions.BytesToUInt16(fileBytes.Skip(56).Take(2).ToArray());
+            npcData.AttackSpeedLow = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 52));
+            npcData.AttackSpeedHigh = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 54));
+            npcData.MovementSpeed = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 56));
             npcData.Level = fileBytes[60];
-            npcData.PlayerExp = Functions.BytesToUInt16(fileBytes.Skip(61).Take(2).ToArray());
+            npcData.PlayerExp = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 61));
             npcData.Appearance = fileBytes[63];
-            npcData.HP = Functions.BytesToUInt32(fileBytes.Skip(64).Take(4).ToArray());
-            npcData.BlueAttackDefense = Functions.BytesToUInt16(fileBytes.Skip(70).Take(2).ToArray());
-            npcData.RedAttackDefense = Functions.BytesToUInt16(fileBytes.Skip(72).Take(2).ToArray());
-            npcData.GreyAttackDefense = Functions.BytesToUInt16(fileBytes.Skip(74).Take(2).ToArray());
-            npcData.MercenaryExp = Functions.BytesToUInt16(fileBytes.Skip(76).Take(2).ToArray());
+            npcData.HP = Functions.BytesToUInt32(Functions.SkipAndTakeLinqShim(ref fileBytes, 4, 64));
+            npcData.BlueAttackDefense = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 70));
+            npcData.RedAttackDefense = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 72));
+            npcData.GreyAttackDefense = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 74));
+            npcData.MercenaryExp = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 76));
         }
     }
 }

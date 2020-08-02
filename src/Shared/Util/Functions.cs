@@ -86,5 +86,17 @@ namespace Agonyl.Shared.Util
             var twoBits = (uint)random.Next(1 << 2);
             return (thirtyBits << 2) | twoBits;
         }
+
+        public static byte[] SkipAndTakeLinqShim(ref byte[] originalBytes, int take, int skip = 0)
+        {
+            if (skip + take > originalBytes.Length)
+            {
+                return Array.Empty<byte>();
+            }
+
+            var outByte = new byte[take];
+            Array.Copy(originalBytes, skip, outByte, 0, take);
+            return outByte;
+        }
     }
 }

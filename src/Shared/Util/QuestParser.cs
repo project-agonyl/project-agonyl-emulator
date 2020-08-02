@@ -4,9 +4,7 @@
 
 #endregion copyright
 
-using System;
 using System.IO;
-using System.Linq;
 using Agonyl.Shared.Data.Game;
 
 namespace Agonyl.Shared.Util
@@ -23,27 +21,27 @@ namespace Agonyl.Shared.Util
             var fileBytes = File.ReadAllBytes(this.FilePath);
             var quest = new Quest()
             {
-                Id = BitConverter.ToUInt16(fileBytes.Take(2).ToArray(), 0),
-                StartNpcId = BitConverter.ToUInt16(fileBytes.Skip(4).Take(2).ToArray(), 0),
-                SubmitNpcId = BitConverter.ToUInt16(fileBytes.Skip(8).Take(2).ToArray(), 0),
-                LowLevel = BitConverter.ToUInt16(fileBytes.Skip(32).Take(2).ToArray(), 0),
-                HighLevel = BitConverter.ToUInt16(fileBytes.Skip(36).Take(2).ToArray(), 0),
-                Experience = BitConverter.ToUInt32(fileBytes.Skip(80).Take(4).ToArray(), 0),
-                Woonz = BitConverter.ToUInt32(fileBytes.Skip(84).Take(4).ToArray(), 0),
-                Lore = BitConverter.ToUInt32(fileBytes.Skip(88).Take(4).ToArray(), 0),
+                Id = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2)),
+                StartNpcId = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 4)),
+                SubmitNpcId = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 8)),
+                LowLevel = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 32)),
+                HighLevel = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 36)),
+                Experience = Functions.BytesToUInt32(Functions.SkipAndTakeLinqShim(ref fileBytes, 4, 80)),
+                Woonz = Functions.BytesToUInt32(Functions.SkipAndTakeLinqShim(ref fileBytes, 4, 84)),
+                Lore = Functions.BytesToUInt32(Functions.SkipAndTakeLinqShim(ref fileBytes, 4, 88)),
                 NextQuestId = 0xffff,
             };
             if (fileBytes.Length == 798)
             {
-                quest.NextQuestId = BitConverter.ToUInt16(fileBytes.Skip(786).Take(2).ToArray(), 0);
+                quest.NextQuestId = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 786));
             }
 
             for (var i = 0; i < 3; i++)
             {
                 quest.QuestItemRewards[i] = new QuestItemReward()
                 {
-                    Id = BitConverter.ToUInt32(fileBytes.Skip(44 + (i * 4)).Take(4).ToArray(), 0),
-                    Count = BitConverter.ToUInt16(fileBytes.Skip(68 + (i * 4)).Take(2).ToArray(), 0),
+                    Id = Functions.BytesToUInt32(Functions.SkipAndTakeLinqShim(ref fileBytes, 4, 44 + (i * 4))),
+                    Count = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 68 + (i * 4))),
                 };
             }
 
@@ -51,11 +49,11 @@ namespace Agonyl.Shared.Util
             {
                 quest.QuestRequirements[i] = new QuestRequirement()
                 {
-                    MapId = BitConverter.ToUInt16(fileBytes.Skip(100 + (i * 96)).Take(2).ToArray(), 0),
-                    MonsterId = BitConverter.ToUInt16(fileBytes.Skip(112 + (i * 96)).Take(2).ToArray(), 0),
-                    MonsterCount = BitConverter.ToUInt16(fileBytes.Skip(116 + (i * 96)).Take(2).ToArray(), 0),
-                    QuestItem = BitConverter.ToUInt16(fileBytes.Skip(124 + (i * 96)).Take(2).ToArray(), 0),
-                    QuestItemCount = BitConverter.ToUInt16(fileBytes.Skip(172 + (i * 96)).Take(2).ToArray(), 0),
+                    MapId = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 100 + (i * 96))),
+                    MonsterId = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 112 + (i * 96))),
+                    MonsterCount = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 116 + (i * 96))),
+                    QuestItem = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 124 + (i * 96))),
+                    QuestItemCount = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 172 + (i * 96))),
                 };
             }
 

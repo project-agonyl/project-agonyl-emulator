@@ -6,7 +6,6 @@
 
 using System;
 using System.IO;
-using System.Linq;
 using Agonyl.Shared.Data.Game;
 
 namespace Agonyl.Shared.Util
@@ -21,14 +20,14 @@ namespace Agonyl.Shared.Util
         public void ParseFile(ref Map map)
         {
             var fileBytes = File.ReadAllBytes(this.FilePath);
-            map.Name = System.Text.Encoding.Default.GetString(fileBytes.Skip(2).Take(20).ToArray());
+            map.Name = System.Text.Encoding.Default.GetString(Functions.SkipAndTakeLinqShim(ref fileBytes, 20, 2));
             map.WarpCount = fileBytes[22];
             for (var i = 0; i < map.WarpCount; i++)
             {
                 var warp = new Warp()
                 {
-                    MapNo = Functions.BytesToUInt16(fileBytes.Skip(23 + (6 * i)).Take(2).ToArray()),
-                    Coordinates = Functions.BytesToUInt16(fileBytes.Skip(25 + (6 * i)).Take(4).ToArray()),
+                    MapNo = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 23 + (6 * i))),
+                    Coordinates = Functions.BytesToUInt16(Functions.SkipAndTakeLinqShim(ref fileBytes, 2, 25 + (6 * i))),
                 };
                 map.WarpList.Add(warp);
             }
@@ -37,9 +36,7 @@ namespace Agonyl.Shared.Util
             var fileReadStart = BitConverter.GetBytes(map.Id).Length + map.Name.Length + sizeof(byte) + (map.WarpCount * 6);
             for (var i = fileReadStart; i < fileBytes.Length; i += 4)
             {
-                var currentCell = new byte[4];
-                Array.Copy(fileBytes, i, currentCell, 0, 4);
-                var currentCellBinary = Convert.ToString(Functions.BytesToUInt32(currentCell), 2);
+                var currentCellBinary = Convert.ToString(Functions.BytesToUInt32(Functions.SkipAndTakeLinqShim(ref fileBytes, 4, i)), 2);
                 map.NavigationMesh[x, y] = (byte)(currentCellBinary[currentCellBinary.Length - 1] == '1' ? 1 : 0);
                 if (x <= 255)
                 {
