@@ -212,7 +212,7 @@ namespace Agonyl.Shared.Network
 
         public MSG_S2C_ERROR()
         {
-            this.MsgHeader = new MSG_S2C_HEADER(Constants.S2C_ERROR_PROTOCOL);
+            this.MsgHeader = new MSG_S2C_HEADER(Op.S2C_ERROR);
             this.MsgHeader.Size = this.GetSize();
         }
     }
@@ -227,7 +227,7 @@ namespace Agonyl.Shared.Network
 
         public MSG_S2C_CHARACTER_LIST()
         {
-            this.MsgHeader = new MSG_S2C_HEADER(Constants.S2C_CHARACTER_LIST_PROTOCOL);
+            this.MsgHeader = new MSG_S2C_HEADER(Op.S2C_CHAR_LIST);
             this.MsgHeader.Size = this.GetSize();
             this.CharInfo = new ACL_CHARACTER_INFO[5];
         }
@@ -264,7 +264,7 @@ namespace Agonyl.Shared.Network
 
         public MSG_S2C_CHARACTER_CREATE_ACK()
         {
-            this.MsgHeader = new MSG_S2C_HEADER(Constants.S2C_CHARACTER_CREATE_ACK_PROTOCOL);
+            this.MsgHeader = new MSG_S2C_HEADER(Op.S2C_ANS_CREATE_PLAYER);
             this.MsgHeader.Size = this.GetSize();
             this.WearList = new ACL_ITEM_WEAR[10];
         }
@@ -280,7 +280,7 @@ namespace Agonyl.Shared.Network
 
         public MSG_S2C_CHARACTER_DELETE_ACK()
         {
-            this.MsgHeader = new MSG_S2C_HEADER(Constants.S2C_CHARACTER_DELETE_ACK_PROTOCOL);
+            this.MsgHeader = new MSG_S2C_HEADER(Op.S2C_ANS_DELETE_PLAYER);
             this.MsgHeader.Size = this.GetSize();
         }
     }
@@ -299,7 +299,7 @@ namespace Agonyl.Shared.Network
 
         public MSG_S2C_CHARACTER_SELECT_ACK()
         {
-            this.MsgHeader = new MSG_S2C_HEADER(Constants.S2C_CHARACTER_SELECT_ACK_PROTOCOL);
+            this.MsgHeader = new MSG_S2C_HEADER(Op.S2C_CHAR_LOGIN_OK);
             this.MsgHeader.Size = this.GetSize();
             this.RandomNumer = Functions.GetRandomUint();
         }
@@ -325,7 +325,7 @@ namespace Agonyl.Shared.Network
 
         public MSG_S2C_WORLD_LOGIN()
         {
-            this.MsgHeader = new MSG_S2C_HEADER(Constants.S2C_WORLD_LOGIN_PROTOCOL);
+            this.MsgHeader = new MSG_S2C_HEADER(Op.S2C_WORLD_LOGIN);
             this.MsgHeader.Size = this.GetSize();
             this.CharacterInfo = new CHARACTER_INFO();
             this.CharacterInfo.SkillList = new SKILL_INFO();
@@ -350,7 +350,7 @@ namespace Agonyl.Shared.Network
 
         public MSG_S2C_UNKNOWN_37()
         {
-            this.MsgHeader = new MSG_S2C_HEADER(Constants.S2C_UNKNOWN_37_PROTOCOL);
+            this.MsgHeader = new MSG_S2C_HEADER(Op.S2C_UNKNOWN_37_PROTOCOL);
             this.MsgHeader.Size = this.GetSize();
             this.Unknown = new byte[25];
         }
@@ -366,7 +366,7 @@ namespace Agonyl.Shared.Network
 
         public MSG_S2C_UNKNOWN_25()
         {
-            this.MsgHeader = new MSG_S2C_HEADER(Constants.S2C_UNKNOWN_25_PROTOCOL);
+            this.MsgHeader = new MSG_S2C_HEADER(Op.S2C_UNKNOWN_25_PROTOCOL);
             this.MsgHeader.Size = this.GetSize();
             this.Unknown = new byte[13];
         }
@@ -388,7 +388,7 @@ namespace Agonyl.Shared.Network
 
         public MSG_S2C_UNKNOWN_36()
         {
-            this.MsgHeader = new MSG_S2C_HEADER(Constants.S2C_UNKNOWN_36_PROTOCOL);
+            this.MsgHeader = new MSG_S2C_HEADER(Op.S2C_UNKNOWN_36_PROTOCOL);
             this.MsgHeader.Size = this.GetSize();
             this.Unknown1 = 0;
             this.Unknown2 = 0xCC;
@@ -423,7 +423,7 @@ namespace Agonyl.Shared.Network
 
         public MSG_S2C_NPC_INITIALIZE()
         {
-            this.MsgHeader = new MSG_S2C_HEADER(Constants.S2C_NPC_INITIALIZE_PROTOCOL);
+            this.MsgHeader = new MSG_S2C_HEADER(Op.S2C_NPC_INITIALIZE_PROTOCOL);
             this.MsgHeader.Size = this.GetSize();
             this.Unknown1 = new byte[] { 0xf8, 0x2f, 0x20, 0xa1, 0x07 };
             this.Unknown2 = new byte[5];
@@ -448,7 +448,7 @@ namespace Agonyl.Shared.Network
 
         public MSG_S2C_CHAT_INITIALIZE()
         {
-            this.MsgHeader = new MSG_S2C_HEADER(Constants.S2C_CHAT_INITIALIZE_PROTOCOL);
+            this.MsgHeader = new MSG_S2C_HEADER(Op.S2C_CHAT_INITIALIZE_PROTOCOL);
             this.Unknown = new byte[] { 0xff, 0x00, 0x1f, 0x00, 0xe3, 0x00 };
         }
     }

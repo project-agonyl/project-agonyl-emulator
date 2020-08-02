@@ -29,7 +29,7 @@ namespace Agonyl.Shared.Data.Game
             this.Shops = new List<NPC>();
             this.Monsters = new List<NPC>();
             this.WarpList = new List<Warp>();
-            this.NavigationMesh = new byte[256, 256];
+            this.NavigationMesh = new byte[Constants.MAP_XCELL, Constants.MAP_YCELL];
         }
 
         public Map(ushort id, string name = "")
@@ -39,7 +39,7 @@ namespace Agonyl.Shared.Data.Game
             this.Shops = new List<NPC>();
             this.Monsters = new List<NPC>();
             this.WarpList = new List<Warp>();
-            this.NavigationMesh = new byte[256, 256];
+            this.NavigationMesh = new byte[Constants.MAP_XCELL, Constants.MAP_YCELL];
         }
     }
 }

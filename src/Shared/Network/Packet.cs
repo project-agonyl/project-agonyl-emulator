@@ -28,7 +28,7 @@ namespace Agonyl.Shared.Network
         /// <summary>
         /// Packet's op.
         /// </summary>
-        public int Op { get; protected set; }
+        public ushort Op { get; protected set; }
 
         /// <summary>
         /// Creates packet from buffer coming from client.
@@ -52,14 +52,14 @@ namespace Agonyl.Shared.Network
             this._buffer = buffer;
 
             this.Length = buffer.Length;
-            this.Op = (int)buffer[opIndex];
+            this.Op = buffer[opIndex];
         }
 
         /// <summary>
         /// Creates new packet with given op.
         /// </summary>
         /// <param name="op"></param>
-        public Packet(int op)
+        public Packet(ushort op)
         {
             this._buffer = new byte[DefaultSize];
             this.Op = op;
@@ -677,188 +677,103 @@ namespace Agonyl.Shared.Network
             return tempByte;
         }
 
-        private int GetOpCode()
+        private ushort GetOpCode()
         {
-            int opCode;
-            switch (this._buffer[10])
+            ushort opCode;
+            switch (this._buffer[11])
             {
-                case 0x08:
-                    switch (this._buffer[11])
-                    {
-                        case 0x11:
-                            opCode = Network.Op.C2S_CLIENT_EXIT;
-                            break;
-
-                        case 0x13:
-                            opCode = Network.Op.C2S_CAN_INTERACT_NPC;
-                            break;
-
-                        default:
-                            opCode = Network.Op.C2S_UNKNOWN;
-                            break;
-                    }
-
-                    break;
-
-                case 0x00:
-                    switch (this._buffer[11])
-                    {
-                        case 0xC0:
-                            opCode = Network.Op.C2S_PAYMENT_INFO;
-                            break;
-
-                        case 0x19:
-                            opCode = Network.Op.C2S_WARP_COMPLETE;
-                            break;
-
-                        case 0x12:
-                            opCode = Network.Op.C2S_MOVE_CHARACTER;
-                            break;
-
-                        default:
-                            opCode = Network.Op.C2S_UNKNOWN;
-                            break;
-                    }
-
-                    break;
-
-                case 0x67:
-                    switch (this._buffer[11])
-                    {
-                        case 0x17:
-                            opCode = Network.Op.C2S_RECHARGE_POTION;
-                            break;
-
-                        default:
-                            opCode = Network.Op.C2S_UNKNOWN;
-                            break;
-                    }
-
-                    break;
-
                 case 0x11:
-                    switch (this._buffer[11])
+                    switch (this._buffer[10])
                     {
-                        case 0x11:
-                            opCode = Network.Op.C2S_WARP_LOCATION;
+                        case 0x06:
+                            opCode = Network.Op.C2S_CHAR_LOGIN;
                             break;
 
-                        case 0x38:
-                            opCode = Network.Op.C2S_CHARACTER_LIST;
+                        case 0x07:
+                            opCode = Network.Op.C2S_WORLD_LOGIN;
+                            break;
+
+                        case 0x08:
+                            opCode = Network.Op.C2S_CHAR_LOGOUT;
                             break;
 
                         default:
-                            opCode = Network.Op.C2S_UNKNOWN;
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
                             break;
                     }
 
                     break;
 
                 case 0x12:
-                    switch (this._buffer[11])
+                    switch (this._buffer[10])
+                    {
+                        case 0x00:
+                            opCode = Network.Op.C2S_ASK_MOVE;
+                            break;
+
+                        case 0x02:
+                            opCode = Network.Op.C2S_PC_MOVE;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0xA0:
+                    switch (this._buffer[10])
+                    {
+                        case 0x01:
+                            opCode = Network.Op.C2S_ASK_CREATE_PLAYER;
+                            break;
+
+                        case 0x02:
+                            opCode = Network.Op.C2S_ASK_DELETE_PLAYER;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0x28:
+                    switch (this._buffer[10])
+                    {
+                        case 0x95:
+                            opCode = Network.Op.C2S_PREPARE_USER;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0x38:
+                    switch (this._buffer[10])
                     {
                         case 0x11:
-                            opCode = Network.Op.C2S_WARP_REQUEST;
+                            opCode = Network.Op.C2S_PREPARE_USER;
                             break;
 
                         default:
-                            opCode = Network.Op.C2S_UNKNOWN;
-                            break;
-                    }
-
-                    break;
-
-                case 0x06:
-                    switch (this._buffer[11])
-                    {
-                        case 0x16:
-                            opCode = Network.Op.C2S_HEALER_WINDOW_OPEN;
-                            break;
-
-                        case 0x11:
-                            opCode = Network.Op.C2S_SELECT_CHARACTER;
-                            break;
-
-                        default:
-                            opCode = Network.Op.C2S_UNKNOWN;
-                            break;
-                    }
-
-                    break;
-
-                case 0x07:
-                    switch (this._buffer[11])
-                    {
-                        case 0x11:
-                            opCode = Network.Op.C2S_WORLD_LOGIN;
-                            break;
-
-                        default:
-                            opCode = Network.Op.C2S_UNKNOWN;
-                            break;
-                    }
-
-                    break;
-
-                case 0x1C:
-                    switch (this._buffer[11])
-                    {
-                        case 0x50:
-                            opCode = Network.Op.C2S_RECHARGE_POTIONS_FULL;
-                            break;
-
-                        default:
-                            opCode = Network.Op.C2S_UNKNOWN;
-                            break;
-                    }
-
-                    break;
-
-                case 0x02:
-                    switch (this._buffer[11])
-                    {
-                        case 0xA0:
-                            opCode = Network.Op.C2S_CHARACTER_DELETE_REQUEST;
-                            break;
-
-                        case 0x12:
-                            opCode = Network.Op.C2S_MOVED_CHARACTER;
-                            break;
-
-                        default:
-                            opCode = Network.Op.C2S_UNKNOWN;
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
                             break;
                     }
 
                     break;
 
                 default:
-                    switch (this._buffer.Length)
-                    {
-                        case 22:
-                            opCode = Network.Op.C2S_PING;
-                            break;
-
-                        case 35:
-                            opCode = Network.Op.C2S_CHARACTER_CREATE_REQUEST;
-                            break;
-
-                        default:
-                            opCode = Network.Op.C2S_UNKNOWN;
-                            break;
-                    }
-
+                    opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
                     break;
             }
 
             return opCode;
-        }
-
-        private enum ZlibMode
-        {
-            None,
-            Compressed,
-            Uncompressed,
         }
     }
 }

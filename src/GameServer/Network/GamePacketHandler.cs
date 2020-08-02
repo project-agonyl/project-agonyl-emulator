@@ -20,8 +20,8 @@ namespace Agonyl.Game.Network
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="packet"></param>
-        [PacketHandler(Op.C2S_CHARACTER_LIST)]
-        public void C2S_CHARACTER_LIST(GameConnection conn, Packet packet)
+        [PacketHandler(Op.C2S_PREPARE_USER)]
+        public void C2S_PREPARE_USER(GameConnection conn, Packet packet)
         {
             packet.SetReadPointer(14);
             var username = packet.GetString(20);
@@ -31,7 +31,7 @@ namespace Agonyl.Game.Network
             {
                 conn.Account = new Account(username);
                 conn.Username = username;
-                Send.S2C_CHARACTER_LIST(conn, conn.Account);
+                Send.S2C_CHAR_LIST(conn, conn.Account);
             }
         }
 
@@ -40,8 +40,8 @@ namespace Agonyl.Game.Network
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="packet"></param>
-        [PacketHandler(Op.C2S_CHARACTER_CREATE_REQUEST)]
-        public void C2S_CREATE_CHARACTER(GameConnection conn, Packet packet)
+        [PacketHandler(Op.C2S_ASK_CREATE_PLAYER)]
+        public void C2S_ASK_CREATE_PLAYER(GameConnection conn, Packet packet)
         {
             var decodedPacket = new MSG_C2S_CHARACTER_CREATE_REQUEST();
             decodedPacket.Deserialize(ref packet);
@@ -64,27 +64,27 @@ namespace Agonyl.Game.Network
                 // Insert wear into body
                 switch (decodedPacket.CharacterType)
                 {
-                    case Constants.CHARACTER_TYPE_WARRIOR:
+                    case Constants.WARRIOR_TYPE:
                         body = Functions.InsertWearIntoMbody(GameServer.Instance.Conf.StarterBodyWarrior, GameServer.Instance.Conf.StarterGearWarrior);
                         break;
 
-                    case Constants.CHARACTER_TYPE_HK:
+                    case Constants.PALADIN_TYPE:
                         body = Functions.InsertWearIntoMbody(GameServer.Instance.Conf.StarterBodyHK, GameServer.Instance.Conf.StarterGearHK);
                         stats = GameServer.Instance.Conf.StarterStatsHK;
                         break;
 
-                    case Constants.CHARACTER_TYPE_MAGE:
+                    case Constants.MAGE_TYPE:
                         body = Functions.InsertWearIntoMbody(GameServer.Instance.Conf.StarterBodyMage, GameServer.Instance.Conf.StarterGearMage);
                         stats = GameServer.Instance.Conf.StarterStatsMage;
                         break;
 
-                    case Constants.CHARACTER_TYPE_ARCHER:
+                    case Constants.ARCHER_TYPE:
                         body = Functions.InsertWearIntoMbody(GameServer.Instance.Conf.StarterBodyArcher, GameServer.Instance.Conf.StarterGearArcher);
                         stats = GameServer.Instance.Conf.StarterStatsArcher;
                         break;
                 }
 
-                if (decodedPacket.CharacterTown == Constants.TOWN_QUANATO)
+                if (decodedPacket.CharacterTown == Constants.QUANATO_TOWN)
                 {
                     location = GameServer.Instance.Conf.StarterLocationQuanato;
                     body = body.Replace("SINFO=0", "SINFO=1");
@@ -92,7 +92,7 @@ namespace Agonyl.Game.Network
 
                 if (GameServer.Instance.ASDDatabase.CreateCharacter(conn.Account.Username, decodedPacket.CharacterName, decodedPacket.CharacterType, stats, body, location, level))
                 {
-                    Send.S2C_CHARACTER_CREATE_ACK(conn, decodedPacket.CharacterName, decodedPacket.CharacterType);
+                    Send.S2C_ANS_CREATE_PLAYER(conn, decodedPacket.CharacterName, decodedPacket.CharacterType);
                 }
                 else
                 {
@@ -106,8 +106,8 @@ namespace Agonyl.Game.Network
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="packet"></param>
-        [PacketHandler(Op.C2S_CHARACTER_DELETE_REQUEST)]
-        public void C2S_DELETE_CHARACTER(GameConnection conn, Packet packet)
+        [PacketHandler(Op.C2S_ASK_DELETE_PLAYER)]
+        public void C2S_ASK_DELETE_PLAYER(GameConnection conn, Packet packet)
         {
             packet.SetReadPointer(12);
             var name = packet.GetString(13);
@@ -115,7 +115,7 @@ namespace Agonyl.Game.Network
             {
                 if (GameServer.Instance.ASDDatabase.DeleteCharacter(name))
                 {
-                    Send.S2C_CHARACTER_DELETE_ACK(conn, name);
+                    Send.S2C_ANS_DELETE_PLAYER(conn, name);
                 }
                 else
                 {
@@ -128,8 +128,8 @@ namespace Agonyl.Game.Network
             }
         }
 
-        [PacketHandler(Op.C2S_SELECT_CHARACTER)]
-        public void C2S_SELECT_CHARACTER(GameConnection conn, Packet packet)
+        [PacketHandler(Op.C2S_CHAR_LOGIN)]
+        public void C2S_CHAR_LOGIN(GameConnection conn, Packet packet)
         {
             packet.SetReadPointer(12);
             var name = packet.GetString(13);
@@ -139,7 +139,7 @@ namespace Agonyl.Game.Network
                 conn.Character.Info = GameServer.Instance.ASDDatabase.GetCharacter(name);
                 conn.Character.Name = conn.Character.Info.c_id;
                 conn.Character.GameConnection = conn;
-                Send.S2C_CHARACTER_SELECT_ACK(conn);
+                Send.S2C_CHAR_LOGIN_OK(conn);
             }
             else
             {
@@ -165,8 +165,8 @@ namespace Agonyl.Game.Network
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="packet"></param>
-        [PacketHandler(Op.C2S_CLIENT_EXIT)]
-        public void C2S_CLIENT_EXIT(GameConnection conn, Packet packet)
+        [PacketHandler(Op.C2S_CHAR_LOGOUT)]
+        public void C2S_CHAR_LOGOUT(GameConnection conn, Packet packet)
         {
             if (conn.Account != null && GameServer.Instance.Redis.IsLoggedIn(conn.Account.Username))
             {

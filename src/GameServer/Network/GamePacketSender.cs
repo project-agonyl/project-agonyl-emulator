@@ -13,7 +13,7 @@ namespace Agonyl.Game.Network
 {
     public static class Send
     {
-        public static void S2C_CHARACTER_LIST(GameConnection conn, Data.Account account)
+        public static void S2C_CHAR_LIST(GameConnection conn, Data.Account account)
         {
             var characters = GameServer.Instance.ASDDatabase.GetCharacterList(account.Username).ToList();
             var characterListPacket = new MSG_S2C_CHARACTER_LIST();
@@ -79,7 +79,7 @@ namespace Agonyl.Game.Network
             conn.Send(errorMsg.Serialize());
         }
 
-        public static void S2C_CHARACTER_CREATE_ACK(GameConnection conn, string name, byte type)
+        public static void S2C_ANS_CREATE_PLAYER(GameConnection conn, string name, byte type)
         {
             var msg = new MSG_S2C_CHARACTER_CREATE_ACK();
             msg.CharacterName = name;
@@ -87,15 +87,15 @@ namespace Agonyl.Game.Network
             var starterGear = GameServer.Instance.Conf.StarterGearWarrior;
             switch (type)
             {
-                case Constants.CHARACTER_TYPE_HK:
+                case Constants.PALADIN_TYPE:
                     starterGear = GameServer.Instance.Conf.StarterGearHK;
                     break;
 
-                case Constants.CHARACTER_TYPE_MAGE:
+                case Constants.MAGE_TYPE:
                     starterGear = GameServer.Instance.Conf.StarterGearMage;
                     break;
 
-                case Constants.CHARACTER_TYPE_ARCHER:
+                case Constants.ARCHER_TYPE:
                     starterGear = GameServer.Instance.Conf.StarterGearArcher;
                     break;
             }
@@ -133,14 +133,14 @@ namespace Agonyl.Game.Network
             conn.Send(msg.Serialize());
         }
 
-        public static void S2C_CHARACTER_DELETE_ACK(GameConnection conn, string name)
+        public static void S2C_ANS_DELETE_PLAYER(GameConnection conn, string name)
         {
             var msg = new MSG_S2C_CHARACTER_DELETE_ACK();
             msg.CharacterName = name;
             conn.Send(msg.Serialize());
         }
 
-        public static void S2C_CHARACTER_SELECT_ACK(GameConnection conn)
+        public static void S2C_CHAR_LOGIN_OK(GameConnection conn)
         {
             var msg = new MSG_S2C_CHARACTER_SELECT_ACK();
             msg.CharacterName = conn.Character.Name;
