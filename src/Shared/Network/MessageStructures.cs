@@ -53,9 +53,9 @@ namespace Agonyl.Shared.Network
     public struct PET_INFO
     {
         public PET_ID PetId;
-        public uint SerialKey;
         public uint Option1;
         public uint Option2;
+        public uint SerialKey;
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]

@@ -71,7 +71,7 @@ namespace Agonyl.Game.Data
             var itemArray = this.Info.GetWear().Split(';');
             for (var j = 0; j < itemArray.Length; j += 3)
             {
-                if (currentWearIndex == 10)
+                if (currentWearIndex == 10 || j + 2 >= itemArray.Length)
                 {
                     break;
                 }
@@ -116,7 +116,7 @@ namespace Agonyl.Game.Data
             var itemArray = this.Info.GetInventory().Split(';');
             for (var j = 0; j < itemArray.Length; j += 4)
             {
-                if (currentInventoryIndex == 30)
+                if (currentInventoryIndex == 30 || j + 3 >= itemArray.Length)
                 {
                     break;
                 }
@@ -157,6 +157,41 @@ namespace Agonyl.Game.Data
         public ushort GetMapNumberFromDbInfo()
         {
             return Convert.ToUInt16(this.Info.c_headerb.Split(';')[0]);
+        }
+
+        public void GetMsgActivePet(out PET_INFO petInfo)
+        {
+            petInfo = default(PET_INFO);
+            petInfo.PetId = default(PET_ID);
+            var petArray = this.Info.GetActivePet().Split(';');
+            petInfo.PetId.PetPtr = Convert.ToUInt32(petArray[3]); // Fix later to unique ID maintained by Game Server
+            petInfo.PetId.PetCode = Convert.ToUInt32(petArray[0]);
+            petInfo.Option1 = Convert.ToUInt32(petArray[1]);
+            petInfo.Option2 = Convert.ToUInt32(petArray[2]);
+            petInfo.SerialKey = Convert.ToUInt32(petArray[3]);
+        }
+
+        public void GetMsgPetInventory(out PET_INFO[] petInfo)
+        {
+            petInfo = new PET_INFO[5];
+            var petArray = this.Info.GetPetInventory().Split(';');
+            var currentPetIndex = 0;
+            for (var i = 0; i < petArray.Length; i += 4)
+            {
+                if (currentPetIndex == 5 || i + 3 >= petArray.Length)
+                {
+                    break;
+                }
+
+                petInfo[currentPetIndex] = default(PET_INFO);
+                petInfo[currentPetIndex].PetId = default(PET_ID);
+                petInfo[currentPetIndex].PetId.PetPtr = Convert.ToUInt32(petArray[i + 3]); // Fix later to unique ID maintained by Game Server
+                petInfo[currentPetIndex].PetId.PetCode = Convert.ToUInt32(petArray[i]);
+                petInfo[currentPetIndex].Option1 = Convert.ToUInt32(petArray[i + 1]);
+                petInfo[currentPetIndex].Option2 = Convert.ToUInt32(petArray[i + 2]);
+                petInfo[currentPetIndex].SerialKey = Convert.ToUInt32(petArray[i + 3]);
+                currentPetIndex++;
+            }
         }
     }
 }

@@ -155,17 +155,8 @@ namespace Agonyl.Game.Network
             conn.Character.GetMsgCharacterStat(out msg.CharacterStat);
             conn.Character.GetMsgItemWear(out msg.WearList);
             conn.Character.GetMsgItemInventory(out msg.InventoryList);
-
-            if (System.IO.File.Exists("world_login.bin"))
-            {
-                System.IO.File.Delete("world_login.bin");
-            }
-
-            using (var fs = new System.IO.FileStream("world_login.bin", System.IO.FileMode.Create, System.IO.FileAccess.Write))
-            {
-                fs.Write(msg.Serialize(), 0, msg.Serialize().Length);
-            }
-
+            conn.Character.GetMsgActivePet(out msg.PetActive);
+            conn.Character.GetMsgPetInventory(out msg.PetInventory);
             conn.Send(msg.Serialize());
             conn.Send(new MSG_S2C_UNKNOWN_37().Serialize());
             conn.Send(new MSG_S2C_UNKNOWN_25().Serialize());

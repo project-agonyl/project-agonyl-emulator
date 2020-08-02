@@ -67,6 +67,16 @@ namespace Agonyl.Shared.Database.Model
             return this.GetMBodyPart("_1INVEN");
         }
 
+        public string GetActivePet()
+        {
+            return this.GetMBodyPart("_1PETACT");
+        }
+
+        public string GetPetInventory()
+        {
+            return this.GetMBodyPart("_1PETINV");
+        }
+
         protected string GetMBodyPart(string startsWith)
         {
             if (this.m_body == null)
