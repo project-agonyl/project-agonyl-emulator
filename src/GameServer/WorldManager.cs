@@ -18,6 +18,7 @@ namespace Agonyl.Game
         public const int Second = 1000;
         public const int Minute = Second * 60;
         public const int Hour = Minute * 60;
+        public const int PingInterval = Second * 5;
 
         private int _characterHandles;
         private int _monsterHandles;
@@ -25,11 +26,12 @@ namespace Agonyl.Game
         private object _mapsLock = new object();
 
         private Timer _heartbeatTimer;
+        private Timer _clientPing;
 
         /// <summary>
-		/// Returns the amount of maps in the world.
-		/// </summary>
-		public int Count { get { lock (_mapsLock) return _mapsId.Count; } }
+        /// Returns the amount of maps in the world.
+        /// </summary>
+        public int Count { get { lock (this._mapsLock) { return this._mapsId.Count; } } }
 
         /// <summary>
         /// Creates new world manager.
@@ -79,6 +81,19 @@ namespace Agonyl.Game
             }
         }
 
+        private void SetUpClientPing()
+        {
+            this._clientPing = new Timer(this.ClientPing, null, PingInterval, PingInterval);
+        }
+
+        private void ClientPing(object _)
+        {
+            foreach (var map in this._mapsId.Values)
+            {
+                map.PingCharacters();
+            }
+        }
+
         public int CreateCharacterHandle()
         {
             return Interlocked.Increment(ref this._characterHandles);
@@ -100,6 +115,7 @@ namespace Agonyl.Game
             }
 
             this.SetUpHeartbeat();
+            this.SetUpClientPing();
         }
 
         /// <summary>

@@ -452,4 +452,21 @@ namespace Agonyl.Shared.Network
             this.Unknown = new byte[] { 0xff, 0x00, 0x1f, 0x00, 0xe3, 0x00 };
         }
     }
+
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public class MSG_CHK_TIMETICK : Marshalling
+    {
+        public MSG_CHK_TIMETICK()
+        {
+            this.MsgHeader = new MSG_HEAD_NO_PROTOCOL();
+            this.MsgHeader.Size = this.GetSize();
+            this.MsgHeader.Ctrl = 0x01;
+            this.MsgHeader.Cmd = 0xF0;
+        }
+
+        public MSG_HEAD_NO_PROTOCOL MsgHeader;
+        public uint TickCount;
+        public uint ServerTick;
+        public uint ClientTick;
+    }
 }

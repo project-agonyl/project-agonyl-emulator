@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Agonyl.Shared.Network;
 
 namespace Agonyl.Game.Data
 {
@@ -42,6 +43,24 @@ namespace Agonyl.Game.Data
         public void UpdateEntities()
         {
             // TODO: Understand ZoneServer logic and build the feature
+        }
+
+        public void PingCharacters()
+        {
+            foreach (var character in this._characters.Values)
+            {
+                if (character.CurrentState == Shared.Const.PlayerState.STANDBY)
+                {
+                    continue;
+                }
+
+                var msg = new MSG_CHK_TIMETICK();
+                character.CurrentServerTick = (uint)(int.MaxValue & (Environment.TickCount - character.Handle));
+                msg.TickCount = character.CurrentTickCount++;
+                msg.ServerTick = character.CurrentServerTick;
+                character.GameConnection.NoEncryptSend(msg.Serialize());
+                Shared.Util.Log.Info("Sent ping to " + character.Name);
+            }
         }
 
         /// <summary>

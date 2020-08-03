@@ -149,7 +149,8 @@ namespace Agonyl.Shared.Network
                     Buffer.BlockCopy(this._buffer, read, packetBuffer, 0, packetLength);
                     read += packetLength;
 
-                    if (this.ShouldDecrypt && !(this._buffer[10] == 0x11 && this._buffer[11] == 0x38))
+                    // Only decrypt if GameServer packet and not initial packet or ping packet
+                    if (this.ShouldDecrypt && !(this._buffer[10] == 0x11 && this._buffer[11] == 0x38) && this._buffer.Length != 22)
                     {
                         this._crypto.Decrypt(ref packetBuffer);
                     }
@@ -278,7 +279,19 @@ namespace Agonyl.Shared.Network
             // Encrypt packet
             this._crypto.Encrypt(ref buffer);
 
-            //Send
+            // Send
+            this._socket.Send(buffer);
+        }
+
+        // Required when crypto isn't required for special packets
+        public virtual void NoEncryptSend(byte[] buffer)
+        {
+            if (this._socket == null || this.State == ConnectionState.Closed)
+            {
+                return;
+            }
+
+            // Send
             this._socket.Send(buffer);
         }
     }

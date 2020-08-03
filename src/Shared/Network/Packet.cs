@@ -769,7 +769,16 @@ namespace Agonyl.Shared.Network
                     break;
 
                 default:
-                    opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+
+                    if (this._buffer.Length == 22)
+                    {
+                        opCode = Network.Op.C2S_PING;
+                    }
+                    else
+                    {
+                        opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                    }
+
                     break;
             }
 

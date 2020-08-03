@@ -4,6 +4,7 @@
 
 #endregion copyright
 
+using System;
 using Agonyl.Game.Data;
 using Agonyl.Shared.Const;
 using Agonyl.Shared.Data;
@@ -140,7 +141,7 @@ namespace Agonyl.Game.Network
                 var map = GameServer.Instance.World.GetMap(character.MapId);
                 if (map == null)
                 {
-                    Log.Warning("CZ_GAME_READY: User '{0}' logged on with invalid map '{1}'.", conn.Account.Username, character.MapId);
+                    Log.Warning("C2S_CHAR_LOGIN: User '{0}' logged on with invalid map '{1}'.", conn.Account.Username, character.MapId);
                     conn.Close();
                     return;
                 }
@@ -159,14 +160,14 @@ namespace Agonyl.Game.Network
         [PacketHandler(Op.C2S_WORLD_LOGIN)]
         public void C2S_WORLD_LOGIN(GameConnection conn, Packet packet)
         {
-            if (conn.Character != null)
-            {
-                Send.S2C_WORLD_LOGIN(conn);
-            }
-            else
+            if (conn.Character == null)
             {
                 Send.S2C_ERROR(conn, Constants.S2C_ERROR_CODE_CHARACTER_NOT_FOUND, "Character not found in the account");
+                return;
             }
+
+            Send.S2C_WORLD_LOGIN(conn);
+            conn.Character.SetPlayerState(PlayerState.STANDING);
         }
 
         /// <summary>
@@ -179,6 +180,63 @@ namespace Agonyl.Game.Network
         {
             Log.Info("Account '{0}' is logging out", conn.Account.Username);
             Send.S2C_CHAR_LOGOUT(conn);
+        }
+
+        [PacketHandler(Op.C2S_PING)]
+        public void C2S_PING(GameConnection conn, Packet packet)
+        {
+            Log.Info("Received ping from " + conn.Character.Name);
+            var currentServerTick = (uint)(int.MaxValue & (Environment.TickCount - conn.Character.Handle));
+            var cTick = new MSG_CHK_TIMETICK();
+            var buffer = packet.GetBuffer();
+            cTick.Deserialize(ref buffer);
+
+            if (conn.Character.ClientTick == 0)
+            {
+                conn.Character.PreviousServerTick = currentServerTick;
+                conn.Character.ClientTick = cTick.ClientTick;
+                conn.Character.PreviousTickCount = cTick.TickCount;
+                return;
+            }
+
+            if (cTick.TickCount - conn.Character.PreviousTickCount != 1)
+            {
+                Log.Info(string.Format("[Index] {0} {1} {2} Pre:{3} now:{4} SendTime:{5} {6}", conn.Character.Account.Username, conn.Character.Name, conn.Character.IPAddress, conn.Character.CurrentTickCount, cTick.TickCount, cTick.ClientTick - conn.Character.ClientTick, currentServerTick - conn.Character.CurrentServerTick));
+                conn.Character.CurrentTickCount = cTick.TickCount++;
+                conn.Character.CurrentTickCount = cTick.TickCount;
+                return;
+            }
+
+            if (cTick.ServerTick != conn.Character.CurrentServerTick)
+            {
+                Log.Info(string.Format("[Hack] {0} {1} {2} Changed SvrTick:{3}->{4} {5}", conn.Character.Account.Username, conn.Character.Name, conn.Character.IPAddress, conn.Character.CurrentServerTick, cTick.ServerTick, currentServerTick - conn.Character.CurrentServerTick));
+
+                // TODO: Handle speed hackers
+                return;
+            }
+
+            var serverTickDiff = Math.Abs(currentServerTick - conn.Character.PreviousServerTick);
+            var clientTickDiff = Math.Abs(cTick.ClientTick - conn.Character.ClientTick);
+            if (Math.Abs(serverTickDiff - clientTickDiff) > 500)
+            {
+                if (++conn.Character.TickErrorCount > 1)
+                {
+                    Log.Info(string.Format("[Hack] {0} {1} {2} {3} {4} {5}", conn.Character.Account.Username, conn.Character.Name, conn.Character.IPAddress, serverTickDiff, clientTickDiff, currentServerTick - conn.Character.CurrentServerTick));
+
+                    // TODO: Handle speed hackers
+                    return;
+                }
+
+                conn.Character.PreviousTickCount = cTick.TickCount;
+                conn.Character.ClientTick = cTick.ClientTick;
+                conn.Character.PreviousServerTick = currentServerTick;
+                return;
+            }
+
+            conn.Character.PreviousTickCount = cTick.TickCount;
+            conn.Character.ClientTick = cTick.ClientTick;
+            conn.Character.PreviousServerTick = currentServerTick;
+            conn.Character.TickErrorCount = 0;
         }
     }
 }

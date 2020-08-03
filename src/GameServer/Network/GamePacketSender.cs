@@ -7,7 +7,6 @@
 using System;
 using System.Linq;
 using Agonyl.Shared.Const;
-using Agonyl.Shared.Data;
 using Agonyl.Shared.Network;
 
 namespace Agonyl.Game.Network
@@ -168,7 +167,7 @@ namespace Agonyl.Game.Network
         {
             var msg = new MSG_S2C_HEADER(Op.S2C_CHAR_LOGOUT);
             msg.Size = 12;
-            conn.Send(msg.Serialize());
+            conn.NoEncryptSend(msg.Serialize());
         }
     }
 }

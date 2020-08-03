@@ -66,7 +66,7 @@ namespace Agonyl.Shared.Network
 
         public const ushort S2C_UNKNOWN_25_PROTOCOL = 0x1461;
 
-        public const ushort S2C_UNKNOWN_37_PROTOCOL = 0x1601;
+        public const ushort S2C_UNKNOWN_37_PROTOCOL = 0x1610;
 
         public const ushort S2C_CHAT_INITIALIZE_PROTOCOL = 0x1803;
 
@@ -76,6 +76,8 @@ namespace Agonyl.Shared.Network
         public const ushort S2C_ANS_CREATE_PLAYER = 0xA001;
         public const ushort C2S_ASK_DELETE_PLAYER = 0xA002;
         public const ushort S2C_ANS_DELETE_PLAYER = 0xA002;
+
+        public const ushort C2S_PING = 0xF001;
 
         private static readonly Dictionary<int, int> _sizes = new Dictionary<int, int>();
         private static readonly Dictionary<int, string> _names = new Dictionary<int, string>();
@@ -90,6 +92,7 @@ namespace Agonyl.Shared.Network
             _sizes[C2S_ASK_DELETE_PLAYER] = 33;
             _sizes[C2S_WORLD_LOGIN] = 33;
             _sizes[C2S_CHAR_LOGOUT] = 12;
+            _sizes[C2S_PING] = 22;
             _sizes[C2S_UNKNOWN_PROTOCOL] = 0;
 
             foreach (var field in typeof(Op).GetFields(BindingFlags.Public | BindingFlags.Static))

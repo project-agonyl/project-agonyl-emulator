@@ -22,7 +22,19 @@ namespace Agonyl.Game.Data
 
         public int Handle { get; private set; }
 
-        public PlayerState CurrentState { get; set; }
+        public uint CurrentTickCount { get; set; }
+
+        public uint PreviousTickCount { get; set; }
+
+        public uint ClientTick { get; set; }
+
+        public uint CurrentServerTick { get; set; }
+
+        public uint PreviousServerTick { get; set; }
+
+        public uint TickErrorCount { get; set; }
+
+        public PlayerState CurrentState { get; private set; }
 
         public string IPAddress { get; set; }
 
@@ -159,6 +171,11 @@ namespace Agonyl.Game.Data
         public void GetMsgPetInventory(out PET_INFO[] petInfo)
         {
             petInfo = this.PetInventory;
+        }
+
+        public void SetPlayerState(PlayerState state)
+        {
+            this.CurrentState = state;
         }
     }
 }

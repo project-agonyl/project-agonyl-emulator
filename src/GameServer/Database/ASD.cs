@@ -66,6 +66,7 @@ namespace Agonyl.Game.Database
                             HPCapacity = Convert.ToUInt32(info.c_headera.Split(';')[8]), // TODO: Calculate based on vitality points
                             MPCapacity = Convert.ToUInt32(info.c_headera.Split(';')[9]), // TODO: Calculate based on mana points
                         };
+                        character.SetPlayerState(PlayerState.STANDBY);
                         character.CalculatedStat = default(Shared.Network.CHARACTER_CALCULATED_STAT);
                         character.CalculatedStat.MaxHp = Convert.ToUInt16(info.c_headera.Split(';')[6]); // TODO: Calculate based on level
                         character.CalculatedStat.MaxMp = Convert.ToUInt16(info.c_headera.Split(';')[7]); // TODO: Calculate based on level
