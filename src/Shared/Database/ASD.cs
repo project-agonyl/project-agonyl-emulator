@@ -149,7 +149,7 @@ namespace Agonyl.Shared.Database
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public Model.Charac0 GetCharacter(string name)
+        public Model.Charac0 GetCharacterModel(string name)
         {
             using (var conn = this.GetConnection())
             {

@@ -5,6 +5,7 @@
 #endregion copyright
 
 using Agonyl.Game.Data;
+using Agonyl.Shared.Const;
 using Agonyl.Shared.Data;
 using Agonyl.Shared.Network;
 using Agonyl.Shared.Util;
@@ -62,29 +63,29 @@ namespace Agonyl.Game.Network
                 var level = GameServer.Instance.Conf.StarterLevel;
 
                 // Insert wear into body
-                switch (decodedPacket.CharacterType)
+                switch ((CharacterType)decodedPacket.CharacterType)
                 {
-                    case Constants.WARRIOR_TYPE:
+                    case CharacterType.Warrior:
                         body = Functions.InsertWearIntoMbody(GameServer.Instance.Conf.StarterBodyWarrior, GameServer.Instance.Conf.StarterGearWarrior);
                         break;
 
-                    case Constants.PALADIN_TYPE:
+                    case CharacterType.Paladin:
                         body = Functions.InsertWearIntoMbody(GameServer.Instance.Conf.StarterBodyHK, GameServer.Instance.Conf.StarterGearHK);
                         stats = GameServer.Instance.Conf.StarterStatsHK;
                         break;
 
-                    case Constants.MAGE_TYPE:
+                    case CharacterType.Mage:
                         body = Functions.InsertWearIntoMbody(GameServer.Instance.Conf.StarterBodyMage, GameServer.Instance.Conf.StarterGearMage);
                         stats = GameServer.Instance.Conf.StarterStatsMage;
                         break;
 
-                    case Constants.ARCHER_TYPE:
+                    case CharacterType.Archer:
                         body = Functions.InsertWearIntoMbody(GameServer.Instance.Conf.StarterBodyArcher, GameServer.Instance.Conf.StarterGearArcher);
                         stats = GameServer.Instance.Conf.StarterStatsArcher;
                         break;
                 }
 
-                if (decodedPacket.CharacterTown == Constants.QUANATO_TOWN)
+                if ((Town)decodedPacket.CharacterTown == Town.Quanato)
                 {
                     location = GameServer.Instance.Conf.StarterLocationQuanato;
                     body = body.Replace("SINFO=0", "SINFO=1");
@@ -135,9 +136,7 @@ namespace Agonyl.Game.Network
             var name = packet.GetString(13);
             if (GameServer.Instance.ASDDatabase.CharacterExists(conn.Account.Username, name))
             {
-                conn.Character = new Character();
-                conn.Character.Info = GameServer.Instance.ASDDatabase.GetCharacter(name);
-                conn.Character.Name = conn.Character.Info.c_id;
+                conn.Character = GameServer.Instance.ASDDatabase.GetCharacter(name);
                 conn.Character.GameConnection = conn;
                 Send.S2C_CHAR_LOGIN_OK(conn);
             }

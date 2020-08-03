@@ -6,6 +6,7 @@
 
 using System;
 using System.Linq;
+using Agonyl.Shared.Const;
 using Agonyl.Shared.Data;
 using Agonyl.Shared.Network;
 
@@ -85,17 +86,17 @@ namespace Agonyl.Game.Network
             msg.CharacterName = name;
             msg.CharacterType = type;
             var starterGear = GameServer.Instance.Conf.StarterGearWarrior;
-            switch (type)
+            switch ((CharacterType)type)
             {
-                case Constants.PALADIN_TYPE:
+                case CharacterType.Paladin:
                     starterGear = GameServer.Instance.Conf.StarterGearHK;
                     break;
 
-                case Constants.MAGE_TYPE:
+                case CharacterType.Mage:
                     starterGear = GameServer.Instance.Conf.StarterGearMage;
                     break;
 
-                case Constants.ARCHER_TYPE:
+                case CharacterType.Archer:
                     starterGear = GameServer.Instance.Conf.StarterGearArcher;
                     break;
             }
@@ -144,7 +145,7 @@ namespace Agonyl.Game.Network
         {
             var msg = new MSG_S2C_CHARACTER_SELECT_ACK();
             msg.CharacterName = conn.Character.Name;
-            msg.Map = conn.Character.GetMapNumberFromDbInfo();
+            msg.Map = conn.Character.MapId;
             conn.Send(msg.Serialize());
         }
 

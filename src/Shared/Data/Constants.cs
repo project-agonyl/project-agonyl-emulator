@@ -8,14 +8,6 @@ namespace Agonyl.Shared.Data
 {
     public static class Constants
     {
-        public const byte WARRIOR_TYPE = 0;
-        public const byte PALADIN_TYPE = 1;
-        public const byte MAGE_TYPE = 2;
-        public const byte ARCHER_TYPE = 3;
-
-        public const byte TEMOZ_TOWN = 0;
-        public const byte QUANATO_TOWN = 1;
-
         public const int MAP_XCELL = 256;
         public const int MAP_YCELL = 256;
         public const byte BLK_XCELL = 12;

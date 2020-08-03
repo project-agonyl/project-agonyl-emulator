@@ -75,6 +75,7 @@
     <Compile Include="Data\Game\Quest.cs" />
     <Compile Include="Data\Game\QuestItemReward.cs" />
     <Compile Include="Data\Game\QuestRequirement.cs" />
+    <Compile Include="Data\Position.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Network\Connection.cs" />
     <Compile Include="Network\ConnectionManager.cs" />

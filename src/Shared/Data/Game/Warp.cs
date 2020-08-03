@@ -9,6 +9,7 @@ namespace Agonyl.Shared.Data.Game
     public class Warp
     {
         public ushort MapNo { get; set; }
+
         public uint Coordinates { get; set; }
     }
 }

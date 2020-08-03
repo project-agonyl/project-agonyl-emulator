@@ -22,6 +22,8 @@ namespace Agonyl.Game
     {
         public static readonly GameServer Instance = new GameServer();
 
+        public Database.ASD ASDDatabase;
+
         /// <summary>
         /// Configuration.
         /// </summary>
@@ -63,7 +65,7 @@ namespace Agonyl.Game
             this.LoadConf(this.Conf = new GameConf());
 
             // Database
-            this.InitDatabase(this.ASDDatabase = new ASD(), this.Conf);
+            this.InitDatabase(this.ASDDatabase = new Database.ASD(), this.Conf);
 
             // Redis server
             this.Redis = new Redis(this.Conf.RedisHost, this.Conf.RedisPort, this.Conf.RedisPassword);
