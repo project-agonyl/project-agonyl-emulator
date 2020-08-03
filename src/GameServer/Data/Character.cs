@@ -13,6 +13,15 @@ namespace Agonyl.Game.Data
 {
     public class Character
     {
+        public Map Map;
+
+        public Character()
+        {
+            this.Handle = GameServer.Instance.World.CreateCharacterHandle();
+        }
+
+        public int Handle { get; private set; }
+
         public PlayerState CurrentState { get; set; }
 
         public string IPAddress { get; set; }

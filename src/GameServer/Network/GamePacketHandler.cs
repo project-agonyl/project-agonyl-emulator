@@ -136,8 +136,18 @@ namespace Agonyl.Game.Network
             var name = packet.GetString(13);
             if (GameServer.Instance.ASDDatabase.CharacterExists(conn.Account.Username, name))
             {
-                conn.Character = GameServer.Instance.ASDDatabase.GetCharacter(name);
+                var character = GameServer.Instance.ASDDatabase.GetCharacter(name);
+                var map = GameServer.Instance.World.GetMap(character.MapId);
+                if (map == null)
+                {
+                    Log.Warning("CZ_GAME_READY: User '{0}' logged on with invalid map '{1}'.", conn.Account.Username, character.MapId);
+                    conn.Close();
+                    return;
+                }
+
+                conn.Character = character;
                 conn.Character.GameConnection = conn;
+                map.AddCharacter(character);
                 Send.S2C_CHAR_LOGIN_OK(conn);
             }
             else
@@ -167,11 +177,8 @@ namespace Agonyl.Game.Network
         [PacketHandler(Op.C2S_CHAR_LOGOUT)]
         public void C2S_CHAR_LOGOUT(GameConnection conn, Packet packet)
         {
-            if (conn.Account != null && GameServer.Instance.Redis.IsLoggedIn(conn.Account.Username))
-            {
-                Log.Info(conn.Account.Username + " account has left the game server");
-                GameServer.Instance.Redis.RemoveLoggedInAccount(conn.Account.Username);
-            }
+            Log.Info("Account '{0}' is logging out", conn.Account.Username);
+            Send.S2C_CHAR_LOGOUT(conn);
         }
     }
 }

@@ -7,7 +7,7 @@
 using System.Collections.Generic;
 using Agonyl.Shared.Data.Game;
 
-namespace Agonyl.Shared.Data
+namespace Agonyl.Game
 {
     /// <summary>
     /// Stores all game related data loaded from server files.

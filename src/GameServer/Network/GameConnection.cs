@@ -36,14 +36,14 @@ namespace Agonyl.Game.Network
         /// </summary>
         protected override void CleanUp()
         {
-            return;
-        }
+            // TODO: Save stuff to database
+            if (this.Character != null)
+            {
+                this.Character.Map.RemoveCharacter(this.Character);
+            }
 
-        protected override void OnAfterClose()
-        {
             if (this.Account != null && GameServer.Instance.Redis.IsLoggedIn(this.Account.Username))
             {
-                Log.Info(this.Account.Username + " account has left the game server");
                 GameServer.Instance.Redis.RemoveLoggedInAccount(this.Account.Username);
             }
         }

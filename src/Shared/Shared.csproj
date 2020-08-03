@@ -61,7 +61,6 @@
     <Compile Include="Data\Constants.cs" />
     <Compile Include="Data\Database.cs" />
     <Compile Include="Data\Exceptions.cs" />
-    <Compile Include="Data\GameData.cs" />
     <Compile Include="Data\Game\IT0ItemProperty.cs" />
     <Compile Include="Data\Game\IT0ItemLevel.cs" />
     <Compile Include="Data\Game\IT1ItemProperty.cs" />

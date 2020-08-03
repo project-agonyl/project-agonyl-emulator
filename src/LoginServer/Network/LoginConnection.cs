@@ -42,14 +42,8 @@ namespace Agonyl.Login.Network
         /// </summary>
         protected override void CleanUp()
         {
-            return;
-        }
-
-        protected override void OnAfterClose()
-        {
             if (this.Username != null && LoginServer.Instance.Redis.IsLoggedIn(this.Username))
             {
-                Log.Info(this.Username + " account has left the login server");
                 LoginServer.Instance.Redis.RemoveLoggedInAccount(this.Username);
             }
         }

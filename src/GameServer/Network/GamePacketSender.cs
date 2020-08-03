@@ -163,5 +163,12 @@ namespace Agonyl.Game.Network
             conn.Send(new MSG_S2C_UNKNOWN_25().Serialize());
             conn.Send(new MSG_S2C_CHAT_INITIALIZE().Serialize());
         }
+
+        public static void S2C_CHAR_LOGOUT(GameConnection conn)
+        {
+            var msg = new MSG_S2C_HEADER(Op.S2C_CHAR_LOGOUT);
+            msg.Size = 12;
+            conn.Send(msg.Serialize());
+        }
     }
 }

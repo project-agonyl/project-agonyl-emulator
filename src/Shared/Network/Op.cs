@@ -53,6 +53,7 @@ namespace Agonyl.Shared.Network
         public const ushort C2S_WORLD_LOGIN = 0x1107;
         public const ushort S2C_WORLD_LOGIN = 0x1107;
         public const ushort C2S_CHAR_LOGOUT = 0x1108;
+        public const ushort S2C_CHAR_LOGOUT = 0x1108;
 
         public const ushort C2S_ASK_MOVE = 0x1200;
         public const ushort S2C_ANS_MOVE = 0x1200;

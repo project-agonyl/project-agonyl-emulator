@@ -106,7 +106,6 @@ namespace Agonyl.Shared.Network
             catch { }
 
             this.OnClosed();
-            this.OnAfterClose();
         }
 
         /// <summary>
@@ -116,11 +115,6 @@ namespace Agonyl.Shared.Network
         {
             this._socket.BeginReceive(this._buffer, 0, this._buffer.Length, SocketFlags.None, this.OnReceive, null);
         }
-
-        /// <summary>
-        /// After close event to clean up connection details.
-        /// </summary>
-        protected abstract void OnAfterClose();
 
         /// <summary>
         /// Called when new data is available from socket.
@@ -138,7 +132,6 @@ namespace Agonyl.Shared.Network
                 {
                     this.State = ConnectionState.Closed;
                     this.OnClosed();
-                    this.OnAfterClose();
                     return;
                 }
 
@@ -199,7 +192,6 @@ namespace Agonyl.Shared.Network
             {
                 this.State = ConnectionState.Closed;
                 this.OnClosed();
-                this.OnAfterClose();
             }
             catch (ObjectDisposedException)
             {

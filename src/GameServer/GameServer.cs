@@ -10,7 +10,6 @@ using Agonyl.Game.Network;
 using Agonyl.Game.Util;
 using Agonyl.Game.Util.Config;
 using Agonyl.Shared;
-using Agonyl.Shared.Data;
 using Agonyl.Shared.Data.Game;
 using Agonyl.Shared.Database;
 using Agonyl.Shared.Network;
@@ -44,9 +43,12 @@ namespace Agonyl.Game
         /// </summary>
         public GameConnection LoginServerConnection { get; private set; }
 
+        public WorldManager World { get; private set; }
+
         public GameServer()
         {
             this.GameData = new GameData();
+            this.World = new WorldManager();
         }
 
         /// <summary>
@@ -75,6 +77,10 @@ namespace Agonyl.Game
 
             // Packet handlers
             GamePacketHandler.Instance.RegisterMethods();
+
+            Log.Info("Initializing game world...");
+            this.World.Initialize();
+            Log.Info("Game world initialized with {0} maps.", this.World.Count);
 
             // Server
             var mgr = new ConnectionManager<GameConnection>(this.Conf.Host, this.Conf.Port);
