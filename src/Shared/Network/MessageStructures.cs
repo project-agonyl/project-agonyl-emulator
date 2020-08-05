@@ -366,7 +366,7 @@ namespace Agonyl.Shared.Network
 
         public MSG_S2C_UNKNOWN_25()
         {
-            this.MsgHeader = new MSG_S2C_HEADER(Op.S2C_UNKNOWN_25_PROTOCOL);
+            this.MsgHeader = new MSG_S2C_HEADER(Op.S2C_SKILL_SLOT_INFO);
             this.MsgHeader.Size = this.GetSize();
             this.Unknown = new byte[13];
         }
@@ -388,7 +388,7 @@ namespace Agonyl.Shared.Network
 
         public MSG_S2C_UNKNOWN_36()
         {
-            this.MsgHeader = new MSG_S2C_HEADER(Op.S2C_UNKNOWN_36_PROTOCOL);
+            this.MsgHeader = new MSG_S2C_HEADER(Op.S2C_FRIEND_STATE);
             this.MsgHeader.Size = this.GetSize();
             this.Unknown1 = 0;
             this.Unknown2 = 0xCC;
@@ -448,7 +448,7 @@ namespace Agonyl.Shared.Network
 
         public MSG_S2C_CHAT_INITIALIZE()
         {
-            this.MsgHeader = new MSG_S2C_HEADER(Op.S2C_CHAT_INITIALIZE_PROTOCOL);
+            this.MsgHeader = new MSG_S2C_HEADER(Op.S2C_CHAT_WINDOW_OPT);
             this.Unknown = new byte[] { 0xff, 0x00, 0x1f, 0x00, 0xe3, 0x00 };
         }
     }

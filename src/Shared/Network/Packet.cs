@@ -682,6 +682,20 @@ namespace Agonyl.Shared.Network
             ushort opCode;
             switch (this._buffer[11])
             {
+                case 0x0F:
+                    switch (this._buffer[10])
+                    {
+                        case 0xF2:
+                            opCode = Network.Op.C2S_KEEP_ALIVE;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
                 case 0x11:
                     switch (this._buffer[10])
                     {
@@ -695,6 +709,50 @@ namespace Agonyl.Shared.Network
 
                         case 0x08:
                             opCode = Network.Op.C2S_CHAR_LOGOUT;
+                            break;
+
+                        case 0x11:
+                            opCode = Network.Op.C2S_WARP;
+                            break;
+
+                        case 0x12:
+                            opCode = Network.Op.C2S_RETURN2HERE;
+                            break;
+
+                        case 0x14:
+                            opCode = Network.Op.C2S_SUBMAP_INFO;
+                            break;
+
+                        case 0x15:
+                            opCode = Network.Op.C2S_ENTER;
+                            break;
+
+                        case 0xA1:
+                            opCode = Network.Op.C2S_ACTIVE_PET;
+                            break;
+
+                        case 0xA2:
+                            opCode = Network.Op.C2S_INACTIVE_PET;
+                            break;
+
+                        case 0xA5:
+                            opCode = Network.Op.C2S_PET_BUY;
+                            break;
+
+                        case 0xA6:
+                            opCode = Network.Op.C2S_PET_SELL;
+                            break;
+
+                        case 0xA7:
+                            opCode = Network.Op.C2S_FEED_PET;
+                            break;
+
+                        case 0xA8:
+                            opCode = Network.Op.C2S_REVIVE_PET;
+                            break;
+
+                        case 0xB0:
+                            opCode = Network.Op.C2S_SHUE_COMBINATION;
                             break;
 
                         default:
@@ -713,6 +771,906 @@ namespace Agonyl.Shared.Network
 
                         case 0x02:
                             opCode = Network.Op.C2S_PC_MOVE;
+                            break;
+
+                        case 0x05:
+                            opCode = Network.Op.C2S_ASK_HS_MOVE;
+                            break;
+
+                        case 0x08:
+                            opCode = Network.Op.C2S_HS_MOVE;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0x13:
+                    switch (this._buffer[10])
+                    {
+                        case 0x07:
+                            opCode = Network.Op.C2S_OBJECT_NPC;
+                            break;
+
+                        case 0x08:
+                            opCode = Network.Op.C2S_ASK_NPC_FAVOR;
+                            break;
+
+                        case 0x09:
+                            opCode = Network.Op.C2S_NPC_FAVOR_UP;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0x14:
+                    switch (this._buffer[10])
+                    {
+                        case 0x00:
+                            opCode = Network.Op.C2S_ASK_ATTACK;
+                            break;
+
+                        case 0x51:
+                            opCode = Network.Op.C2S_LEARN_SKILL;
+                            break;
+
+                        case 0x53:
+                            opCode = Network.Op.C2S_ASK_SKILL;
+                            break;
+
+                        case 0x61:
+                            opCode = Network.Op.C2S_SKILL_SLOT_INFO;
+                            break;
+
+                        case 0x62:
+                            opCode = Network.Op.C2S_ANS_RECALL;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0x16:
+                    switch (this._buffer[10])
+                    {
+                        case 0x02:
+                            opCode = Network.Op.C2S_ALLOT_POINT;
+                            break;
+
+                        case 0x06:
+                            opCode = Network.Op.C2S_ASK_HEAL;
+                            break;
+
+                        case 0x09:
+                            opCode = Network.Op.C2S_RETRIEVE_POINT;
+                            break;
+
+                        case 0x0C:
+                            opCode = Network.Op.C2S_RESTORE_EXP;
+                            break;
+
+                        case 0x11:
+                            opCode = Network.Op.C2S_LEARN_PSKILL;
+                            break;
+
+                        case 0x13:
+                            opCode = Network.Op.C2S_FORGET_ALL_PSKILL;
+                            break;
+
+                        case 0x51:
+                            opCode = Network.Op.C2S_ASK_OPEN_STORAGE;
+                            break;
+
+                        case 0x52:
+                            opCode = Network.Op.C2S_ASK_INVEN2STORAGE;
+                            break;
+
+                        case 0x53:
+                            opCode = Network.Op.C2S_ASK_STORAGE2INVEN;
+                            break;
+
+                        case 0x54:
+                            opCode = Network.Op.C2S_ASK_DEPOSITE_MONEY;
+                            break;
+
+                        case 0x55:
+                            opCode = Network.Op.C2S_ASK_WITHDRAW_MONEY;
+                            break;
+
+                        case 0x56:
+                            opCode = Network.Op.C2S_ASK_CLOSE_STORAGE;
+                            break;
+
+                        case 0x57:
+                            opCode = Network.Op.C2S_ASK_MOVE_ITEMINSTORAGE;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0x17:
+                    switch (this._buffer[10])
+                    {
+                        case 0x02:
+                            opCode = Network.Op.C2S_PICKUP_ITEM;
+                            break;
+
+                        case 0x04:
+                            opCode = Network.Op.C2S_DROP_ITEM;
+                            break;
+
+                        case 0x06:
+                            opCode = Network.Op.C2S_MOVE_ITEM;
+                            break;
+
+                        case 0x08:
+                            opCode = Network.Op.C2S_WEAR_ITEM;
+                            break;
+
+                        case 0x11:
+                            opCode = Network.Op.C2S_STRIP_ITEM;
+                            break;
+
+                        case 0x14:
+                            opCode = Network.Op.C2S_BUY_ITEM;
+                            break;
+
+                        case 0x16:
+                            opCode = Network.Op.C2S_SELL_ITEM;
+                            break;
+
+                        case 0x18:
+                            opCode = Network.Op.C2S_GIVE_ITEM;
+                            break;
+
+                        case 0x21:
+                            opCode = Network.Op.C2S_USE_POTION;
+                            break;
+
+                        case 0x23:
+                            opCode = Network.Op.C2S_ASK_DEAL;
+                            break;
+
+                        case 0x25:
+                            opCode = Network.Op.C2S_ANS_DEAL;
+                            break;
+
+                        case 0x27:
+                            opCode = Network.Op.C2S_PUTIN_ITEM;
+                            break;
+
+                        case 0x29:
+                            opCode = Network.Op.C2S_PUTOUT_ITEM;
+                            break;
+
+                        case 0x31:
+                            opCode = Network.Op.C2S_DECIDE_DEAL;
+                            break;
+
+                        case 0x33:
+                            opCode = Network.Op.C2S_CONFIRM_DEAL;
+                            break;
+
+                        case 0x36:
+                            opCode = Network.Op.C2S_USE_ITEM;
+                            break;
+
+                        case 0x42:
+                            opCode = Network.Op.C2S_CONFIRM_ITEM;
+                            break;
+
+                        case 0x44:
+                            opCode = Network.Op.C2S_REMODEL_ITEM;
+                            break;
+
+                        case 0x48:
+                            opCode = Network.Op.C2S_USESCROLL;
+                            break;
+
+                        case 0x50:
+                            opCode = Network.Op.C2S_PUTIN_PET;
+                            break;
+
+                        case 0x51:
+                            opCode = Network.Op.C2S_PUTOUT_PET;
+                            break;
+
+                        case 0x53:
+                            opCode = Network.Op.C2S_ITEM_COMBINATION;
+                            break;
+
+                        case 0x54:
+                            opCode = Network.Op.C2S_LOTTO_PURCHASE;
+                            break;
+
+                        case 0x55:
+                            opCode = Network.Op.C2S_LOTTO_QUERY_PRIZE;
+                            break;
+
+                        case 0x56:
+                            opCode = Network.Op.C2S_LOTTO_QUERY_HISTORY;
+                            break;
+
+                        case 0x57:
+                            opCode = Network.Op.C2S_LOTTO_SALE;
+                            break;
+
+                        case 0x60:
+                            opCode = Network.Op.C2S_TAKEITEM_IN_BOX;
+                            break;
+
+                        case 0x61:
+                            opCode = Network.Op.C2S_TAKEITEM_OUT_BOX;
+                            break;
+
+                        case 0x67:
+                            opCode = Network.Op.C2S_USE_POTION_EX;
+                            break;
+
+                        case 0x70:
+                            opCode = Network.Op.C2S_OPEN_MARKET;
+                            break;
+
+                        case 0x71:
+                            opCode = Network.Op.C2S_CLOSE_MARKET;
+                            break;
+
+                        case 0x73:
+                            opCode = Network.Op.C2S_ENTER_MARKET;
+                            break;
+
+                        case 0x75:
+                            opCode = Network.Op.C2S_BUYITEM_MARKET;
+                            break;
+
+                        case 0x76:
+                            opCode = Network.Op.C2S_LEAVE_MARKET;
+                            break;
+
+                        case 0x77:
+                            opCode = Network.Op.C2S_MODIFY_MARKET;
+                            break;
+
+                        case 0x80:
+                            opCode = Network.Op.C2S_ASK_ITEM_SERIAL;
+                            break;
+
+                        case 0x81:
+                            opCode = Network.Op.C2S_SOCKET_ITEM;
+                            break;
+
+                        case 0x85:
+                            opCode = Network.Op.C2S_BUY_BATTLEFIELD_ITEM;
+                            break;
+
+                        case 0x90:
+                            opCode = Network.Op.C2S_BUY_CASH_ITEM;
+                            break;
+
+                        case 0x91:
+                            opCode = Network.Op.C2S_CASH_INFO;
+                            break;
+
+                        case 0xA9:
+                            opCode = Network.Op.C2S_DERBY_INDEX_QUERY;
+                            break;
+
+                        case 0xAA:
+                            opCode = Network.Op.C2S_DERBY_MONSTER_QUERY;
+                            break;
+
+                        case 0xAB:
+                            opCode = Network.Op.C2S_DERBY_RATIO_QUERY;
+                            break;
+
+                        case 0xAC:
+                            opCode = Network.Op.C2S_DERBY_PURCHASE;
+                            break;
+
+                        case 0xAE:
+                            opCode = Network.Op.C2S_DERBY_RESULT_QUERY;
+                            break;
+
+                        case 0xAF:
+                            opCode = Network.Op.C2S_DERBY_HISTORY_QUERY;
+                            break;
+
+                        case 0xB0:
+                            opCode = Network.Op.C2S_DERBY_EXCHANGE;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0x18:
+                    switch (this._buffer[10])
+                    {
+                        case 0x00:
+                            opCode = Network.Op.C2S_SAY;
+                            break;
+
+                        case 0x01:
+                            opCode = Network.Op.C2S_GESTURE;
+                            break;
+
+                        case 0x03:
+                            opCode = Network.Op.C2S_CHAT_WINDOW_OPT;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0x19:
+                    switch (this._buffer[10])
+                    {
+                        case 0x00:
+                            opCode = Network.Op.C2S_OPTION;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0x21:
+                    switch (this._buffer[10])
+                    {
+                        case 0x10:
+                            opCode = Network.Op.C2S_PARTY_QUEST;
+                            break;
+
+                        case 0x20:
+                            opCode = Network.Op.C2S_QUESTEX_DIALOGUE_REQ;
+                            break;
+
+                        case 0x22:
+                            opCode = Network.Op.C2S_QUESTEX_DIALOGUE_ANS;
+                            break;
+
+                        case 0x26:
+                            opCode = Network.Op.C2S_QUESTEX_CANCEL;
+                            break;
+
+                        case 0x28:
+                            opCode = Network.Op.C2S_QUESTEX_LIST;
+                            break;
+
+                        case 0x40:
+                            opCode = Network.Op.C2S_SQUEST_START;
+                            break;
+
+                        case 0x44:
+                            opCode = Network.Op.C2S_SQUEST_STEP_END;
+                            break;
+
+                        case 0x45:
+                            opCode = Network.Op.C2S_SQUEST_HISTORY;
+                            break;
+
+                        case 0x49:
+                            opCode = Network.Op.C2S_SQUEST_MINIGAME_MOVE;
+                            break;
+
+                        case 0x4A:
+                            opCode = Network.Op.C2S_SQUEST_WALL_QUIZ;
+                            break;
+
+                        case 0x4C:
+                            opCode = Network.Op.C2S_SQUEST_WALL_OK;
+                            break;
+
+                        case 0x4E:
+                            opCode = Network.Op.C2S_SQUEST_A3_QUIZ_SELECT;
+                            break;
+
+                        case 0x4F:
+                            opCode = Network.Op.C2S_SQUEST_A3_QUIZ;
+                            break;
+
+                        case 0x51:
+                            opCode = Network.Op.C2S_SQUEST_A3_QUIZ_OK;
+                            break;
+
+                        case 0x52:
+                            opCode = Network.Op.C2S_SQUEST_END_OK;
+                            break;
+
+                        case 0x53:
+                            opCode = Network.Op.C2S_SQUEST_222_NUM_QUIZ;
+                            break;
+
+                        case 0x55:
+                            opCode = Network.Op.C2S_SQUEST_312_ITEM_CREATE;
+                            break;
+
+                        case 0x57:
+                            opCode = Network.Op.C2S_SQUEST_HBOY_RUNE;
+                            break;
+
+                        case 0x59:
+                            opCode = Network.Op.C2S_SQUEST_HBOY_HANOI;
+                            break;
+
+                        case 0x5E:
+                            opCode = Network.Op.C2S_SQUEST_346_ITEM_COMBI;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0x22:
+                    switch (this._buffer[10])
+                    {
+                        case 0x00:
+                            opCode = Network.Op.C2S_ASK_PARTY;
+                            break;
+
+                        case 0x02:
+                            opCode = Network.Op.C2S_ANS_PARTY;
+                            break;
+
+                        case 0x05:
+                            opCode = Network.Op.C2S_OUT_PARTY;
+                            break;
+
+                        case 0xA0:
+                            opCode = Network.Op.C2S_ASK_APPRENTICE_IN;
+                            break;
+
+                        case 0xA1:
+                            opCode = Network.Op.C2S_ANS_APPRENTICE_IN;
+                            break;
+
+                        case 0xA4:
+                            opCode = Network.Op.C2S_ASK_APPRENTICE_OUT;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0x23:
+                    switch (this._buffer[10])
+                    {
+                        case 0x00:
+                            opCode = Network.Op.C2S_CLAN;
+                            break;
+
+                        case 0x01:
+                            opCode = Network.Op.C2S_JOIN_CLAN;
+                            break;
+
+                        case 0x02:
+                            opCode = Network.Op.C2S_ANS_CLAN;
+                            break;
+
+                        case 0x03:
+                            opCode = Network.Op.C2S_BOLT_CLAN;
+                            break;
+
+                        case 0x04:
+                            opCode = Network.Op.C2S_REQ_CLAN_INFO;
+                            break;
+
+                        case 0x20:
+                            opCode = Network.Op.C2Z_REGISTER_MARK;
+                            break;
+
+                        case 0x22:
+                            opCode = Network.Op.C2S_TRANSFER_MARK;
+                            break;
+
+                        case 0x23:
+                            opCode = Network.Op.C2S_ASK_MARK;
+                            break;
+
+                        case 0x31:
+                            opCode = Network.Op.C2S_FRIEND_INFO;
+                            break;
+
+                        case 0x32:
+                            opCode = Network.Op.C2S_FRIEND_STATE;
+                            break;
+
+                        case 0x33:
+                            opCode = Network.Op.C2S_FRIEND_GROUP;
+                            break;
+
+                        case 0x34:
+                            opCode = Network.Op.C2S_ASK_FRIEND;
+                            break;
+
+                        case 0x35:
+                            opCode = Network.Op.C2S_ANS_FRIEND;
+                            break;
+
+                        case 0x40:
+                            opCode = Network.Op.C2S_ASK_CLAN_BATTLE;
+                            break;
+
+                        case 0x41:
+                            opCode = Network.Op.C2S_ANS_CLAN_BATTLE;
+                            break;
+
+                        case 0x42:
+                            opCode = Network.Op.C2S_ASK_CLAN_BATTLE_END;
+                            break;
+
+                        case 0x43:
+                            opCode = Network.Op.C2S_ANS_CLAN_BATTLE_END;
+                            break;
+
+                        case 0x45:
+                            opCode = Network.Op.C2S_ASK_CLAN_BATTLE_SCORE;
+                            break;
+
+                        case 0x50:
+                            opCode = Network.Op.C2S_LETTER_BASE_INFO;
+                            break;
+
+                        case 0x51:
+                            opCode = Network.Op.C2S_LETTER_SIMPLE_INFO;
+                            break;
+
+                        case 0x53:
+                            opCode = Network.Op.C2S_LETTER_DEL;
+                            break;
+
+                        case 0x54:
+                            opCode = Network.Op.C2S_LETTER_SEND;
+                            break;
+
+                        case 0x56:
+                            opCode = Network.Op.C2S_LETTER_KEEPING;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0x24:
+                    switch (this._buffer[10])
+                    {
+                        case 0x00:
+                            opCode = Network.Op.C2S_CHANGE_NATION;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0x25:
+                    switch (this._buffer[10])
+                    {
+                        case 0x10:
+                            opCode = Network.Op.C2S_CAO_MITIGATION;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0x26:
+                    switch (this._buffer[10])
+                    {
+                        case 0x00:
+                            opCode = Network.Op.C2S_AGIT_INFO;
+                            break;
+
+                        case 0x01:
+                            opCode = Network.Op.C2S_AUCTION_INFO;
+                            break;
+
+                        case 0x02:
+                            opCode = Network.Op.C2S_AGIT_ENTER;
+                            break;
+
+                        case 0x03:
+                            opCode = Network.Op.C2S_AGIT_PUTUP_AUCTION;
+                            break;
+
+                        case 0x04:
+                            opCode = Network.Op.C2S_AGIT_BIDON;
+                            break;
+
+                        case 0x05:
+                            opCode = Network.Op.C2S_AGIT_PAY_EXPENSE;
+                            break;
+
+                        case 0x06:
+                            opCode = Network.Op.C2S_AGIT_CHANGE_NAME;
+                            break;
+
+                        case 0x07:
+                            opCode = Network.Op.C2S_AGIT_REPAY_MONEY;
+                            break;
+
+                        case 0x08:
+                            opCode = Network.Op.C2S_AGIT_OBTAIN_SALEMONEY;
+                            break;
+
+                        case 0x0A:
+                            opCode = Network.Op.C2S_AGIT_MANAGE_INFO;
+                            break;
+
+                        case 0x0B:
+                            opCode = Network.Op.C2S_AGIT_OPTION;
+                            break;
+
+                        case 0x0C:
+                            opCode = Network.Op.C2S_AGIT_OPTION_INFO;
+                            break;
+
+                        case 0x0D:
+                            opCode = Network.Op.C2S_AGIT_PC_BAN;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0x27:
+                    switch (this._buffer[10])
+                    {
+                        case 0x30:
+                            opCode = Network.Op.C2S_CHRISTMAS_CARD;
+                            break;
+
+                        case 0x31:
+                            opCode = Network.Op.C2S_SPEAK_CARD;
+                            break;
+
+                        case 0x40:
+                            opCode = Network.Op.C2S_PROCESS_INFO;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0x28:
+                    switch (this._buffer[10])
+                    {
+                        case 0x95:
+                            opCode = Network.Op.C2S_PREPARE_USER;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0x35:
+                    switch (this._buffer[10])
+                    {
+                        case 0x00:
+                            opCode = Network.Op.C2S_ASK_WARP_Z2B;
+                            break;
+
+                        case 0x10:
+                            opCode = Network.Op.C2S_ASK_WARP_B2Z;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0x38:
+                    switch (this._buffer[10])
+                    {
+                        case 0x11:
+                            opCode = Network.Op.C2S_PREPARE_USER;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0x39:
+                    switch (this._buffer[10])
+                    {
+                        case 0x15:
+                            opCode = Network.Op.C2S_ASK_SHOP_INFO;
+                            break;
+
+                        case 0x16:
+                            opCode = Network.Op.C2S_ASK_GIVE_MY_TAX;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0x40:
+                    switch (this._buffer[10])
+                    {
+                        case 0x01:
+                            opCode = Network.Op.C2S_TYR_UNIT_LIST;
+                            break;
+
+                        case 0x02:
+                            opCode = Network.Op.C2S_TYR_UNIT_INFO;
+                            break;
+
+                        case 0x03:
+                            opCode = Network.Op.C2S_TYR_ENTRY;
+                            break;
+
+                        case 0x04:
+                            opCode = Network.Op.C2S_TYR_JOIN;
+                            break;
+
+                        case 0x80:
+                            opCode = Network.Op.C2S_TYR_REWARD_INFO;
+                            break;
+
+                        case 0x81:
+                            opCode = Network.Op.C2S_TYR_REWARD;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0x41:
+                    switch (this._buffer[10])
+                    {
+                        case 0x02:
+                            opCode = Network.Op.C2S_TYR_UPGRADE;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0x42:
+                    switch (this._buffer[10])
+                    {
+                        case 0x03:
+                            opCode = Network.Op.C2S_TYR_RTMM_END;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0x50:
+                    switch (this._buffer[10])
+                    {
+                        case 0x01:
+                            opCode = Network.Op.C2S_HS_SEAL;
+                            break;
+
+                        case 0x02:
+                            opCode = Network.Op.C2S_HS_RECALL;
+                            break;
+
+                        case 0x05:
+                            opCode = Network.Op.C2S_HS_REVIVE;
+                            break;
+
+                        case 0x06:
+                            opCode = Network.Op.C2S_HS_ASK_ATTACK;
+                            break;
+
+                        case 0x08:
+                            opCode = Network.Op.C2S_HSSTONE_BUY;
+                            break;
+
+                        case 0x09:
+                            opCode = Network.Op.C2S_HSSTONE_SELL;
+                            break;
+
+                        case 0x0A:
+                            opCode = Network.Op.C2S_HS_LEARN_SKILL;
+                            break;
+
+                        case 0x0B:
+                            opCode = Network.Op.C2S_HS_ALLOT_POINT;
+                            break;
+
+                        case 0x0C:
+                            opCode = Network.Op.C2S_HS_RETRIEVE_POINT;
+                            break;
+
+                        case 0x0D:
+                            opCode = Network.Op.C2S_HS_WEAR_ITEM;
+                            break;
+
+                        case 0x10:
+                            opCode = Network.Op.C2S_HS_STRIP_ITEM;
+                            break;
+
+                        case 0x1B:
+                            opCode = Network.Op.C2S_HS_OPTION;
+                            break;
+
+                        case 0x1C:
+                            opCode = Network.Op.C2S_HS_HEAL;
+                            break;
+
+                        case 0x1E:
+                            opCode = Network.Op.C2S_HS_SKILL_RESET;
+                            break;
+
+                        default:
+                            opCode = Network.Op.C2S_UNKNOWN_PROTOCOL;
+                            break;
+                    }
+
+                    break;
+
+                case 0x90:
+                    switch (this._buffer[10])
+                    {
+                        case 0x00:
+                            opCode = Network.Op.C2S_ASK_MIGRATION;
                             break;
 
                         default:
@@ -740,11 +1698,19 @@ namespace Agonyl.Shared.Network
 
                     break;
 
-                case 0x28:
+                case 0xA3:
                     switch (this._buffer[10])
                     {
-                        case 0x95:
-                            opCode = Network.Op.C2S_PREPARE_USER;
+                        case 0x40:
+                            opCode = Network.Op.C2S_LEAGUE;
+                            break;
+
+                        case 0x45:
+                            opCode = Network.Op.C2S_REQ_LEAGUE_CLAN_INFO;
+                            break;
+
+                        case 0x47:
+                            opCode = Network.Op.C2S_LEAGUE_ALLOW;
                             break;
 
                         default:
@@ -754,11 +1720,11 @@ namespace Agonyl.Shared.Network
 
                     break;
 
-                case 0x38:
+                case 0xC0:
                     switch (this._buffer[10])
                     {
-                        case 0x11:
-                            opCode = Network.Op.C2S_PREPARE_USER;
+                        case 0x00:
+                            opCode = Network.Op.C2S_PAYINFO;
                             break;
 
                         default:
