@@ -67,11 +67,7 @@ namespace Agonyl.Game.Database
                             MPCapacity = Convert.ToUInt32(info.c_headera.Split(';')[9]), // TODO: Calculate based on mana points
                         };
                         character.SetPlayerState(PlayerState.STANDBY);
-                        character.CalculatedStat = default(Shared.Network.CHARACTER_CALCULATED_STAT);
-                        character.CalculatedStat.MaxHp = Convert.ToUInt16(info.c_headera.Split(';')[6]); // TODO: Calculate based on level
-                        character.CalculatedStat.MaxMp = Convert.ToUInt16(info.c_headera.Split(';')[7]); // TODO: Calculate based on level
-                        character.Wear = new ITEM_WEAR[10];
-                        var currentWearIndex = 0;
+                        byte currentWearIndex = 0;
                         var itemArray = info.GetWear().Split(';');
                         for (var j = 0; j < itemArray.Length; j += 3)
                         {
@@ -80,40 +76,29 @@ namespace Agonyl.Game.Database
                                 break;
                             }
 
-                            if (!decimal.TryParse(itemArray[j], out _))
+                            if (!decimal.TryParse(itemArray[j], out _) ||
+                                !decimal.TryParse(itemArray[j + 1], out _) ||
+                                !decimal.TryParse(itemArray[j + 2], out _) ||
+                                !GameServer.Instance.GameData.Items.ContainsKey(Convert.ToUInt32(itemArray[j]) & 0x3FFF))
                             {
                                 continue;
                             }
-
-                            if (!GameServer.Instance.GameData.Items.ContainsKey(Convert.ToUInt32(itemArray[j]) & 0x3FFF))
+                            else
                             {
-                                continue;
+                                var wearItem = new WearItem(
+                                    Convert.ToUInt32(itemArray[j]),
+                                    Convert.ToUInt32(itemArray[j + 1]),
+                                    Convert.ToUInt32(itemArray[j + 2]),
+                                    (int)Convert.ToUInt32(itemArray[j + 2]),
+                                    GameServer.Instance.GameData.Items[Convert.ToUInt32(itemArray[j]) & 0x3FFF].SlotIndex);
+
+                                character.Inventory.AddWearItem(currentWearIndex, wearItem);
                             }
 
-                            character.Wear[currentWearIndex] = default(ITEM_WEAR);
-                            character.Wear[currentWearIndex].Item = default(ITEM);
-                            character.Wear[currentWearIndex].Item.ItemId = default(ITEM_ID);
-                            character.Wear[currentWearIndex].Item.ItemId.ItemCode = Convert.ToUInt32(itemArray[j]);
-                            character.Wear[currentWearIndex].Item.ItemOption = 0;
-                            if (decimal.TryParse(itemArray[j + 1], out _))
-                            {
-                                character.Wear[currentWearIndex].Item.ItemOption = Convert.ToUInt32(itemArray[j + 1]);
-                            }
-
-                            character.Wear[currentWearIndex].Item.ItemId.ItemPtr = 0;
-                            character.Wear[currentWearIndex].Item.ItemKey = 0;
-                            if (decimal.TryParse(itemArray[j + 2], out _))
-                            {
-                                character.Wear[currentWearIndex].Item.ItemKey = Convert.ToUInt32(itemArray[j + 2]);
-                                character.Wear[currentWearIndex].Item.ItemId.ItemPtr = Convert.ToUInt32(itemArray[j + 2]);
-                            }
-
-                            character.Wear[currentWearIndex].WearIndex = GameServer.Instance.GameData.Items[Convert.ToUInt32(itemArray[j]) & 0x3FFF].SlotIndex;
                             currentWearIndex++;
                         }
 
-                        character.Inventory = new ITEM_INVENTORY[30];
-                        var currentInventoryIndex = 0;
+                        byte currentInventoryIndex = 0;
                         itemArray = info.GetInventory().Split(';');
                         for (var j = 0; j < itemArray.Length; j += 4)
                         {
@@ -122,35 +107,25 @@ namespace Agonyl.Game.Database
                                 break;
                             }
 
-                            if (!decimal.TryParse(itemArray[j], out _))
+                            if (!decimal.TryParse(itemArray[j], out _) ||
+                                !decimal.TryParse(itemArray[j + 1], out _) ||
+                                !decimal.TryParse(itemArray[j + 2], out _) ||
+                                !decimal.TryParse(itemArray[j + 3], out _) ||
+                                !GameServer.Instance.GameData.Items.ContainsKey(Convert.ToUInt32(itemArray[j]) & 0x3FFF))
                             {
                                 continue;
                             }
-
-                            if (!GameServer.Instance.GameData.Items.ContainsKey(Convert.ToUInt32(itemArray[j]) & 0x3FFF))
+                            else
                             {
-                                continue;
+                                var inventoryItem = new InventoryItem(
+                                    Convert.ToUInt32(itemArray[j]),
+                                    Convert.ToUInt32(itemArray[j + 1]),
+                                    Convert.ToUInt32(itemArray[j + 2]),
+                                    (int)Convert.ToUInt32(itemArray[j + 2]),
+                                    Convert.ToByte(itemArray[j + 3]));
+                                character.Inventory.AddInventoryItem(Convert.ToByte(itemArray[j + 3]), inventoryItem);
                             }
 
-                            character.Inventory[currentInventoryIndex] = default(ITEM_INVENTORY);
-                            character.Inventory[currentInventoryIndex].Item = default(ITEM);
-                            character.Inventory[currentInventoryIndex].Item.ItemId = default(ITEM_ID);
-                            character.Inventory[currentInventoryIndex].Item.ItemId.ItemCode = Convert.ToUInt32(itemArray[j]);
-                            character.Inventory[currentInventoryIndex].Item.ItemOption = 0;
-                            if (decimal.TryParse(itemArray[j + 1], out _))
-                            {
-                                character.Inventory[currentInventoryIndex].Item.ItemOption = Convert.ToUInt32(itemArray[j + 1]);
-                            }
-
-                            character.Inventory[currentInventoryIndex].Item.ItemId.ItemPtr = 0;
-                            character.Inventory[currentInventoryIndex].Item.ItemKey = 0;
-                            if (decimal.TryParse(itemArray[j + 2], out _))
-                            {
-                                character.Inventory[currentInventoryIndex].Item.ItemKey = Convert.ToUInt32(itemArray[j + 2]);
-                                character.Inventory[currentInventoryIndex].Item.ItemId.ItemPtr = Convert.ToUInt32(itemArray[j + 2]);
-                            }
-
-                            character.Inventory[currentInventoryIndex].InventoryIndex = Convert.ToUInt32(itemArray[j + 3]);
                             currentInventoryIndex++;
                         }
 
@@ -183,6 +158,7 @@ namespace Agonyl.Game.Database
                             currentPetIndex++;
                         }
 
+                        character.UpdateCalculatedStats();
                         return character;
                     }
                 }

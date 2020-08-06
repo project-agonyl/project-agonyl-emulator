@@ -19,5 +19,12 @@ namespace Agonyl.Shared.Data
         public const ushort S2C_ERROR_CODE_CHARACTER_INVALID = 0x1106;
         public const ushort S2C_ERROR_CODE_CHARACTER_SLOTS_FULL = 0x1201;
         public const ushort S2C_ERROR_CODE_CHARACTER_NOT_FOUND = 0x1202;
+
+        public const uint ItemMountConstant = 0x10000;
+        public const uint ItemBlessingConstant = 0x8000;
+        public const uint ItemAdditionalAttributeConstant = 0xF;
+        public const uint ItemBlueOptionConstant = 0x4000;
+        public const uint ItemRedOptionConstant = 0x10000;
+        public const uint ItemGreyOptionConstant = 0x4000000;
     }
 }
