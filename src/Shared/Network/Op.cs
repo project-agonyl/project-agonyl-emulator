@@ -111,11 +111,15 @@ namespace Agonyl.Shared.Network
         public const ushort C2S_BUY_ITEM = 0x1714;
         public const ushort C2S_SELL_ITEM = 0x1716;
         public const ushort C2S_GIVE_ITEM = 0x1718;
+        public const ushort S2C_GIVE_ITEM = 0x1720;
         public const ushort C2S_USE_POTION = 0x1721;
         public const ushort C2S_ASK_DEAL = 0x1723;
+        public const ushort S2C_ASK_DEAL = 0x1724;
         public const ushort C2S_ANS_DEAL = 0x1725;
         public const ushort C2S_PUTIN_ITEM = 0x1727;
+        public const ushort S2C_PUTIN_ITEM = 0x1728;
         public const ushort C2S_PUTOUT_ITEM = 0x1729;
+        public const ushort S2C_PUTOUT_ITEM = 0x1730;
         public const ushort C2S_DECIDE_DEAL = 0x1731;
         public const ushort C2S_CONFIRM_DEAL = 0x1733;
         public const ushort C2S_USE_ITEM = 0x1736;
