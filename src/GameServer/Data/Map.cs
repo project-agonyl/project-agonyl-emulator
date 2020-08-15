@@ -20,7 +20,7 @@ namespace Agonyl.Game.Data
         /// <summary>
         /// Range a character can see.
         /// </summary>
-        public const int VisibleBlock = 15;
+        public const int VisibleBlock = 9;
 
         public Map(ushort id, string name = "")
         {
@@ -125,12 +125,68 @@ namespace Agonyl.Game.Data
         /// Returns all characters on this map that match the given predicate.
         /// </summary>
         /// <param name="handle"></param>
+        /// <param name="predicate"></param>
         /// <returns></returns>
         public Character[] GetCharacters(Func<Character, bool> predicate)
         {
             lock (this._characters)
             {
                 return this._characters.Values.Where(predicate).ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Broadcasts packet to all characters on map.
+        /// </summary>
+        /// <param name="packet"></param>
+        public virtual void Broadcast(Packet packet)
+        {
+            lock (this._characters)
+            {
+                foreach (var character in this._characters.Values)
+                {
+                    character.GameConnection.Send(packet);
+                }
+            }
+        }
+
+        public virtual void Broadcast(byte[] packet)
+        {
+            lock (this._characters)
+            {
+                foreach (var character in this._characters.Values)
+                {
+                    character.GameConnection.Send(packet);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Broadcasts packet to all characters on map, that are within
+        /// visible range of source.
+        /// </summary>
+        /// <param name="packet"></param>
+        /// <param name="source"></param>
+        /// <param name="includeSource"></param>
+        public virtual void Broadcast(Packet packet, Character source, bool includeSource = true)
+        {
+            lock (this._characters)
+            {
+                foreach (var character in this._characters.Values.Where(a => (includeSource || a != source) && a.CurrentPostion.InRange(source.CurrentPostion, VisibleBlock)))
+                {
+                    character.GameConnection.Send(packet);
+                }
+            }
+        }
+
+        public virtual void Broadcast(byte[] packet, Character source, bool includeSource = true)
+        {
+            lock (this._characters)
+            {
+                foreach (var character in this._characters.Values.Where(a => (includeSource || a != source) && a.CurrentPostion.InRange(source.CurrentPostion, VisibleBlock)))
+                {
+                    character.GameConnection.Send(packet);
+                }
             }
         }
     }
