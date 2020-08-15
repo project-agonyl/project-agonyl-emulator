@@ -132,12 +132,18 @@ namespace Agonyl.Game.Database
                         character.ActivePet = default(PET_INFO);
                         character.ActivePet.PetId = default(PET_ID);
                         var petArray = info.GetActivePet().Split(';');
-                        character.ActivePet.PetId.PetPtr = Convert.ToUInt32(petArray[3]); // Fix later by getting unique ID maintained by Game Server
-                        character.ActivePet.PetId.PetCode = Convert.ToUInt32(petArray[0]);
-                        character.ActivePet.Option1 = Convert.ToUInt32(petArray[1]);
-                        character.ActivePet.Option2 = Convert.ToUInt32(petArray[2]);
-                        character.ActivePet.SerialKey = Convert.ToUInt32(petArray[3]);
-
+                        if (petArray[0] != string.Empty)
+                        {
+                            character.ActivePet.PetId.PetPtr = Convert.ToUInt32(petArray[3]); // Fix later by getting unique ID maintained by Game Server
+                            character.ActivePet.PetId.PetCode = Convert.ToUInt32(petArray[0]);
+                            character.ActivePet.Option1 = Convert.ToUInt32(petArray[1]);
+                            character.ActivePet.Option2 = Convert.ToUInt32(petArray[2]);
+                            character.ActivePet.SerialKey = Convert.ToUInt32(petArray[3]);
+                        }
+                        else
+                        {
+                            character.ActivePet = new PET_INFO();
+                        }
                         character.PetInventory = new PET_INFO[5];
                         petArray = info.GetPetInventory().Split(';');
                         var currentPetIndex = 0;

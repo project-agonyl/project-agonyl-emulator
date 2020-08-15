@@ -60,7 +60,7 @@ namespace Agonyl.Game.Data
 
             var additionalAttribute = itemOption & 0x10;
             this.HasAdditionalAttribute = additionalAttribute != 0;
-            this.Level = (byte)(itemOption & 0xF);
+            this.Level = (byte)(itemOption & 0xF) == 0 ? (byte)1 : (byte)(itemOption & 0xF);
             while (itemOption > Constants.ItemGreyOptionConstant)
             {
                 itemOption -= Constants.ItemGreyOptionConstant;
